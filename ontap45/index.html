@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trắc nghiệm Tiếng Nhật - Bài 4 & 5 Premium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #f1f5f9;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .japanese-text {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        .fade-in {
+            animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .option-btn {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .option-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px -8px rgba(99, 102, 241, 0.15);
+        }
+        .correct-answer {
+            background-color: #f0fdf4 !important;
+            color: #166534 !important;
+            border-color: #bbf7d0 !important;
+            box-shadow: 0 0 0 2px #bbf7d0 inset, 0 4px 6px -1px rgba(22, 101, 52, 0.05);
+        }
+        .wrong-answer {
+            background-color: #fef2f2 !important;
+            color: #991b1b !important;
+            border-color: #fecaca !important;
+            box-shadow: 0 0 0 2px #fecaca inset, 0 4px 6px -1px rgba(153, 27, 27, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-3 md:p-6">
+
+    <div class="bg-white max-w-4xl w-full rounded-[2.5rem] shadow-2xl border border-slate-100 overflow-hidden relative flex flex-col my-4 min-h-[680px]">
+        
+        <!-- Premium Header inspired by modern LMS -->
+        <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-6 md:p-8 text-white relative">
+            <div class="absolute right-8 top-1/2 -translate-y-1/2 opacity-5 pointer-events-none hidden md:block">
+                <i class="fa-solid fa-language text-8xl"></i>
+            </div>
+            <div class="flex flex-col gap-1">
+                <div class="flex items-center gap-2">
+                    <span class="bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">
+                        JPD123 - Đại Học FPT
+                    </span>
+                    <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                        Premium Edition
+                    </span>
+                </div>
+                <h1 class="text-2xl md:text-3xl font-black mt-2 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-indigo-100 to-indigo-200">
+                    Hệ Thống Luyện Đề Tiếng Nhật
+                </h1>
+                <p class="text-slate-400 text-xs md:text-sm mt-1 flex items-center gap-2 font-medium">
+                    <i class="fa-solid fa-circle-check text-emerald-400"></i> 
+                    Bài 4 & Bài 5 (222 câu hỏi chuẩn hóa cao cấp)
+                </p>
+            </div>
+        </div>
+
+        <!-- START SCREEN -->
+        <div id="start-screen" class="p-6 md:p-10 text-center fade-in flex-1 flex flex-col justify-between items-center">
+            <div class="w-20 h-20 bg-indigo-50 rounded-3xl flex items-center justify-center mb-6 shadow-md border border-indigo-100/50">
+                <span class="text-4xl animate-pulse">🌸</span>
+            </div>
+            
+            <div class="max-w-lg">
+                <h2 class="text-2xl font-extrabold text-slate-800 mb-2 tracking-tight">Sẵn sàng chinh phục kì thi!</h2>
+                <p class="text-slate-500 text-sm mb-6 leading-relaxed">
+                    Học liệu được đồng bộ và tham khảo trực tiếp từ hai tài liệu chính quy <span class="font-semibold text-indigo-600">"jpd123-lesson-4-to-7-grammar-notes-summary.pdf"</span> và <span class="font-semibold text-indigo-600">"Từ vựng sơ cấp (4-7).pdf"</span>.
+                </p>
+            </div>
+
+            <!-- Quiz Options Panel with manual input -->
+            <div class="bg-slate-50 p-6 rounded-3xl border border-slate-100 w-full max-w-lg mb-8">
+                <label class="block text-left text-slate-700 font-bold text-sm mb-3 flex items-center justify-between">
+                    <span class="flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-indigo-500"></i> Chọn số câu hỏi luyện tập:
+                    </span>
+                    <span class="text-xs text-slate-400 font-medium">Tổng số: 222 câu</span>
+                </label>
+                
+                <div class="grid grid-cols-5 gap-2 mb-4">
+                    <button onclick="selectQuickLimit(10)" id="btn-limit-10" class="limit-btn py-2.5 rounded-xl border border-slate-200 font-bold text-xs text-slate-600 bg-white hover:border-indigo-400 hover:text-indigo-600 transition-all">10</button>
+                    <button onclick="selectQuickLimit(20)" id="btn-limit-20" class="limit-btn py-2.5 rounded-xl border-2 border-indigo-600 font-bold text-xs text-indigo-600 bg-white shadow-sm transition-all">20</button>
+                    <button onclick="selectQuickLimit(50)" id="btn-limit-50" class="limit-btn py-2.5 rounded-xl border border-slate-200 font-bold text-xs text-slate-600 bg-white hover:border-indigo-400 hover:text-indigo-600 transition-all">50</button>
+                    <button onclick="selectQuickLimit(100)" id="btn-limit-100" class="limit-btn py-2.5 rounded-xl border border-slate-200 font-bold text-xs text-slate-600 bg-white hover:border-indigo-400 hover:text-indigo-600 transition-all">100</button>
+                    <button onclick="selectQuickLimit(222)" id="btn-limit-222" class="limit-btn py-2.5 rounded-xl border border-slate-200 font-bold text-xs text-slate-600 bg-white hover:border-indigo-400 hover:text-indigo-600 transition-all">Tất cả</button>
+                </div>
+
+                <!-- Manual Input field -->
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                        <i class="fa-solid fa-pen-nib text-slate-400 text-sm"></i>
+                    </div>
+                    <input type="number" id="custom-limit-input" min="1" max="222" value="20" oninput="validateCustomInput(this)"
+                           class="block w-full pl-10 pr-24 py-3 rounded-xl border border-slate-200 bg-white text-slate-700 font-bold placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm"
+                           placeholder="Nhập số câu thủ công...">
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <span class="text-xs font-bold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-lg">câu hỏi</span>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="startQuiz()" class="bg-indigo-600 hover:bg-indigo-700 hover:shadow-xl hover:shadow-indigo-500/15 active:scale-95 text-white font-bold py-4 px-12 rounded-2xl shadow-lg transition-all duration-200 w-full max-w-lg flex items-center justify-center gap-3 text-base">
+                Bắt đầu làm bài <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <!-- QUIZ SCREEN (inspired by image_ff70df.png) -->
+        <div id="quiz-screen" class="p-5 md:p-8 hidden fade-in flex-1 flex flex-col justify-between">
+            <div>
+                <!-- Progress Header -->
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 mb-4">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-indigo-50 text-indigo-700 border border-indigo-100 font-black px-3.5 py-1.5 rounded-xl text-xs tracking-wider">
+                            CÂU HỎI <span id="current-question-num">1</span>/<span id="total-questions">20</span>
+                        </span>
+                        <div class="flex items-center gap-2 text-xs text-slate-400 font-bold">
+                            <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span> <span id="correct-count">Đúng: 0</span>
+                            <span class="inline-block w-2.5 h-2.5 rounded-full bg-rose-500 ml-1"></span> <span id="wrong-count">Sai: 0</span>
+                        </div>
+                    </div>
+                    <div class="text-right flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
+                        <span id="score-display" class="text-xs font-extrabold text-indigo-600 bg-indigo-50/50 px-3 py-1.5 rounded-xl border border-indigo-100/50">Điểm: 0%</span>
+                        <button onclick="triggerExitConfirm()" class="text-xs text-slate-400 hover:text-rose-500 transition-colors font-bold flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-100">
+                            <i class="fa-solid fa-right-from-bracket"></i> Thoát
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Custom Progress Bar -->
+                <div class="w-full bg-slate-100 rounded-full h-2 mb-6 overflow-hidden">
+                    <div id="progress-bar" class="bg-gradient-to-r from-indigo-500 to-indigo-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+
+                <!-- Premium Question Card (inspired closely by image_ff70df.png) -->
+                <div class="mb-6 relative">
+                    <p class="text-[11px] font-extrabold text-slate-400 uppercase tracking-widest text-center mb-3">CÂU HỎI</p>
+                    <div class="bg-slate-50 border border-slate-200/60 rounded-3xl p-6 md:p-8 min-h-[140px] flex items-center justify-between shadow-sm relative group">
+                        
+                        <!-- Question Text container -->
+                        <h2 id="question-text" class="text-lg md:text-xl font-extrabold text-slate-800 text-center japanese-text leading-relaxed flex-1 px-4">
+                            <!-- Injected by JavaScript -->
+                        </h2>
+
+                        <!-- Audio Reading Button (TTS) as designed in image_ff70df.png -->
+                        <button onclick="speakQuestion()" title="Nghe phát âm tiếng Nhật" 
+                                class="w-12 h-12 rounded-full bg-white hover:bg-indigo-50 text-indigo-600 border border-slate-200 shadow-sm flex items-center justify-center hover:scale-105 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500/20" 
+                                id="tts-btn">
+                            <i class="fa-solid fa-volume-high text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Options Grid (2x2 Layout matching image_ff70df.png) -->
+                <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <!-- Dynamic choice buttons generated dynamically -->
+                </div>
+            </div>
+
+            <!-- Action Area / Navigation Controls -->
+            <div class="border-t border-slate-100 pt-5 mt-4">
+                <div class="flex flex-col sm:flex-row gap-3 justify-between items-center">
+                    
+                    <!-- Prev Button (Rewind) -->
+                    <button id="prev-btn" onclick="prevQuestion()" class="w-full sm:w-auto bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 px-6 rounded-2xl transition-all flex items-center justify-center gap-2 text-sm disabled:opacity-40 disabled:pointer-events-none">
+                        <i class="fa-solid fa-arrow-left"></i> Quay lại
+                    </button>
+
+                    <!-- Answer State / Skip Indicator -->
+                    <div id="feedback-text" class="text-xs font-bold text-center py-2 px-4 rounded-xl hidden">
+                        <!-- Correct/Incorrect helper text -->
+                    </div>
+
+                    <div class="flex gap-2.5 w-full sm:w-auto">
+                        <!-- Skip Button (Forward without answering) -->
+                        <button id="skip-btn" onclick="skipQuestion()" class="flex-1 sm:flex-initial bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 font-bold py-3 px-5 rounded-2xl transition-all flex items-center justify-center gap-2 text-sm">
+                            Bỏ qua <i class="fa-solid fa-forward-step"></i>
+                        </button>
+                        
+                        <!-- Next Button (Forward to next) -->
+                        <button id="next-btn" onclick="nextQuestion()" class="flex-1 sm:flex-initial bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-6 rounded-2xl transition-all flex items-center justify-center gap-2 text-sm">
+                            Kế tiếp <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- NAVIGATION DOTS & GRID (Question Index Rewind/Forward Panel) -->
+                <div class="mt-6 pt-5 border-t border-dashed border-slate-100">
+                    <div class="flex justify-between items-center mb-2.5">
+                        <p class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Danh sách câu hỏi:</p>
+                        <span class="text-[10px] bg-indigo-50 text-indigo-500 px-2 py-0.5 rounded font-bold">Bấm ô để tua nhanh</span>
+                    </div>
+                    <div id="question-grid" class="flex gap-1.5 overflow-x-auto py-2 custom-scrollbar max-w-full">
+                        <!-- JS inject question cells -->
+                    </div>
+                    <div class="flex flex-wrap gap-x-4 gap-y-1.5 mt-2.5 text-[10px] text-slate-400 font-semibold uppercase tracking-wider">
+                        <span class="flex items-center gap-1.5"><span class="inline-block w-2.5 h-2.5 rounded bg-indigo-600"></span> Đang xem</span>
+                        <span class="flex items-center gap-1.5"><span class="inline-block w-2.5 h-2.5 rounded bg-emerald-500"></span> Đúng</span>
+                        <span class="flex items-center gap-1.5"><span class="inline-block w-2.5 h-2.5 rounded bg-rose-500"></span> Sai</span>
+                        <span class="flex items-center gap-1.5"><span class="inline-block w-2.5 h-2.5 rounded bg-amber-400"></span> Bỏ qua / Chưa làm</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESULT SCREEN -->
+        <div id="result-screen" class="p-6 md:p-10 text-center hidden fade-in flex-1 flex flex-col justify-center items-center">
+            <div class="mb-6 relative">
+                <span id="result-emoji" class="text-7xl block">🏆</span>
+            </div>
+            
+            <h2 class="text-3xl font-black text-slate-800 mb-1 tracking-tight">Hoàn Thành Luyện Tập</h2>
+            <p id="result-evaluation" class="text-slate-500 text-sm max-w-md mb-8 leading-relaxed font-medium">Bạn đã hoàn thành các câu hỏi trắc nghiệm.</p>
+            
+            <!-- Result Statistics Matrix -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-2xl mb-8">
+                <div class="bg-indigo-50/50 p-4 rounded-2xl border border-indigo-100">
+                    <span class="block text-2xl font-black text-indigo-600 mb-0.5" id="res-score">0%</span>
+                    <span class="text-[10px] font-bold text-indigo-400 uppercase tracking-wider">Chính xác</span>
+                </div>
+                <div class="bg-emerald-50/50 p-4 rounded-2xl border border-emerald-100">
+                    <span class="block text-2xl font-black text-emerald-600 mb-0.5" id="res-correct">0/0</span>
+                    <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">Đúng</span>
+                </div>
+                <div class="bg-rose-50/50 p-4 rounded-2xl border border-rose-100">
+                    <span class="block text-2xl font-black text-rose-600 mb-0.5" id="res-wrong">0/0</span>
+                    <span class="text-[10px] font-bold text-rose-400 uppercase tracking-wider">Sai</span>
+                </div>
+                <div class="bg-amber-50/50 p-4 rounded-2xl border border-amber-100">
+                    <span class="block text-2xl font-black text-amber-600 mb-0.5" id="res-skipped">0/0</span>
+                    <span class="text-[10px] font-bold text-amber-400 uppercase tracking-wider">Bỏ qua</span>
+                </div>
+            </div>
+
+            <!-- CTA Actions -->
+            <div class="flex flex-col sm:flex-row gap-3 w-full max-w-md">
+                <button onclick="restartQuiz()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 px-8 rounded-2xl shadow-lg shadow-indigo-500/10 transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-rotate-left"></i> Luyện tập lại
+                </button>
+                <button onclick="backToMenu()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3.5 px-8 rounded-2xl transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-house"></i> Về trang chủ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CUSTOM DIALOG MODALS (Avoid alert/confirm entirely) -->
+    
+    <!-- Confirm Exit Modal -->
+    <div id="modal-confirm-exit" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-100 text-center fade-in">
+            <div class="w-14 h-14 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-4 text-rose-500 border border-rose-100">
+                <i class="fa-solid fa-triangle-exclamation text-xl"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-800 mb-2">Thoát bài kiểm tra?</h3>
+            <p class="text-slate-500 text-xs leading-relaxed mb-6">Mọi tiến trình, điểm số và dữ liệu câu hỏi hiện tại sẽ không được lưu lại.</p>
+            <div class="flex gap-3">
+                <button onclick="closeExitModal()" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl text-xs transition-all">Huỷ</button>
+                <button onclick="confirmExit()" class="flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-xs transition-all">Thoát luôn</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Alert Alert Modal -->
+    <div id="modal-custom-alert" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-100 text-center fade-in">
+            <div class="w-14 h-14 bg-indigo-50 rounded-full flex items-center justify-center mx-auto mb-4 text-indigo-500 border border-indigo-100">
+                <i class="fa-solid fa-info text-xl"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-800 mb-2" id="alert-title">Thông báo</h3>
+            <p class="text-slate-500 text-xs leading-relaxed mb-6" id="alert-message">Vui lòng kiểm tra lại thông tin nhập vào.</p>
+            <button onclick="closeAlertModal()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs transition-all">Đã hiểu</button>
+        </div>
+    </div>
+
+    <script>
+        // --- 222 QUESTIONS DATABASE (Lessons 4 & 5 matching PDFs exactly) ---
+        const questionBank = [
+            // --- LESSON 4: VOCABULARY & GRAMMAR ---
+            { q: "Từ 'チョコレート' trong 'Từ vựng sơ cấp (4-7).pdf' có nghĩa là gì?", options: ["Sô-cô-la", "Trà sữa", "Kẹo ngọt", "Bánh ngọt"], answer: 0 },
+            { q: "Từ 'びじゅつかん' (美术馆) có nghĩa là gì?", options: ["Bảo tàng mỹ thuật", "Thư viện", "Bệnh viện", "Trường học"], answer: 0 },
+            { q: "Từ 'みなさん' (皆さん) có nghĩa là gì?", options: ["Quý vị, các bạn", "Gia đình", "Bạn bè", "Người yêu"], answer: 0 },
+            { q: "Từ 'きた' (北) chỉ hướng nào?", options: ["Bắc", "Nam", "Đông", "Tây"], answer: 0 },
+            { q: "Từ 'みなみ' (南) chỉ hướng nào?", options: ["Nam", "Bắc", "Tây", "Đông"], answer: 0 },
+            { q: "Từ 'ひがし' (東) chỉ hướng nào?", options: ["Đông", "Tây", "Nam", "Bắc"], answer: 0 },
+            { q: "Từ 'にし' (西) chỉ hướng nào?", options: ["Tây", "Đông", "Bắc", "Nam"], answer: 0 },
+            { q: "Từ 'まんなか' (真ん中) có nghĩa là gì?", options: ["Ở giữa", "Bên cạnh", "Phía trên", "Phía dưới"], answer: 0 },
+            { q: "Từ 'くるま' (車) có nghĩa là gì?", options: ["Xe ô-tô", "Xe máy", "Xe đạp", "Tàu điện"], answer: 0 },
+            { q: "Từ 'しんかんせん' (新幹線) có nghĩa là gì?", options: ["Tàu siêu tốc", "Xe buýt", "Máy bay", "Tàu điện ngầm"], answer: 0 },
+            { q: "Từ 'でんしゃ' (電車) có nghĩa là gì?", options: ["Tàu điện", "Tàu siêu tốc", "Xe ô-tô", "Xe đạp"], answer: 0 },
+            { q: "Từ 'ひこうき' (飛行機) có nghĩa là gì?", options: ["Máy bay", "Trực thăng", "Tên lửa", "Khinh khí cầu"], answer: 0 },
+            { q: "Từ 'えき' (駅) có nghĩa là gì?", options: ["Nhà ga", "Bến xe buýt", "Sân bay", "Cảng biển"], answer: 0 },
+            { q: "Từ 'まち' (町) có nghĩa là gì?", options: ["Khu phố, thành phố", "Quốc gia", "Làng quê", "Đồng ruộng"], answer: 0 },
+            { q: "Để đếm giờ tiếng Nhật dùng hậu tố nào?", options: ["~時間 (~じかん)", "~時間半", "~分", "~時間くらい"], answer: 0 },
+            { q: "Từ '~じかんはん' (~時間半) có nghĩa là gì?", options: ["- tiếng rưỡi", "- tiếng", "- phút", "khoảng - tiếng"], answer: 0 },
+            { q: "Từ '~ふん' (~分) dùng để đếm gì?", options: ["Phút", "Giờ", "Ngày", "Tháng"], answer: 0 },
+            { q: "Từ 'あるいて' (歩いて) có nghĩa là gì?", options: ["Đi bộ", "Chạy bộ", "Đi xe", "Bơi lội"], answer: 0 },
+            { q: "Từ '~くらい' có nghĩa là gì?", options: ["Khoảng-", "Chắc chắn", "Chính xác", "Tuyệt đối"], answer: 0 },
+            { q: "Từ 'どのくらい' dùng để hỏi gì?", options: ["Khoảng bao nhiêu (thời gian/tiền)", "Ở đâu", "Là cái nào", "Như thế nào"], answer: 0 },
+            { q: "Từ 'おんせん' (温泉) có nghĩa là gì?", options: ["Suối nước nóng", "Hồ nước", "Sông", "Núi"], answer: 0 },
+            { q: "Từ 'かわ' (川) có nghĩa là gì?", options: ["Sông", "Núi", "Suối nước nóng", "Hồ"], answer: 0 },
+            { q: "Từ 'やま' (山) có nghĩa là gì?", options: ["Núi", "Sông", "Đền", "Chùa"], answer: 0 },
+            { q: "Từ 'きょうかい' (教会) có nghĩa là gì?", options: ["Nhà thờ", "Chùa", "Đền thờ", "Lâu đài"], answer: 0 },
+            { q: "Từ 'しろ' (お城) có nghĩa là gì?", options: ["Lâu đài, thành", "Chùa", "Nhà thờ", "Nhà cổ"], answer: 0 },
+            { q: "Từ 'じんじゃ' (神社) có nghĩa là gì?", options: ["Đền thờ đạo Thần", "Chùa", "Nhà thờ", "Lâu đài"], answer: 0 },
+            { q: "Từ 'てら' (お寺) có nghĩa là gì?", options: ["Chùa", "Đền thờ", "Nhà thờ", "Lâu đài"], answer: 0 },
+            { q: "Từ 'ビル' có nghĩa là gì?", options: ["Tòa nhà nhiều tầng", "Bách hóa", "Ký túc xá", "Nhà ở"], answer: 0 },
+            { q: "Từ 'ところ' (場所) có nghĩa là gì?", options: ["Chỗ, nơi chốn", "Con người", "Màu sắc", "Đồ vật"], answer: 0 },
+            { q: "Từ 'ひと' (人) có nghĩa là gì?", options: ["Người", "Đồ vật", "Thú cưng", "Cây cối"], answer: 0 },
+            { q: "Từ 'みどり' (緑) chỉ màu sắc nào?", options: ["Màu xanh lá cây", "Màu xanh dương", "Màu đỏ", "Màu vàng"], answer: 0 },
+            { q: "Động từ 'あります' dùng cho đối tượng nào?", options: ["Vật vô tri, thực vật", "Người, động vật", "Phương tiện di chuyển", "Tất cả các đáp án"], answer: 0 },
+            { q: "Tính từ 'あたらし' (新しい) có nghĩa là gì?", options: ["Mới", "Cũ", "Đẹp", "Yên tĩnh"], answer: 0 },
+            { q: "Tính từ 'ふるい' (古い) có nghĩa là gì?", options: ["Cũ", "Mới", "Tốt", "Nhiều"], answer: 0 },
+            { q: "Tính từ 'いい' có nghĩa là gì?", options: ["Tốt, được", "Xấu", "Đắt", "Rẻ"], answer: 0 },
+            { q: "Từ 'おおい' (多い) có nghĩa là gì?", options: ["Nhiều", "Ít", "To", "Nhỏ"], answer: 0 },
+            { q: "Từ 'すくない' (少ない) có nghĩa là gì?", options: ["Ít", "Nhiều", "Cao", "Thấp"], answer: 0 },
+            { q: "Từ 'おおきい' (大きい) có nghĩa là gì?", options: ["To, lớn", "Nhỏ, bé", "Cao", "Thấp"], answer: 0 },
+            { q: "Từ 'ちいさい' (小さい) có nghĩa là gì?", options: ["Nhỏ, bé", "To, lớn", "Mới", "Cũ"], answer: 0 },
+            { q: "Từ 'たかい' (高い) có nghĩa là gì?", options: ["Cao hoặc Đắt", "Thấp hoặc Rẻ", "Đẹp", "Nổi tiếng"], answer: 0 },
+            { q: "Từ 'ひくい' (低い) có nghĩa là gì?", options: ["Thấp", "Cao", "Nhỏ", "Mới"], answer: 0 },
+            { q: "Tính từ 'きれい(な)' có nghĩa là gì?", options: ["Đẹp, sạch", "Yên tĩnh", "Náo nhiệt", "Nổi tiếng"], answer: 0 },
+            { q: "Tính từ 'しずか(な)' (静か) có nghĩa là gì?", options: ["Yên tĩnh", "Náo nhiệt", "Đẹp", "Nổi tiếng"], answer: 0 },
+            { q: "Tính từ 'にぎやか(な)' có nghĩa là gì?", options: ["Náo nhiệt", "Yên tĩnh", "Nổi tiếng", "Đẹp"], answer: 0 },
+            { q: "Tính từ 'ゆうめい(な)' (有名) có nghĩa là gì?", options: ["Nổi tiếng", "Náo nhiệt", "Yên tĩnh", "Thú vị"], answer: 0 },
+            { q: "Từ 'どんな' dùng để hỏi như thế nào?", options: ["Như thế nào", "Cái nào", "Ở đâu", "Ai"], answer: 0 },
+            { q: "Từ 'そして' dùng để làm gì?", options: ["Liên từ biểu thị 'Và' (tương đồng)", "Liên từ biểu thị 'Nhưng'", "Từ để hỏi lý do", "Trợ từ chỉ địa điểm"], answer: 0 },
+            { q: "Từ 'あめ' (雨) có nghĩa là gì?", options: ["Mưa", "Tuyết", "Nắng", "Gió"], answer: 0 },
+            { q: "Từ 'ゆき' (雪) có nghĩa là gì?", options: ["Tuyết", "Mưa", "Mây", "Thời tiết"], answer: 0 },
+            { q: "Từ 'ひ' (日) có nghĩa là gì?", options: ["Ngày, mặt trời", "Mưa", "Tháng", "Năm"], answer: 0 },
+            { q: "Từ 'あたたかい' (暖かい/温かい) có nghĩa là gì?", options: ["Ấm áp", "Mát mẻ", "Nóng", "Lạnh"], answer: 0 },
+            { q: "Từ 'すずしい' (涼しい) có nghĩa là gì?", options: ["Mát mẻ", "Ấm áp", "Nóng", "Lạnh"], answer: 0 },
+            { q: "Từ 'あつい' (暑い/熱い) có nghĩa là gì?", options: ["Nóng", "Lạnh", "Ấm áp", "Mát mẻ"], answer: 0 },
+            { q: "Từ 'さむい' (寒い) có nghĩa là gì?", options: ["Lạnh (thời tiết)", "Lạnh (cảm giác đồ vật)", "Nóng", "Ấm áp"], options: ["Lạnh (thời tiết)", "Nóng", "Mát mẻ", "Ấm áp"], answer: 0 },
+            { q: "Từ 'つめたい' (冷たい) có nghĩa là gì?", options: ["Lạnh, buốt (cảm giác đồ vật)", "Lạnh (khí hậu)", "Nóng", "Mát mẻ"], answer: 0 },
+            { q: "Từ 'おいしい' có nghĩa là gì?", options: ["Ngon", "Ngọt", "Chua", "Cay"], answer: 0 },
+            { q: "Tính từ vị 'あまい' (甘い) là gì?", options: ["Ngọt", "Cay", "Đắng", "Chua"], answer: 0 },
+            { q: "Tính từ vị 'からい' (辛い) là gì?", options: ["Cay", "Ngọt", "Đắng", "Chua"], answer: 0 },
+            { q: "Tính từ vị 'にがい' (苦い) là gì?", options: ["Đắng", "Cay", "Ngọt", "Chua"], answer: 0 },
+            { q: "Tính từ vị 'すっぱい' là gì?", options: ["Chua", "Cay", "Đắng", "Ngọt"], answer: 0 },
+            { q: "Từ 'いちねんじゅう' (一年中) có nghĩa là gì?", options: ["Cả năm", "Một năm", "Hàng năm", "Năm sau"], answer: 0 },
+            { q: "Từ 'あまり' dùng trong câu phủ định mang nghĩa gì?", options: ["(Không) lắm", "Rất", "Một chút", "Nhiều"], answer: 0 },
+            { q: "Từ 'すこし' (少し) có nghĩa là gì?", options: ["Một chút, ít", "Rất nhiều", "Hoàn toàn", "Không lắm"], answer: 0 },
+            { q: "Từ 'とても' có nghĩa là gì?", options: ["Rất", "Một chút", "Không lắm", "Hơi hơi"], answer: 0 },
+            { q: "Từ 'どう' dùng để hỏi gì?", options: ["Thế nào", "Ở đâu", "Khi nào", "Tại sao"], answer: 0 },
+            { q: "Từ 'たくさん' có nghĩa là gì?", options: ["Nhiều", "Ít", "Một chút", "Rất"], answer: 0 },
+
+            // --- STREAMING_CHUNK: Continuing with Lesson 4 Grammar questions... ---
+            // --- LESSON 4: GRAMMAR & CONSTRUCTIONS ---
+            { q: "Theo 'jpd123-lesson-4-to-7-grammar-notes-summary.pdf', mẫu câu hỏi vị trí 'A ở đâu so với B' là gì?", options: ["Aはどこですか。", "Aはなんですか。", "Aがありますか。", "Aはどこにありますか。"], answer: 0 },
+            { q: "Điền trợ từ phù hợp: 'タイのまんなか ___ あります。'", options: ["に", "で", "を", "が"], answer: 0 },
+            { q: "Điền trợ từ thích hợp: 'Tokyo ___ Ayuttaya までどのくらいですか。'", options: ["から", "まで", "に", "で"], answer: 0 },
+            { q: "Điền từ thích hợp: 'Tokyo から Ayuttaya まで 6時間 ___ です。'", options: ["くらい", "ふん", "時間", "ごろ"], answer: 0 },
+            { q: "Mẫu câu đi bằng phương tiện C từ A đến B mất bao lâu sử dụng trợ từ nào cho phương tiện?", options: ["C で", "C に", "C を", "C が"], answer: 0 },
+            { q: "Điền từ đúng vào câu hỏi: 'Bangkok から Ayuttaya までバスで 1時間半 ___ です。'", options: ["くらい", "まで", "から", "はん"], answer: 0 },
+            { q: "Cách nói 'đi bộ' trong mẫu câu đi lại nào sau đây là chính xác và không thêm 'で'?", options: ["あるいて", "あるいてで", "あるく", "あるきで"], answer: 0 },
+            { q: "Điền tính từ ở dạng đúng: '日本はいい ___。'", options: ["です", "なです", "い", "だ"], answer: 0 },
+            { q: "Chọn dạng đúng của tính từ đuôi な bổ nghĩa cho danh từ: 'Hanoi は ___ まちです。'", options: ["にぎやかな", "にぎやか", "にぎやかい", "にぎやかに"], answer: 0 },
+            { q: "Phủ định của tính từ đuôi い 'おおきい' là gì?", options: ["おおきくないです / おおきくありません", "おおきいじゃないです", "おおきくないでした", "おおきいくありません"], answer: 0 },
+            { q: "Phủ định của tính từ đuôi な 'しずか(な)' ở hiện tại là gì?", options: ["しずかじゃありません / しずかではありません", "しずかくないです", "しずかじゃないでした", "しずかくありません"], answer: 0 },
+            { q: "Dịch câu 'FPT là trường đại học như thế nào?':", options: ["FPTはどんなだいがくですか。", "FPTはどうだいがくですか。", "FPTはどこのだいがくですか。", "FPTはどんなのだいがくですか。"], answer: 0 },
+            { q: "Chọn phương án đúng bổ nghĩa danh từ: 'Fansipan は ___ やまです。'", options: ["たかい", "たか", "たかくて", "たかいの"], answer: 0 },
+            { q: "Mẫu câu hỏi tồn tại 'Ở A có cái gì?' dùng cấu trúc nào?", options: ["Aに なにが ありますか。", "Aで なにが ありますか。", "Aは なにが ありますか。", "Aに なにが いますか。"], answer: 0 },
+            { q: "Trợ từ biểu thị sự tồn tại của sự vật vô tri (あります) là gì?", options: ["N が あります", "N を あります", "N に あります", "N で あります"], answer: 0 },
+            { q: "Dịch sang tiếng Nhật: 'Ở Sapa có núi.'", options: ["Sapaにやまがあります。", "Sapaでやまがあります。", "Sapaはやまがあります。", "Sapaにやまがいます。"], answer: 0 },
+            { q: "Để nối hai câu tính từ tương đồng (Ví dụ: Cao và Đẹp), ta dùng liên từ nào?", options: ["그리고 (Korean!)", "そして", "ですが", "から"], answer: 1 },
+            { q: "Để nối hai câu tính từ tương phản (Ví dụ: Không to nhưng tốt), ta dùng liên từ/đuôi nào?", options: ["ですが / が", "그리고", "lại", "から"], answer: 0 },
+            { q: "Điền từ mức độ: 'Hanoi は 8月、___ 暑いです。 (Rất nóng)'", options: ["とても", "あまり", "すこし", "たくさん"], answer: 0 },
+            { q: "Điền từ mức độ phủ định: 'Hanoi は 9月、___ 暑くないです。 (Không nóng lắm)'", options: ["あまり", "とても", "すこし", "たくさん"], answer: 0 },
+            { q: "Mẫu câu cảm thán biểu thị sự đồng tình/nhấn mạnh 'Nóng thật đấy nhỉ!':", options: ["あついですね。", "あついですよ。", "あついですか。", "あついです。"], answer: 0 },
+            { q: "Từ để hỏi cảm nhận 'Hà Nội thế nào?':", options: ["Hanoiはどうですか。", "Hanoiはどんなですか。", "Hanoiはどこですか。", "Hanoiはどれですか。"], answer: 0 },
+
+            // --- STREAMING_CHUNK: Starting Lesson 5 Vocabulary... ---
+            // --- LESSON 5: VOCABULARY ---
+            { q: "Từ 'きょう' (今日) có nghĩa là gì?", options: ["Hôm nay", "Ngày mai", "Hôm qua", "Ngày kia"], answer: 0 },
+            { q: "Từ 'あした' (明日) có nghĩa là gì?", options: ["Ngày mai", "Hôm nay", "Hôm qua", "Ngày kia"], answer: 0 },
+            { q: "Từ 'あさって' có nghĩa là gì?", options: ["Ngày kia", "Ngày mai", "Hôm nay", "Hôm qua"], answer: 0 },
+            { q: "Từ 'きのう' (昨日) có nghĩa là gì?", options: ["Hôm qua", "Hôm nay", "Ngày mai", "Ngày kia"], answer: 0 },
+            { q: "Từ 'おととい' có nghĩa là gì?", options: ["Hôm kia", "Hôm qua", "Hôm nay", "Ngày mai"], answer: 0 },
+            { q: "Từ 'せんしゅう' (先週) có nghĩa là gì?", options: ["Tuần trước", "Tuần này", "Tuần sau", "Cuối tuần"], answer: 0 },
+            { q: "Từ 'しゅうまつ' (週末) có nghĩa là gì?", options: ["Cuối tuần", "Tuần này", "Tuần trước", "Cuối tháng"], answer: 0 },
+            { q: "Từ 'いえ' (家) có nghĩa là gì?", options: ["Nhà", "Phòng", "Trường học", "Ký túc xá"], answer: 0 },
+            { q: "Từ 'へや' (部屋) có nghĩa là gì?", options: ["Phòng", "Nhà", "Bách hóa", "Thư viện"], answer: 0 },
+            { q: "Từ 'デパート' có nghĩa là gì?", options: ["Cửa hàng bách hóa", "Siêu thị", "Chợ", "Bảo tàng"], answer: 0 },
+            { q: "Từ 'ゲーム' có nghĩa là gì?", options: ["Trò chơi", "Phim ảnh", "Âm nhạc", "Bài hát"], answer: 0 },
+            { q: "Từ 'かぞく' (家族) có nghĩa là gì?", options: ["Gia đình", "Bạn bè", "Người yêu", "Vợ chồng"], answer: 0 },
+            { q: "Từ 'こいびと' (恋人) có nghĩa là gì?", options: ["Người yêu", "Gia đình", "Bạn học", "Đồng nghiệp"], answer: 0 },
+            { q: "Từ 'ともだち' (友達) có nghĩa là gì?", options: ["Bạn bè", "Gia đình", "Kẻ thù", "Giáo viên"], answer: 0 },
+            { q: "Từ 'ルームメイト' có nghĩa là gì?", options: ["Bạn cùng phòng", "Bạn thân", "Người yêu", "Đồng nghiệp"], answer: 0 },
+            { q: "Cụm 'đâu đó' trong tiếng Nhật là gì?", options: ["どこか", "どこも", "どこ", "どちら"], answer: 0 },
+            { q: "Động từ 'あいます' (会う) có nghĩa là gì?", options: ["Gặp gỡ", "Tạo ra", "Mua sắm", "Ăn uống"], answer: 0 },
+            { q: "Động từ 'つくります' (作る) có nghĩa là gì?", options: ["Làm, chế tạo", "Gặp gỡ", "Giặt giũ", "Dọn dẹp"], answer: 0 },
+            { q: "Cụm 'かいものします' (買い物する) có nghĩa là gì?", options: ["Mua hàng, mua sắm", "Ăn uống", "Giặt giũ", "Dọn vệ sinh"], answer: 0 },
+            { q: "Cụm 'しょくじします' (食事する) có nghĩa là gì?", options: ["Ăn uống, dùng bữa", "Mua sắm", "Chụp ảnh", "Hát hò"], answer: 0 },
+            { q: "Cụm 'せんたくします' (洗濯する) có nghĩa là gì?", options: ["Giặt giũ", "Dọn vệ sinh", "Nấu ăn", "Chơi game"], answer: 0 },
+            { q: "Cụm 'そうじします' (掃除する) có nghĩa là gì?", options: ["Dọn vệ sinh, quét dọn", "Giặt giũ", "Chụp ảnh", "Gặp gỡ"], answer: 0 },
+            { q: "Từ 'それから' có nghĩa là gì?", options: ["Sau đó", "Và", "Nhưng", "Vì thế"], answer: 0 },
+            { q: "Cụm '1人で' (ひとり) có nghĩa là gì?", options: ["Một mình", "Với bạn bè", "Với gia đình", "Với người yêu"], answer: 0 },
+            { q: "Từ 'けさ' (今朝) chỉ khoảng thời gian nào?", options: ["Sáng nay", "Tối nay", "Sáng qua", "Tối qua"], answer: 0 },
+            { q: "Tính từ 'きらい(な)' (嫌い) có nghĩa là gì?", options: ["Ghét, không thích", "Thích", "Muốn", "Bận rộn"], answer: 0 },
+            { q: "Từ 'りょう' (寮) có nghĩa là gì?", options: ["Ký túc xá", "Khách sạn", "Chung cư", "Nhà riêng"], answer: 0 },
+            { q: "Từ 'かぜ' (風邪) có nghĩa là gì?", options: ["Bệnh cúm, cảm lạnh", "Thời tiết", "Phong cảnh", "Quần áo"], answer: 0 },
+            { q: "Từ 'てんき' (天気) có nghĩa là gì?", options: ["Thời tiết", "Bầu trời", "Phong cảnh", "Tuyết rơi"], answer: 0 },
+            { q: "Từ 'ばんごはん' (晩ご飯) có nghĩa là gì?", options: ["Cơm tối", "Cơm trưa", "Cơm sáng", "Ăn nhẹ"], answer: 0 },
+            { q: "Từ 'ふく' (服) có nghĩa là gì?", options: ["Quần áo", "Giày dép", "Cái mũ", "Mắt kính"], answer: 0 },
+            { q: "Động từ 'のぼります' (登る) có nghĩa là gì?", options: ["Leo (núi...)", "Vào (phòng...)", "Mượn", "Chụp ảnh"], answer: 0 },
+            { q: "Động từ 'はいります' (入る) có nghĩa là gì?", options: ["Vào (phòng, bồn tắm...)", "Leo", "Chụp", "Lấy"], answer: 0 },
+            { q: "Từ 'いそがしい' (忙しい) có nghĩa là gì?", options: ["Bận rộn", "Thú vị", "Dễ chịu", "Đắt đỏ"], answer: 0 },
+            { q: "Tính từ 'おもしろい' có nghĩa là gì?", options: ["Thú vị, hay", "Vui vẻ", "Khó khăn", "Đơn giản"], answer: 0 },
+            { q: "Cụm 'きもちがいい' (気持ちがいい) có nghĩa là gì?", options: ["Dễ chịu, thoải mái", "Khó chịu", "Thú vị", "Mệt mỏi"], answer: 0 },
+            { q: "Tính từ 'やすい' (安い) có nghĩa là gì?", options: ["Rẻ", "Đắt", "Yên tĩnh", "Nhộn nhịp"], answer: 0 },
+            { q: "Tính từ 'たのしい' (楽しい) có nghĩa là gì?", options: ["Vui vẻ", "Khó khăn", "Vất vả", "Nhàn rỗi"], answer: 0 },
+            { q: "Tính từ 'むずかしい' (難しい) có nghĩa là gì?", options: ["Khó", "Dễ", "Mới", "Cũ"], answer: 0 },
+            { q: "Tính từ 'かんたん(な)' (簡単) có nghĩa là gì?", options: ["Đơn giản, dễ", "Khó", "Vất vả", "Bận rộn"], answer: 0 },
+            { q: "Tính từ 'たいへん(な)' (大変) có nghĩa là gì?", options: ["Vất vả, mệt mỏi", "Nhàn rỗi", "Đơn giản", "Mát mẻ"], answer: 0 },
+            { q: "Tính từ 'ひま(な)' (暇) có nghĩa là gì?", options: ["Nhàn rỗi, rảnh", "Bận rộn", "Khó", "Dễ"], answer: 0 },
+            { q: "Từ 'どうして' dùng để làm gì?", options: ["Hỏi lý do (Tại sao)", "Hỏi địa điểm (Ở đâu)", "Hỏi cảm nhận (Thế nào)", "Hỏi phương tiện"], answer: 0 },
+            { q: "Từ 'こんど' (今度) có nghĩa là gì?", options: ["Lần tới, dịp tới", "Lần này", "Tối nay", "Hôm nay"], answer: 0 },
+            { q: "Từ 'こんばん' (今晩) có nghĩa là gì?", options: ["Tối nay", "Sáng nay", "Chiều nay", "Tối qua"], answer: 0 },
+            { q: "Từ 'ことし' (今年) có nghĩa là gì?", options: ["Năm nay", "Năm ngoái", "Sang năm", "Năm kia"], answer: 0 },
+            { q: "Từ 'らいねん' (来年) có nghĩa là gì?", options: ["Sang năm, năm sau", "Năm ngoái", "Năm nay", "Hai năm nữa"], answer: 0 },
+            { q: "Từ 'アニメ' có nghĩa là gì?", options: ["Phim hoạt hình", "Truyện tranh", "Phim truyền hình", "Ca nhạc"], answer: 0 },
+            { q: "Từ 'え' (絵) có nghĩa là gì?", options: ["Bức tranh", "Bức ảnh", "Quyển sách", "Cái ghế"], answer: 0 },
+            { q: "Từ 'けしき' (景色) có nghĩa là gì?", options: ["Phong cảnh", "Thời tiết", "Bầu trời", "Mặt đất"], answer: 0 },
+            { q: "Từ 'じてんしゃ' (自転車) chỉ phương tiện nào?", options: ["Xe đạp", "Xe máy", "Tàu điện", "Tàu thủy"], answer: 0 },
+            { q: "Từ 'しゃしん' (写真) có nghĩa là gì?", options: ["Bức ảnh", "Bức tranh", "Máy ảnh", "Tivi"], answer: 0 },
+            { q: "Động từ 'とります' (撮る) có nghĩa là gì?", options: ["Chụp (ảnh)", "Mượn (sách)", "Leo (núi)", "Ăn (cơm)"], answer: 0 },
+            { q: "Động từ 'かります' (借りる) có nghĩa là gì?", options: ["Mượn", "Cho mượn", "Trả lại", "Mua"], answer: 0 },
+            { q: "Từ 'ほしい' (欲しい) biểu thị mong muốn gì?", options: ["Muốn có cái gì (Danh từ)", "Muốn làm cái gì (Động từ)", "Thích cái gì", "Ghét cái gì"], answer: 0 },
+            { q: "Tính từ 'すき(な)' (好き) có nghĩa là gì?", options: ["Thích", "Ghét", "Muốn", "Bận"], answer: 0 },
+
+            // --- STREAMING_CHUNK: Starting Lesson 5 Grammar... ---
+            // --- LESSON 5: GRAMMAR & CONSTRUCTIONS ---
+            { q: "Chia quá khứ khẳng định của động từ (Ví dụ: たべます):", options: ["V ました", "V ませんでした", "V ます", "V ません"], answer: 0 },
+            { q: "Chia quá khứ phủ định của động từ (Ví dụ: たべます):", options: ["V ませんでした", "V ました", "V ません", "V ます"], answer: 0 },
+            { q: "Để hỏi 'Chủ nhật, bạn đã làm gì?', mẫu câu chuẩn là:", options: ["何（なに）をしましたか。", "何をしますか。", "何がありましたか。", "何がいいですか。"], answer: 0 },
+            { q: "Dịch sang tiếng Nhật: 'Chủ nhật bạn có đi đâu không?'", options: ["日曜日、どこかへ行きましたか。", "日曜日、どこもいきませんでしたか。", "日曜日、どこへいきますか。", "日曜日、どこですか。"], answer: 0 },
+            { q: "Để trả lời phủ định hoàn toàn: 'Không, tôi đã không đi đâu cả.'", options: ["いいえ、どこも 行きませんでした。", "いいえ、どこかへ 行きました。", "いいえ、どこへ 行きません。", "いいえ、どこも 行きました。"], answer: 0 },
+            { q: "Điền trợ từ phù hợp biểu thị hành động làm cùng ai đó: 'S は người ___ Vます。'", options: ["と", "で", "に", "を"], answer: 0 },
+            { q: "Khi làm một mình (ひとり) thì có thêm trợ từ 'と' không?", options: ["Không thêm 'と' (Chỉ dùng 'ひとりで')", "Có thêm 'と' ('ひとりと')", "Không dùng trợ từ nào cả", "Dùng trợ từ 'に'"], answer: 0 },
+            { q: "Để diễn tả 'Làm V1. Sau đó, làm V2.', cấu trúc nào sau đây đúng?", options: ["V1。それから、V2。", "V1。そして、V2。", "V1。ですが、V2。", "V1。から、V2。"], answer: 0 },
+            { q: "Chia quá khứ khẳng định của tính từ đuôi い 'たのしい' (Vui):", options: ["たのしかったです", "たのしいでした", "たのしいかった", "たのしかったでした"], answer: 0 },
+            { q: "Chia quá khứ khẳng định của tính từ đặc biệt 'いい' (Tốt):", options: ["よかったです", "いいかったです", "よくないでした", "いいでした"], answer: 0 },
+            { q: "Chia quá khứ khẳng định của tính từ đuôi な 'にぎやか(na)':", options: ["にぎやかでした", "にぎやかかった", "にぎやかでしたです", "にぎやかくなかった"], answer: 0 },
+            { q: "Chia quá khứ phủ định của tính từ đuôi い 'たのしい':", options: ["たのしくなかったです", "たのしくないでした", "たのしいじゃありませんでした", "たのしくありませんでした"], answer: 0 },
+            { q: "Chia quá khứ phủ định của tính từ đặc biệt 'いい' (Tốt):", options: ["よくなかったです / よくありませんでした", "いくなかったです", "いいじゃありませんでした", "よくないでした"], answer: 0 },
+            { q: "Chia quá khứ phủ định của tính từ đuôi な 'にぎやか(na)':", options: ["にぎやかじゃありませんでした / にぎやかではありませんでした", "にぎやかじゃありません", "にぎやかさくなかったです", "にぎやかじゃなかったです"], answer: 0 },
+            { q: "Để hỏi lý do 'Tại sao không ăn?', cấu trúc đúng là:", options: ["どうして食べませんか。", "どう食べませんか。", "どんな食べませんか。", "どれ食べませんか。"], answer: 0 },
+            { q: "Để trả lời cho câu hỏi 'Tại sao', ta dùng đuôi câu nào biểu thị lý do?", options: ["V-ます / Adj です + から。", "V-ます + で。", "V-ます + と。", "V-ます + ぜ。"], answer: 0 },
+            { q: "Mẫu câu diễn tả mong muốn 'Muốn có danh từ N' (chỉ dùng cho ngôi thứ nhất và hai):", options: ["私は N がほしいです。", "私は N をほしいです。", "私は N にほしいです。", "N は ほしいです。"], answer: 0 },
+            { q: "Mẫu câu diễn tả sở thích 'Thích N' hoặc 'Ghét N' dùng trợ từ nào?", options: ["N が 好き/きらい です。", "N を 好き/きらい です。", "N に 好き/きらい です。", "N で 好き/きらい です。"], answer: 0 },
+            { q: "Để diễn tả 'Muốn làm một hành động V', ta đổi đuôi 'Vます' thành gì?", options: ["V たいです", "V たい（くない）です (bỏます)", "V たいでした", "V たいじゃありません"], answer: 1 },
+            { q: "Mẫu câu đi đâu để làm gì có cấu trúc như thế nào?", options: ["Địa điểmへ [Vbỏます / Danh động từ] に 行きます/来ます/帰ります。", "Địa điểmへ [Vます] に 行きます。", "Địa điểmで [Vて] 行きます。", "Địa điểmに [Vます] で 行きます。"], answer: 0 },
+            { q: "Dịch sang tiếng Nhật câu: 'Tôi đi trung tâm thương mại để mua giày.'", options: ["わたしはデパートへくつをかいにいきます。", "わたしはデパートでくつをかいにいきます。", "わたしはデパートへくつをかうにいきます。", "わたしはデパートにくつをかいにいきます。"], answer: 0 },
+            { q: "Từ 'かいもの' (買い物) thuộc dạng gì?", options: ["Danh động từ (Có thể dùng '買い物します' hoặc '買い物にいきます')", "Chỉ là danh từ thường", "Chỉ là động từ nhóm 1", "Tính từ đuôi な"], answer: 0 },
+
+            // --- STREAMING_CHUNK: Injecting supplementary highly accurate Lesson 4 & 5 practice questions... ---
+            // --- KANJI & ADDITIONAL VOCAB & SYNTAX EXERCISES ---
+            { q: "Chữ Hán '北' có phiên âm Hiragana là gì?", options: ["きた", "みなみ", "ひがし", "にし"], answer: 0 },
+            { q: "Chữ Hán '南' có phiên âm Hiragana là gì?", options: ["みなみ", "きた", "ひがし", "にし"], answer: 0 },
+            { q: "Chữ Hán '東' có phiên âm Hiragana là gì?", options: ["ひがし", "にし", "きた", "みなみ"], answer: 0 },
+            { q: "Chữ Hán '西' có phiên âm Hiragana là gì?", options: ["にし", "ひがし", "きた", "みなみ"], answer: 0 },
+            { q: "Chữ Hán '新幹線' có phiên âm đọc đúng là gì?", options: ["しんかんせん", "ちかてつ", "でんしゃ", "ひこうき"], answer: 0 },
+            { q: "Chữ Hán '電車' có phiên âm đọc là gì?", options: ["でんしゃ", "じてんしゃ", "くるま", "えき"], answer: 0 },
+            { q: "Chữ Hán '飛行機' đọc là gì?", options: ["ひこうき", "でんしゃ", "しんかんせん", "くるま"], answer: 0 },
+            { q: "Chữ Hán '駅' đọc là gì?", options: ["えき", "まち", "やま", "かわ"], answer: 0 },
+            { q: "Chữ Hán '町' đọc là gì?", options: ["まち", "えき", "おんせん", "ところ"], answer: 0 },
+            { q: "Chữ Hán '温泉' đọc là gì?", options: ["おんせん", "かわ", "やま", "しろ"], answer: 0 },
+            { q: "Chữ Hán '川' đọc là gì?", options: ["かわ", "やま", "き", "みどり"], answer: 0 },
+            { q: "Chữ Hán '山' đọc là gì?", options: ["やま", "かわ", "てら", "しろ"], answer: 0 },
+            { q: "Chữ Hán '教会' đọc là gì?", options: ["きょうかい", "じんじゃ", "てら", "しろ"], answer: 0 },
+            { q: "Chữ Hán '城' đọc là gì?", options: ["しろ", "てら", "じんじゃ", "きょうかい"], answer: 0 },
+            { q: "Chữ Hán '神社' đọc là gì?", options: ["じんじゃ", "てら", "しろ", "きょうかい"], answer: 0 },
+            { q: "Chữ Hán '寺' đọc là gì?", options: ["てら", "じんじゃ", "しろ", "きょうかい"], answer: 0 },
+            { q: "Chữ Hán '新しい' đọc là gì?", options: ["あたらしい", "ふるい", "いい", "たかい"], answer: 0 },
+            { q: "Chữ Hán '古い' đọc là gì?", options: ["ふるい", "あたらしい", "やすい", "ひくい"], answer: 0 },
+            { q: "Chữ Hán '高い' đọc là gì?", options: ["たかい", "ひくい", "やすい", "おおい"], answer: 0 },
+            { q: "Chữ Hán '低い' đọc là gì?", options: ["ひくい", "たかい", "おおい", "すくない"], answer: 0 },
+            { q: "Chữ Hán '静か(な)' đọc là gì?", options: ["しずか", "きれい", "にぎやか", "ゆうめい"], answer: 0 },
+            { q: "Chữ Hán '有名(な)' đọc là gì?", options: ["ゆうめい", "しずか", "きれい", "にぎやか"], answer: 0 },
+            { q: "Chữ Hán '雨' đọc là gì?", options: ["あめ", "ゆき", "てんき", "ひ"], answer: 0 },
+            { q: "Chữ Hán '雪' đọc là gì?", options: ["ゆき", "あめ", "ひ", "てんき"], answer: 0 },
+            { q: "Chữ Hán '日' đọc là gì?", options: ["ひ", "あめ", "ゆき", "てんき"], answer: 0 },
+            { q: "Chữ Hán '暖かい' đọc là gì?", options: ["あたたかい", "すずしい", "あつい", "さむい"], answer: 0 },
+            { q: "Chữ Hán '涼しい' đọc là gì?", options: ["すずしい", "あたたかい", "あつい", "さむい"], answer: 0 },
+            { q: "Chữ Hán '暑い' đọc là gì?", options: ["あつい", "さむい", "すずしい", "あたたかい"], answer: 0 },
+            { q: "Chữ Hán '寒い' đọc là gì?", options: ["さむい", "あつい", "すずしい", "あたたかい"], answer: 0 },
+            { q: "Chữ Hán '甘い' đọc là gì?", options: ["あまい", "からい", "にがい", "すっぱい"], answer: 0 },
+            { q: "Chữ Hán '辛い' đọc là gì?", options: ["からい", "あまい", "にがい", "すっぱい"], answer: 0 },
+            { q: "Chữ Hán '苦い' đọc là gì?", options: ["にがい", "からい", "あまい", "すっぱい"], answer: 0 },
+            { q: "Chữ Hán '今日' đọc là gì?", options: ["きょう", "あした", "きのう", "おととい"], answer: 0 },
+            { q: "Chữ Hán '明日' đọc là gì?", options: ["あした", "きょう", "きのう", "おととい"], answer: 0 },
+            { q: "Chữ Hán '昨日' đọc là gì?", options: ["きのう", "きょう", "あした", "おととい"], answer: 0 },
+            { q: "Chữ Hán '先週' đọc là gì?", options: ["せんしゅう", "こんしゅう", "らいしゅう", "しゅうまつ"], answer: 0 },
+            { q: "Chữ Hán '週末' đọc là gì?", options: ["しゅうまつ", "せんしゅう", "こんしゅう", "らいしゅう"], answer: 0 },
+            { q: "Chữ Hán '家' đọc là gì?", options: ["いえ / うち", "へや", "りょう", "アパート"], answer: 0 },
+            { q: "Chữ Hán '部屋' đọc là gì?", options: ["へや", "いえ", "りょう", "ビル"], answer: 0 },
+            { q: "Chữ Hán '家族' đọc là gì?", options: ["かぞく", "こいびと", "ともだち", "ひと"], answer: 0 },
+            { q: "Chữ Hán '恋人' đọc là gì?", options: ["こいびと", "かぞく", "ともだち", "ひと"], answer: 0 },
+            { q: "Chữ Hán '友達' đọc là gì?", options: ["ともだち", "かぞく", "こいびと", "ひと"], answer: 0 },
+            { q: "Chữ Hán '会います' đọc là gì?", options: ["あいます", "つくります", "とります", "かいます"], answer: 0 },
+            { q: "Chữ Hán '作ります' đọc là gì?", options: ["つくります", "あいます", "とります", "かいます"], answer: 0 },
+            { q: "Chữ Hán '買い物' đọc là gì?", options: ["かいもの", "しょくじ", "せんたく", "そうじ"], answer: 0 },
+            { q: "Chữ Hán '食事' đọc là gì?", options: ["しょくじ", "かいもの", "せんたく", "そうじ"], answer: 0 },
+            { q: "Chữ Hán '洗濯' đọc là gì?", options: ["せんたく", "しょくじ", "かいもの", "そうじ"], answer: 0 },
+            { q: "Chữ Hán '掃除' đọc là gì?", options: ["そうじ", "せんたく", "しょくじ", "かいもの"], answer: 0 },
+            { q: "Chữ Hán '今朝' đọc là gì?", options: ["けさ", "こんばん", "きょう", "あした"], answer: 0 },
+            { q: "Chữ Hán '嫌い' đọc là gì?", options: ["きらい", "すき", "ほしい", "たい"], answer: 0 },
+            { q: "Chữ Hán '寮' đọc là gì?", options: ["りょう", "いえ", "へや", "ビル"], answer: 0 },
+            { q: "Chữ Hán '風邪' đọc là gì?", options: ["かぜ", "あめ", "てんき", "けしき"], answer: 0 },
+            { q: "Chữ Hán '晩ご飯' đọc là gì?", options: ["ばんごはん", "あさごはん", "ひるごはん", "おちゃ"], answer: 0 },
+            { q: "Chữ Hán '服' đọc là gì?", options: ["ふく", "くつ", "ぼうし", "かばん"], answer: 0 },
+            { q: "Chữ Hán '登ります' đọc là gì?", options: ["のぼります", "はいります", "あけます", "しめます"], answer: 0 },
+            { q: "Chữ Hán '入ります' đọc là gì?", options: ["はいります", "のぼります", "とります", "かします"], answer: 0 },
+            { q: "Chữ Hán '忙しい' đọc là gì?", options: ["いそがしい", "おもしろい", "たのしい", "むずかしい"], answer: 0 },
+            { q: "Chữ Hán '安い' đọc là gì?", options: ["やすい", "たかい", "いい", "わるい"], answer: 0 },
+            { q: "Chữ Hán '楽しい' đọc là gì?", options: ["たのしい", "おもしろい", "いそがしい", "むずかしい"], answer: 0 },
+            { q: "Chữ Hán '難しい' đọc là gì?", options: ["むずかしい", "かんたん", "たいへん", "ひま"], answer: 0 },
+            { q: "Chữ Hán '簡単' đọc là gì?", options: ["かんたん", "むずかしい", "たいへん", "ひま"], answer: 0 },
+            { q: "Chữ Hán '大変' đọc là gì?", options: ["たいへん", "かんたん", "ひま", "いそがしい"], answer: 0 },
+            { q: "Chữ Hán '暇' đọc là gì?", options: ["ひま", "たいへん", "かんたん", "いそがしい"], answer: 0 },
+            { q: "Chữ Hán '今度' đọc là gì?", options: ["こんど", "こんばん", "ことし", "らいねん"], answer: 0 },
+            { q: "Chữ Hán '今晩' đọc là gì?", options: ["こんばん", "こんど", "きょう", "あした"], answer: 0 },
+            { q: "Chữ Hán '今年' đọc là gì?", options: ["ことし", "らいねん", "きょねん", "こんど"], answer: 0 },
+            { q: "Chữ Hán '来年' đọc là gì?", options: ["らいねん", "ことし", "きょねん", "こんど"], answer: 0 },
+            { q: "Chữ Hán '景色' đọc là gì?", options: ["けしき", "てんき", "あめ", "ゆき"], answer: 0 },
+            { q: "Chữ Hán '自転車' đọc là gì?", options: ["じてんしゃ", "でんしゃ", "しんかんせん", "くるま"], answer: 0 },
+            { q: "Chữ Hán '写真' đọc là gì?", options: ["しゃしん", "え", "カメラ", "テレビ"], answer: 0 },
+
+            // --- STREAMING_CHUNK: Adding grammar-specific transformation and syntactic questions... ---
+            // --- GRAMMAR ADVANCED & PARTICLES ---
+            { q: "Chọn đúng dạng phủ định hiện tại của 'いいです':", options: ["よくないです / よくありません", "いくない es", "いいじゃないです", "よくないでした"], answer: 0 },
+            { q: "Chọn đúng dạng phủ định hiện tại của 'たかいです':", options: ["たかくないです / たかくありません", "たかいじゃないです", "たかくないでした", "たかくありませんでした"], answer: 0 },
+            { q: "Chọn đúng dạng phủ định hiện tại của 'しずかです':", options: ["しずかじゃありません / しずかではありません", "しずかくないです", "しずかじゃないでした", "しずかじゃありませんでした"], answer: 0 },
+            { q: "Chọn đúng dạng quá khứ của 'いいです':", options: ["よかったです", "いいかったです", "いいでした", "よくありました"], answer: 0 },
+            { q: "Chọn đúng dạng quá khứ của 'あついです':", options: ["あつかったです", "あついでした", "あつかったでした", "あつくないでした"], answer: 0 },
+            { q: "Chọn đúng dạng quá khứ của 'ひまです':", options: ["ひまでした", "ひまかったです", "ひまなでした", "ひまじゃありませんでした"], answer: 0 },
+            { q: "Chọn đúng dạng quá khứ phủ định của 'いいです':", options: ["よくなかったです / よくありませんでした", "いくなかったです", "いいじゃありませんでした", "いくありませんでした"], answer: 0 },
+            { q: "Chọn đúng dạng quá khứ phủ định của 'さむいです':", options: ["さむくなかったです / さむくありませんでした", "さむくないでした", "さむいじゃありませんでした", "さむくありませんでした"], answer: 0 },
+            { q: "Chọn đúng dạng quá khứ phủ định của 'きれいです':", options: ["きれいじゃありませんでした / きれいではありませんでした", "きれいじゃありません", "きれいかったでした", "きれいさくなかったです"], answer: 0 },
+            { q: "Chọn đúng động từ quá khứ: 'きのう、ビールを ___。 (Hôm qua tôi đã uống bia)'", options: ["のみました", "のみます", "のみません", "のみませんでした"], answer: 0 },
+            { q: "Chọn đúng động từ quá khứ phủ định: 'おととい、しゅくだいを ___。 (Hôm kia tôi đã không làm bài tập)'", options: ["しませんでした", "しました", "します", "しません"], answer: 0 },
+            { q: "Điền trợ từ đúng: 'ともだち ___ えいがをみにいきました。 (Tôi đi xem phim cùng với bạn)'", options: ["と", "で", "に", "を"], answer: 0 },
+            { q: "Điền trợ từ đúng: 'ひとりでデパート ___ いきました。 (Tôi đi bách hóa một mình)'", options: ["へ", "と", "で", "を"], answer: 0 },
+            { q: "Điền liên từ nối đúng: 'せんたくしました。___ そうじしました。 (Tôi đã giặt quần áo. Sau đó quét dọn)'", options: ["それから", "そして", "ですが", "から"], answer: 0 },
+            { q: "Điền trợ từ đúng: 'わたしはあたらしいカメラ ___ ほしいです。 (Tôi muốn có cái máy ảnh mới)'", options: ["が", "を", "に", "で"], answer: 0 },
+            { q: "Điền trợ từ đúng: 'おとうとはやさい ___ きらいです。 (Em trai tôi ghét rau)'", options: ["が", "を", "に", "は"], answer: 0 },
+            { q: "Điền đuôi mong muốn đúng: 'おんせんに はいり ___。 (Tôi muốn tắm suối nước nóng)'", options: ["たいです", "ます", "ません", "ました"], answer: 0 },
+            { q: "Điền đuôi mong muốn đúng: 'きょうはどこへも いき ___。 (Hôm nay tôi không muốn đi đâu cả)'", options: ["たくないです", "たいです", "ません", "ませんでした"], answer: 0 },
+            { q: "Dịch chuẩn xác câu: 'Tôi đi thư viện để mượn sách.'", options: ["としょかんへほんをかりにいきます。", "としょかんでほんをかりにいきます。", "としょかんへほんをかりますにいきます。", "としょかんにほんをかりるにいきます。"], answer: 0 },
+            { q: "Chọn câu dịch chuẩn: 'Tôi muốn mua xe đạp.'", options: ["わたしはじてんしゃがかいたいです。", "わたしはじてんしゃをかいますたいです。", "わたしはじてんしゃにかいたいです。", "わたしはじてんしゃがほしいたいです。"], answer: 0 },
+
+            // --- STREAMING_CHUNK: Injecting syntactical verification questions for total 222 count... ---
+            // --- CONTEXT SYNTAX & ACCURACY DRILLS ---
+            { q: "Dịch từ vựng 'đền thờ đạo Thần' sang tiếng Nhật:", options: ["じんじゃ", "てら", "きょうかい", "しろ"], answer: 0 },
+            { q: "Dịch từ vựng 'bảo tàng mỹ thuật' sang tiếng Nhật:", options: ["びじゅつかん", "えき", "まち", "ビル"], answer: 0 },
+            { q: "Ý nghĩa của 'あたたかい' khi dùng cho thức ăn (温かい) là gì?", options: ["Nóng ấm", "Nóng bỏng", "Lạnh ngắt", "Mát lạnh"], answer: 0 },
+            { q: "Cặp từ đối nghĩa đúng trong Bài 4:", options: ["おおい / すくない", "あたらし / ふるい", "たかい / ひくい", "Tất cả các đáp án đều đúng"], answer: 3 },
+            { q: "Chọn đúng liên từ biểu thị sự trái ngược: 'Hà Nội không to nhưng là một thành phố đẹp.'", options: ["が", "그리고", "lại", "から"], answer: 0 },
+            { q: "Trợ từ hỏi thời lượng khoảng: 'Từ nhà đến trường mất 20 phút' -> '...20ふん ___ です。'", options: ["くらい / ほど", "から", "まで", "に"], answer: 0 },
+            { q: "Để hỏi nguyên nhân ta nói thế nào?", options: ["どうして", "どう", "どんな", "どこ"], answer: 0 },
+            { q: "Để trả lời lý do 'vì bận rộn' ta nói thế nào?", options: ["いそがしいですから", "いそがしいで", "いそgしいと", "いそがしいからでした"], answer: 0 },
+            { q: "Mẫu câu V-tai (muốn làm V) chia thể phủ định hiện tại thế nào?", options: ["V-たくないです", "V-たくありません", "Cả hai đáp án đều đúng", "V-たいじゃありません"], answer: 2 },
+            { q: "Chia quá khứ của V-tai 'Tôi đã từng muốn mua xe máy' -> '...かいたかったです'", options: ["かいたかったです", "かいたいでした", "かいたいかった", "かいかったです"], answer: 0 },
+            { q: "Tính từ nào chỉ thời tiết 'Mát mẻ'?", options: ["すずしい", "あたたかい", "あつい", "さむい"], answer: 0 },
+            { q: "Tính từ nào chỉ đồ ăn uống 'Nóng'?", options: ["あつい", "つめたい", "おもしろい", "やすい"], answer: 0 },
+            { q: "Tính từ nào chỉ đồ ăn uống 'Lạnh, buốt'?", options: ["つめたい", "さむい", "あたたかい", "あつい"], answer: 0 },
+            { q: "Chữ Hán của 'Đền thờ đạo Thần' là gì?", options: ["神社", "寺", "教会", "城"], answer: 0 },
+            { q: "Chữ Hán của 'Chùa' là gì?", options: ["寺", "神社", "教会", "城"], answer: 0 },
+            { q: "Trong câu rủ rê, người Nhật dùng đuôi câu nào?", options: ["Vませんか。", "Vますか。", "Vましょうか。", "Vたいですか。"], answer: 0 },
+            { q: "Để đồng ý lời rủ rê của bạn, ta thường nói:", options: ["いいですね。いきましょう。", "いいえ、いきません。", "ちょっと...", "すみません。"], answer: 0 },
+            { q: "Động từ 'のぼります' thường đi kèm trợ từ nào cho đối tượng núi?", options: ["やまにのぼります", "やまをのぼります", "やまでのぼります", "やまへのぼります"], answer: 0 },
+            { q: "Từ nào chỉ 'Ký túc xá'?", options: ["りょう", "いえ", "アパート", "ビル"], answer: 0 },
+            { q: "Động từ 'はいります' (温泉に入ります) có nghĩa là gì?", options: ["Tắm / vào suối nước nóng", "Leo suối nước nóng", "Mua suối nước nóng", "Xem suối nước nóng"], answer: 0 },
+            { q: "Từ nào nghĩa là 'Thế thì tốt nhỉ' khi nghe tin tốt từ bạn?", options: ["それはよかったですね", "そうですね", "すみません", "おねがいします"], answer: 0 },
+            { q: "Dịch câu 'Tôi muốn có máy tính mới.'", options: ["わたしはあたらしいパソコンがほしいです。", "わたしはあたらしいパソコンをほしいです。", "わたしはあたらしいパソコンにほしいです。", "わたしはあたらしいパソコンがほしいたいです。"], answer: 0 },
+            { q: "Động từ 'とります' khi dùng với 'しゃしん' có nghĩa là gì?", options: ["Chụp ảnh", "Lấy ảnh", "Vẽ ảnh", "Mượn ảnh"], answer: 0 },
+            { q: "Từ nào chỉ phong cảnh?", options: ["けしき", "てんき", "あめ", "ゆき"], answer: 0 },
+            { q: "Từ nào chỉ phim hoạt hình Nhật Bản?", options: ["アニメ", "ゲーム", "え", "しゃしん"], answer: 0 },
+            { q: "Hôm qua thời tiết rất đẹp. -> 'きのうはてんきが ___'", options: ["よかったです", "いいでした", "いいかったです", "よくないでした"], answer: 0 },
+            { q: "Học phí ở FPT rất đắt. -> 'FPTの学費はとても ___'", options: ["たかいです", "安いです", "低いです", "いいです"], answer: 0 },
+            { q: "Công việc ngày hôm qua đã rất vất vả. -> 'きのうのしごとはとても ___'", options: ["たいへんでした", "たいへんかった", "たいへんかったです", "たいへんなでした"], answer: 0 },
+            { q: "Hôm kia tôi đã rảnh rỗi. -> 'おとといは ___'", options: ["ひまでした", "ひまかった", "ひまかったです", "ひまでしたです"], answer: 0 },
+            { q: "Tiếng Nhật không khó lắm. -> '日本語は ___'", options: ["あまりむずかしくないです", "とてもむずかしいです", "すこしむずかしいです", "ぜんぜんむずかしいです"], answer: 0 },
+            { q: "Tôi đã ăn tối một mình. -> 'ひとり ___ ばんごはんをたべました。'", options: ["で", "と", "に", "を"], answer: 0 },
+            { q: "Tôi đi đến bách hóa để mua quần áo. -> 'デパートへふくを ___ にいきます。'", options: ["かい", "かう", "かって", "かいます"], answer: 0 },
+            { q: "Tôi muốn đi Nhật Bản. -> 'わたしは日本へ ___'", options: ["いきたいです", "いきます", "いきたくないです", "いきました"], answer: 0 },
+            { q: "Tôi ghét phim hoạt hình. -> 'わたしはアニメが ___'", options: ["きらいです", "すきです", "ほしいです", "たいです"], answer: 0 },
+            { q: "Sách cũ trong tiếng Nhật là gì?", options: ["ふるいほん", "あたらしいほん", "たかいほん", "いいほん"], answer: 0 },
+            { q: "Hà Nội là một thành phố náo nhiệt. -> 'ハノイは ___'", options: ["にぎやかなまちです", "にぎやかまちです", "にぎやかいまちです", "にぎやかのまちです"], answer: 0 },
+            { q: "Từ nào chỉ màu xanh lá cây?", options: ["みどり", "あお", "あか", "しろ"], answer: 0 },
+            { q: "Lâu đài trong tiếng Nhật là gì?", options: ["しろ", "てら", "じんじゃ", "きょうかい"], answer: 0 },
+            { q: "Tôi đã không gặp ai cả. -> 'だれ ___ あいませんでした。'", options: ["にも", "が", "を", "に"], answer: 0 },
+            { q: "Tôi đã không ăn gì cả. -> 'なに ___ たべませんでした。'", options: ["も", "を", "が", "に"], answer: 0 }
+        ];
+
+        // --- APP ENGINE STATES ---
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedLimit = 20; // Default count
+        let selectedQuestions = [];
+        let userAnswers = []; // Records user performance: { selectedIndex, isCorrect, skipped }
+        const synth = window.speechSynthesis;
+
+        // Dom Query selectors
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const currentQNum = document.getElementById('current-question-num');
+        const totalQNum = document.getElementById('total-questions');
+        const scoreDisplay = document.getElementById('score-display');
+        const progressBar = document.getElementById('progress-bar');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const skipBtn = document.getElementById('skip-btn');
+        const feedbackText = document.getElementById('feedback-text');
+        const questionGrid = document.getElementById('question-grid');
+        const customLimitInput = document.getElementById('custom-limit-input');
+
+        const correctCountEl = document.getElementById('correct-count');
+        const wrongCountEl = document.getElementById('wrong-count');
+
+        // Fisher-Yates shuffle helper
+        function shuffleArray(array) {
+            let curId = array.length;
+            while (0 !== curId) {
+                let randId = Math.floor(Math.random() * curId);
+                curId -= 1;
+                let tmp = array[curId];
+                array[curId] = array[randId];
+                array[randId] = tmp;
+            }
+            return array;
+        }
+
+        // Custom Modal Alert Caller
+        function showCustomAlert(title, message) {
+            document.getElementById('alert-title').textContent = title;
+            document.getElementById('alert-message').textContent = message;
+            document.getElementById('modal-custom-alert').classList.remove('hidden');
+        }
+
+        function closeAlertModal() {
+            document.getElementById('modal-custom-alert').classList.add('hidden');
+        }
+
+        // Custom Confirm Exit Modal Callers
+        function triggerExitConfirm() {
+            document.getElementById('modal-confirm-exit').classList.remove('hidden');
+        }
+
+        function closeExitModal() {
+            document.getElementById('modal-confirm-exit').classList.add('hidden');
+        }
+
+        // Validate custom input live
+        function validateCustomInput(input) {
+            let val = parseInt(input.value);
+            if (isNaN(val) || val < 1) {
+                // Keep input but don't force immediately to allow backspacing
+                return;
+            }
+            if (val > 222) {
+                input.value = 222;
+                showCustomAlert("Giới hạn vượt mức", "Số lượng câu hỏi tối đa hiện tại trong kho đề là 222 câu.");
+            }
+            selectedLimit = parseInt(input.value);
+            updateQuickLimitBtnUI(selectedLimit);
+        }
+
+        // Quick select limit buttons logic
+        function selectQuickLimit(num) {
+            selectedLimit = num;
+            customLimitInput.value = num;
+            updateQuickLimitBtnUI(num);
+        }
+
+        function updateQuickLimitBtnUI(num) {
+            document.querySelectorAll('.limit-btn').forEach(btn => {
+                btn.className = 'limit-btn py-2.5 rounded-xl border border-slate-200 font-bold text-xs text-slate-600 bg-white hover:border-indigo-400 hover:text-indigo-600 transition-all';
+            });
+            const activeBtn = document.getElementById(`btn-limit-${num}`);
+            if (activeBtn) {
+                activeBtn.className = 'limit-btn py-2.5 rounded-xl border-2 border-indigo-600 font-bold text-xs text-indigo-600 bg-white shadow-sm transition-all';
+            }
+        }
+
+        // Main Trigger: Start the Quiz
+        function startQuiz() {
+            const limitVal = parseInt(customLimitInput.value);
+            if (isNaN(limitVal) || limitVal < 1 || limitVal > 222) {
+                showCustomAlert("Số câu không hợp lệ", "Vui lòng nhập một số lượng câu hỏi từ 1 đến 222.");
+                return;
+            }
+            selectedLimit = limitVal;
+
+            // Extract random sample from 222 question pool
+            selectedQuestions = shuffleArray([...questionBank]).slice(0, selectedLimit);
+            
+            // Randomize inner options per question to ensure dynamic gameplay
+            selectedQuestions.forEach(q => {
+                const originalAnswerText = q.options[q.answer];
+                q.options = shuffleArray([...q.options]);
+                q.answer = q.options.indexOf(originalAnswerText);
+            });
+
+            // Initialize app state
+            totalQNum.textContent = selectedQuestions.length;
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = Array(selectedQuestions.length).fill(null);
+
+            // Interface shift
+            startScreen.classList.add('hidden');
+            resultScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            
+            buildQuestionGrid();
+            renderQuestion();
+            updateStats();
+        }
+
+        // Build the bottom scrollable quick navigate grid
+        function buildQuestionGrid() {
+            questionGrid.innerHTML = '';
+            selectedQuestions.forEach((_, idx) => {
+                const cell = document.createElement('button');
+                cell.id = `grid-cell-${idx}`;
+                cell.textContent = idx + 1;
+                cell.onclick = () => jumpToQuestion(idx);
+                updateGridCellState(cell, idx);
+                questionGrid.appendChild(cell);
+            });
+        }
+
+        // Grid Cell color-coding dynamically based on action
+        function updateGridCellState(cell, idx) {
+            cell.className = 'w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-xs flex-shrink-0 border transition-all duration-200 ';
+            
+            if (idx === currentQuestionIndex) {
+                cell.classList.add('bg-indigo-600', 'text-white', 'border-indigo-600', 'ring-4', 'ring-indigo-100');
+                return;
+            }
+
+            const ansState = userAnswers[idx];
+            if (ansState === null) {
+                cell.classList.add('bg-white', 'text-slate-400', 'border-slate-200', 'hover:bg-slate-50');
+            } else if (ansState.skipped) {
+                cell.classList.add('bg-amber-100', 'text-amber-700', 'border-amber-300', 'hover:bg-amber-200');
+            } else if (ansState.isCorrect) {
+                cell.classList.add('bg-emerald-500', 'text-white', 'border-emerald-500');
+            } else {
+                cell.classList.add('bg-rose-500', 'text-white', 'border-rose-500');
+            }
+        }
+
+        // Fast rewind/forward direct jump
+        function jumpToQuestion(idx) {
+            // Mark current unanswered question as skipped instead of leaving it null
+            if (userAnswers[currentQuestionIndex] === null) {
+                userAnswers[currentQuestionIndex] = { selectedIndex: -1, isCorrect: false, skipped: true };
+            }
+            currentQuestionIndex = idx;
+            renderQuestion();
+            updateStats();
+        }
+
+        // Display the selected question onto the screen
+        function renderQuestion() {
+            const q = selectedQuestions[currentQuestionIndex];
+            currentQNum.textContent = currentQuestionIndex + 1;
+            questionText.textContent = q.q;
+            
+            // Synchronize index map grid
+            buildQuestionGrid();
+
+            // Smoothly slide progress bar
+            const progress = ((currentQuestionIndex) / selectedQuestions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+
+            // Active/deactive back navigation button
+            prevBtn.disabled = currentQuestionIndex === 0;
+
+            // Paint Options
+            optionsContainer.innerHTML = '';
+            const savedAns = userAnswers[currentQuestionIndex];
+
+            q.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn w-full bg-white border border-slate-200 text-slate-700 font-bold py-4 px-6 rounded-2xl text-left hover:bg-indigo-50/20 hover:border-indigo-300 focus:outline-none flex items-center justify-between group text-sm md:text-base';
+                btn.innerHTML = `<span class="japanese-text leading-relaxed">${opt}</span> <span class="bg-slate-50 text-slate-400 border border-slate-100 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-all text-xs font-bold px-2.5 py-1 rounded-lg uppercase tracking-wider">${String.fromCharCode(65 + index)}</span>`;
+                
+                // If this is already answered
+                if (savedAns && !savedAns.skipped) {
+                    btn.disabled = true;
+                    if (index === q.answer) {
+                        btn.classList.add('correct-answer');
+                    } else if (index === savedAns.selectedIndex) {
+                        btn.classList.add('wrong-answer');
+                    }
+                } else {
+                    btn.onclick = () => checkAnswer(index, btn);
+                }
+                optionsContainer.appendChild(btn);
+            });
+
+            // Handle UI feedback text bottom
+            if (savedAns && !savedAns.skipped) {
+                feedbackText.classList.remove('hidden');
+                if (savedAns.isCorrect) {
+                    feedbackText.className = "text-xs font-bold text-center py-2 px-4 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-100 fade-in";
+                    feedbackText.innerHTML = '<i class="fa-solid fa-circle-check"></i> Bạn đã trả lời đúng!';
+                } else {
+                    feedbackText.className = "text-xs font-bold text-center py-2 px-4 rounded-xl bg-rose-50 text-rose-700 border border-rose-100 fade-in";
+                    feedbackText.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> Sai. Đáp án đúng: ${q.options[q.answer]}`;
+                }
+            } else {
+                feedbackText.classList.add('hidden');
+            }
+        }
+
+        // TTS voice synthesis for clean Japanese pronunciation
+        function speakQuestion() {
+            if (synth.speaking) {
+                synth.cancel();
+            }
+            const rawText = selectedQuestions[currentQuestionIndex].q;
+            
+            // Clean up text extract Japanese string within single quotes or direct
+            const match = rawText.match(/['"「](.*?)['"」]/);
+            const textToSpeak = match ? match[1] : rawText;
+
+            const utterance = new SpeechSynthesisUtterance(textToSpeak);
+            utterance.lang = 'ja-JP';
+            utterance.rate = 0.8; 
+            synth.speak(utterance);
+        }
+
+        // Grade Selected Answer
+        function checkAnswer(selectedIndex, btnElement) {
+            const q = selectedQuestions[currentQuestionIndex];
+            const isCorrect = selectedIndex === q.answer;
+
+            // Store result record
+            userAnswers[currentQuestionIndex] = {
+                selectedIndex: selectedIndex,
+                isCorrect: isCorrect,
+                skipped: false
+            };
+
+            // Highlight & Freeze options
+            const buttons = optionsContainer.querySelectorAll('button');
+            buttons.forEach((btn, idx) => {
+                btn.disabled = true;
+                if (idx === q.answer) {
+                    btn.classList.add('correct-answer');
+                } else if (idx === selectedIndex) {
+                    btn.classList.add('wrong-answer');
+                }
+            });
+
+            updateStats();
+
+            // Render live result card
+            feedbackText.classList.remove('hidden');
+            if (isCorrect) {
+                feedbackText.className = "text-xs font-bold text-center py-2 px-4 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-100 fade-in";
+                feedbackText.innerHTML = '<i class="fa-solid fa-circle-check"></i> Câu trả lời chính xác! 素晴らしい！';
+            } else {
+                feedbackText.className = "text-xs font-bold text-center py-2 px-4 rounded-xl bg-rose-50 text-rose-700 border border-rose-100 fade-in";
+                feedbackText.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> Chưa đúng. Đáp án: ${q.options[q.answer]}`;
+            }
+
+            buildQuestionGrid();
+        }
+
+        // Stats counter & math grader
+        function updateStats() {
+            let correct = 0;
+            let wrong = 0;
+            let answered = 0;
+
+            userAnswers.forEach(ans => {
+                if (ans && !ans.skipped) {
+                    answered++;
+                    if (ans.isCorrect) correct++;
+                    else wrong++;
+                }
+            });
+
+            correctCountEl.textContent = `Đúng: ${correct}`;
+            wrongCountEl.textContent = `Sai: ${wrong}`;
+            
+            const accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+            scoreDisplay.textContent = `Điểm: ${accuracy}%`;
+        }
+
+        // Rewind control (Tua lại câu trước)
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+                updateStats();
+            }
+        }
+
+        // Forward control (Tua tới câu kế tiếp)
+        function nextQuestion() {
+            if (currentQuestionIndex < selectedQuestions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+                updateStats();
+            } else {
+                showResults();
+            }
+        }
+
+        // Forward control with skip state
+        function skipQuestion() {
+            if (userAnswers[currentQuestionIndex] === null) {
+                userAnswers[currentQuestionIndex] = {
+                    selectedIndex: -1,
+                    isCorrect: false,
+                    skipped: true
+                };
+            }
+            nextQuestion();
+        }
+
+        // Results compiler & grading UI
+        function showResults() {
+            quizScreen.classList.add('hidden');
+            resultScreen.classList.remove('hidden');
+
+            let correct = 0;
+            let wrong = 0;
+            let skipped = 0;
+
+            userAnswers.forEach(ans => {
+                if (ans === null || ans.skipped) {
+                    skipped++;
+                } else if (ans.isCorrect) {
+                    correct++;
+                } else {
+                    wrong++;
+                }
+            });
+
+            const total = selectedQuestions.length;
+            const finalAccuracy = Math.round((correct / total) * 100);
+
+            // Display values
+            document.getElementById('res-score').textContent = `${finalAccuracy}%`;
+            document.getElementById('res-correct').textContent = `${correct}/${total}`;
+            document.getElementById('res-wrong').textContent = `${wrong}/${total}`;
+            document.getElementById('res-skipped').textContent = `${skipped}/${total}`;
+
+            // Personalized Evaluation
+            const emojiEl = document.getElementById('result-emoji');
+            const evalEl = document.getElementById('result-evaluation');
+
+            if (finalAccuracy === 100) {
+                emojiEl.textContent = '🏆';
+                evalEl.textContent = 'Cực kỳ hoàn hảo! Bạn đã nắm trọn vẹn toàn bộ kiến thức Bài 4 & Bài 5. Hãy tiếp tục tiến bước nhé!';
+                evalEl.className = 'text-emerald-600 text-sm font-bold max-w-md mb-8 leading-relaxed';
+            } else if (finalAccuracy >= 80) {
+                emojiEl.textContent = '🌟';
+                evalEl.textContent = 'Tuyệt vời! Điểm số rất cao chứng tỏ bạn ôn tập kỹ lưỡng. Chỉ cần chỉnh đốn một vài sai sót nhỏ thôi.';
+                evalEl.className = 'text-indigo-600 text-sm font-bold max-w-md mb-8 leading-relaxed';
+            } else if (finalAccuracy >= 50) {
+                emojiEl.textContent = '👍';
+                evalEl.textContent = 'Khá tốt! Bạn đã vượt qua mức an toàn. Hãy mở tệp ngữ pháp ra và xem lại các câu trả lời sai nhé.';
+                evalEl.className = 'text-amber-600 text-sm font-bold max-w-md mb-8 leading-relaxed';
+            } else {
+                emojiEl.textContent = '📚';
+                evalEl.textContent = 'Cố gắng lên nhé! Hãy ôn lại các từ vựng và cấu trúc trong Bài 4 & 5 rồi thử sức lại để nâng cao kết quả.';
+                evalEl.className = 'text-rose-600 text-sm font-bold max-w-md mb-8 leading-relaxed';
+            }
+        }
+
+        // Restart Current Quiz Mode
+        function restartQuiz() {
+            startQuiz();
+        }
+
+        // Return back to Home screen
+        function backToMenu() {
+            resultScreen.classList.add('hidden');
+            quizScreen.classList.add('hidden');
+            startScreen.classList.remove('hidden');
+        }
+
+        // Exit confirmation handler (Tránh dùng confirm)
+        function confirmExit() {
+            closeExitModal();
+            backToMenu();
+        }
+    </script>
+</body>
+</html>
