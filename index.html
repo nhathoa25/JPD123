@@ -1,816 +1,151 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Học Từ Vựng Sơ Cấp (Bài 4-7)</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- React & ReactDOM -->
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-    <!-- Babel -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-    <style>
-        /* Custom Styles for Flashcard Flip */
-        .perspective-1000 { perspective: 1000px; }
-        .transform-style-3d { transform-style: preserve-3d; }
-        .backface-hidden { backface-visibility: hidden; }
-        .rotate-y-180 { transform: rotateY(180deg); }
-        .flip-card-inner {
-            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
-        }
-        .bg-pattern {
-            background-color: #f0fdf4;
-            background-image: radial-gradient(#bbf7d0 1px, transparent 1px);
-            background-size: 20px 20px;
-        }
-        /* Custom Scrollbar for small elements */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語への旅 | Hành Trình Chinh Phục Tiếng Nhật</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
+body{overflow:hidden;background:#050816;color:#fff}
+#space{position:fixed;inset:0;z-index:-3}
+#loader{position:fixed;inset:0;background:#050816;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999}
+#loader h1{font-size:2.5rem}
+.progress{width:320px;height:14px;background:#222;border-radius:99px;margin:20px 0;overflow:hidden}
+.bar{height:100%;width:0;background:linear-gradient(90deg,#ff69b4,#7f5af0,#00f5d4);animation:load 3s forwards}
+@keyframes load{to{width:100%}}
+.cursor{width:18px;height:18px;border-radius:50%;position:fixed;background:#fff;pointer-events:none;z-index:99999;box-shadow:0 0 20px #fff,0 0 40px #ff69b4}
+.trail{position:fixed;width:8px;height:8px;border-radius:50%;background:#fff;pointer-events:none;animation:fade .8s forwards}
+@keyframes fade{to{opacity:0;transform:scale(0)}}
+.toggle{position:fixed;right:20px;top:20px;border:none;border-radius:50%;width:60px;height:60px;font-size:1.4rem;cursor:pointer;z-index:1000}
+.container{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:20px}
+.title{text-align:center;text-shadow:0 0 10px #fff,0 0 30px #ff69b4,0 0 60px #7f5af0}
+.jp{font-size:4rem;font-weight:700}
+.vn{font-size:2rem}
+.slogan{margin:20px 0 50px;text-align:center;font-size:1.1rem;color:#e5e7eb}
+.cards{display:flex;gap:30px;flex-wrap:wrap;justify-content:center}
+.card{
+width:320px;height:230px;text-decoration:none;color:#fff;
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,.15);
+border-radius:28px;
+display:flex;flex-direction:column;justify-content:center;align-items:center;
+transition:.4s;position:relative;overflow:hidden
+}
+.card:before{
+content:"";position:absolute;left:-120%;top:0;width:70%;height:100%;
+background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);
+transform:skewX(-25deg)
+}
+.card:hover:before{left:180%;transition:1s}
+.card:hover{transform:translateY(-12px) rotateX(8deg) rotateY(8deg);box-shadow:0 0 30px #fff,0 0 60px #ff69b4}
+.icon{font-size:4rem;margin-bottom:15px}
+.card h2{margin-bottom:10px}
+.sakura{position:fixed;top:-50px;font-size:22px;pointer-events:none;animation:fall linear infinite}
+@keyframes fall{
+from{transform:translateY(-50px) rotate(0)}
+to{transform:translateY(110vh) translateX(120px) rotate(720deg)}
+}
+.dark{background:#000}
+.dark .card{background:rgba(20,20,30,.6)}
+@media(max-width:768px){
+.jp{font-size:2.3rem}.vn{font-size:1.3rem}
+}
+</style>
 </head>
-<body class="bg-gray-50 min-h-screen font-sans text-gray-800">
-    <div id="root"></div>
+<body>
 
-    <script type="text/babel">
-        const { useState, useEffect, useMemo } = React;
+<div id="loader">
+<h1>🌸 日本語への旅 🌸</h1>
+<div class="progress"><div class="bar"></div></div>
+<p>Đang chuẩn bị hành trình học tập...</p>
+</div>
 
-        // Dữ liệu từ vựng trích xuất từ PDF (Đầy đủ cụm từ, câu ví dụ)
-        const vocabularyData = [
-            // BÀI 4
-            { id: 401, lesson: 4, ja: "チョコレート", vi: "sô-cô-la" },
-            { id: 402, lesson: 4, ja: "びじゅつかん", vi: "bảo tàng mỹ thuật" },
-            { id: 403, lesson: 4, ja: "みなさん", vi: "các bạn, quý vị" },
-            { id: 404, lesson: 4, ja: "いろいろ(な)", vi: "nhiều" },
-            { id: 405, lesson: 4, ja: "~からきました", vi: "từ ... đến" },
-            { id: 406, lesson: 4, ja: "ぜひきてください", vi: "rất mong anh/chị đến" },
-            { id: 407, lesson: 4, ja: "きた", vi: "bắc" },
-            { id: 408, lesson: 4, ja: "みなみ", vi: "nam" },
-            { id: 409, lesson: 4, ja: "ひがし", vi: "đông" },
-            { id: 410, lesson: 4, ja: "にし", vi: "tây" },
-            { id: 411, lesson: 4, ja: "まんなか", vi: "giữa" },
-            { id: 412, lesson: 4, ja: "くるま", vi: "xe ô-tô" },
-            { id: 413, lesson: 4, ja: "しんかんせん", vi: "đường sắt tàu điện cao tốc nối các thành phố chính của Nhật Bản" },
-            { id: 414, lesson: 4, ja: "でんしゃ", vi: "tàu điện" },
-            { id: 415, lesson: 4, ja: "ひこうき", vi: "máy bay" },
-            { id: 416, lesson: 4, ja: "えき", vi: "nhà ga" },
-            { id: 417, lesson: 4, ja: "まち", vi: "khu phố, thành phố" },
-            { id: 418, lesson: 4, ja: "~じかん", vi: "-tiếng" },
-            { id: 419, lesson: 4, ja: "~じかんはん", vi: "- tiếng rưỡi" },
-            { id: 420, lesson: 4, ja: "~ふん", vi: "-phút" },
-            { id: 421, lesson: 4, ja: "うちからがっこうまで20ぷんです。", vi: "Từ nhà đến trường là 20 phút." },
-            { id: 422, lesson: 4, ja: "あるいて", vi: "đi bộ" },
-            { id: 423, lesson: 4, ja: "~くらい", vi: "khoảng-" },
-            { id: 424, lesson: 4, ja: "どのくらい", vi: "khoảng bao nhiêu" },
-            { id: 425, lesson: 4, ja: "おんせん", vi: "suối nước nóng" },
-            { id: 426, lesson: 4, ja: "かわ", vi: "sông" },
-            { id: 427, lesson: 4, ja: "やま", vi: "núi" },
-            { id: 428, lesson: 4, ja: "きょうかい", vi: "nhà thờ" },
-            { id: 429, lesson: 4, ja: "(お)しろ", vi: "lâu đài, thành" },
-            { id: 430, lesson: 4, ja: "じんじゃ", vi: "đền thờ đạo Thần" },
-            { id: 431, lesson: 4, ja: "(お)てら", vi: "chùa" },
-            { id: 432, lesson: 4, ja: "ビル", vi: "tòa nhà nhiều tầng" },
-            { id: 433, lesson: 4, ja: "ところ", vi: "chỗ" },
-            { id: 434, lesson: 4, ja: "ひと", vi: "người" },
-            { id: 435, lesson: 4, ja: "みどり", vi: "màu xanh lá cây" },
-            { id: 436, lesson: 4, ja: "あります [ある]", vi: "Có" },
-            { id: 437, lesson: 4, ja: "はこねにおんせんがあります。", vi: "Ở Hakone có suối nước nóng." },
-            { id: 438, lesson: 4, ja: "あたらしい", vi: "mới" },
-            { id: 439, lesson: 4, ja: "ふるい", vi: "cũ" },
-            { id: 440, lesson: 4, ja: "いい", vi: "tốt, được" },
-            { id: 441, lesson: 4, ja: "おおい (~が)", vi: "nhiều" },
-            { id: 442, lesson: 4, ja: "すくない (~が)", vi: "ít" },
-            { id: 443, lesson: 4, ja: "おおきい", vi: "to" },
-            { id: 444, lesson: 4, ja: "ちいさい", vi: "nhỏ" },
-            { id: 445, lesson: 4, ja: "たかい", vi: "cao / đắt" },
-            { id: 446, lesson: 4, ja: "ふじさんはたかいです。", vi: "Núi Phú Sĩ cao." },
-            { id: 447, lesson: 4, ja: "ひくい", vi: "thấp" },
-            { id: 448, lesson: 4, ja: "きれい(な)", vi: "đẹp, sạch" },
-            { id: 449, lesson: 4, ja: "しずか(な)", vi: "yên tĩnh" },
-            { id: 450, lesson: 4, ja: "にぎやか(な)", vi: "náo nhiệt" },
-            { id: 451, lesson: 4, ja: "ゆうめい(な)", vi: "nổi tiếng" },
-            { id: 452, lesson: 4, ja: "どんな", vi: "thế nào" },
-            { id: 453, lesson: 4, ja: "そして", vi: "và" },
-            { id: 454, lesson: 4, ja: "あめ", vi: "mưa" },
-            { id: 455, lesson: 4, ja: "ゆき", vi: "tuyết" },
-            { id: 456, lesson: 4, ja: "ひ", vi: "ngày" },
-            { id: 457, lesson: 4, ja: "メロン", vi: "dưa lê" },
-            { id: 458, lesson: 4, ja: "あたたかい", vi: "ấm" },
-            { id: 459, lesson: 4, ja: "すずしい", vi: "mát" },
-            { id: 460, lesson: 4, ja: "あつい", vi: "nóng" },
-            { id: 461, lesson: 4, ja: "さむい", vi: "lạnh" },
-            { id: 462, lesson: 4, ja: "てんきがいい", vi: "trời đẹp" },
-            { id: 463, lesson: 4, ja: "てんきがわるい", vi: "trời xấu" },
-            { id: 464, lesson: 4, ja: "つめたい", vi: "lạnh" },
-            { id: 465, lesson: 4, ja: "おいしい", vi: "ngon" },
-            { id: 466, lesson: 4, ja: "あまい", vi: "ngọt" },
-            { id: 467, lesson: 4, ja: "からい", vi: "cay" },
-            { id: 468, lesson: 4, ja: "にがい", vi: "đắng" },
-            { id: 469, lesson: 4, ja: "すっぱい", vi: "chua" },
-            { id: 470, lesson: 4, ja: "いちねんじゅう", vi: "cả năm" },
-            { id: 471, lesson: 4, ja: "あまり", vi: "(không) lắm" },
-            { id: 472, lesson: 4, ja: "わたしのくにはなつ、あまりあつくないです。", vi: "nước tôi mùa hè không nóng lắm." },
-            { id: 473, lesson: 4, ja: "すこし", vi: "ít" },
-            { id: 474, lesson: 4, ja: "とても", vi: "rất" },
-            { id: 475, lesson: 4, ja: "どう", vi: "thế nào" },
-            { id: 476, lesson: 4, ja: "そうですね", vi: "vâng, đúng thế" },
-            { id: 477, lesson: 4, ja: "たくさん", vi: "nhiều" },
+<canvas id="space"></canvas>
+<div class="cursor"></div>
 
-            // BÀI 5
-            { id: 501, lesson: 5, ja: "ちかく", vi: "gần" },
-            { id: 502, lesson: 5, ja: "いちにち", vi: "một ngày" },
-            { id: 503, lesson: 5, ja: "また", vi: "lại" },
-            { id: 504, lesson: 5, ja: "きょう", vi: "hôm nay" },
-            { id: 505, lesson: 5, ja: "あした", vi: "ngày mai" },
-            { id: 506, lesson: 5, ja: "あさって", vi: "ngày kia" },
-            { id: 507, lesson: 5, ja: "きのう", vi: "hôm qua" },
-            { id: 508, lesson: 5, ja: "おととい", vi: "hôm kia" },
-            { id: 509, lesson: 5, ja: "せんしゅう", vi: "tuần trước" },
-            { id: 510, lesson: 5, ja: "しゅうまつ", vi: "cuối tuần" },
-            { id: 511, lesson: 5, ja: "いえ", vi: "nhà" },
-            { id: 512, lesson: 5, ja: "へや", vi: "phòng" },
-            { id: 513, lesson: 5, ja: "デパート", vi: "bách hóa" },
-            { id: 514, lesson: 5, ja: "ゲーム", vi: "trò chơi" },
-            { id: 515, lesson: 5, ja: "かぞく", vi: "gia đình" },
-            { id: 516, lesson: 5, ja: "こいびと", vi: "người yêu" },
-            { id: 517, lesson: 5, ja: "ともだち", vi: "bạn" },
-            { id: 518, lesson: 5, ja: "ルームメイト", vi: "bạn cùng phòng" },
-            { id: 519, lesson: 5, ja: "どこか(へ)", vi: "(đi) đâu" },
-            { id: 520, lesson: 5, ja: "あいます [あう]", vi: "gặp" },
-            { id: 521, lesson: 5, ja: "つくります [つくる]", vi: "làm" },
-            { id: 522, lesson: 5, ja: "かいものします [かいものする]", vi: "mua hàng" },
-            { id: 523, lesson: 5, ja: "しょくじします [しょくじする]", vi: "ăn" },
-            { id: 524, lesson: 5, ja: "せんたくします [せんたくする]", vi: "giặt" },
-            { id: 525, lesson: 5, ja: "そうじします [そうじする]", vi: "dọn vệ sinh" },
-            { id: 526, lesson: 5, ja: "それから", vi: "sau đó" },
-            { id: 527, lesson: 5, ja: "ひとりで", vi: "một mình" },
-            { id: 528, lesson: 5, ja: "けさ", vi: "sáng nay" },
-            { id: 529, lesson: 5, ja: "きらい(な)", vi: "ghét" },
-            { id: 530, lesson: 5, ja: "りょう", vi: "ký túc xá" },
-            { id: 531, lesson: 5, ja: "いろいろ(な)", vi: "nhiều" },
-            { id: 532, lesson: 5, ja: "それはよかったですね", vi: "Thế thì tốt nhỉ." },
-            { id: 533, lesson: 5, ja: "せんげつ", vi: "tháng trước" },
-            { id: 534, lesson: 5, ja: "きょねん", vi: "năm ngoái" },
-            { id: 535, lesson: 5, ja: "かぜ", vi: "bệnh cúm" },
-            { id: 536, lesson: 5, ja: "てんき", vi: "thời tiết" },
-            { id: 537, lesson: 5, ja: "ばんごはん", vi: "cơm tối" },
-            { id: 538, lesson: 5, ja: "ふく", vi: "quần áo" },
-            { id: 539, lesson: 5, ja: "のぼります [のぼる]", vi: "leo" },
-            { id: 540, lesson: 5, ja: "はいります [はいる]", vi: "vào" },
-            { id: 541, lesson: 5, ja: "おんせいにはいります。", vi: "vào (tắm) suối nước nóng" },
-            { id: 542, lesson: 5, ja: "いそがしい", vi: "bận" },
-            { id: 543, lesson: 5, ja: "おもしろい", vi: "thú vị" },
-            { id: 544, lesson: 5, ja: "きもちがいい", vi: "dễ chịu" },
-            { id: 545, lesson: 5, ja: "たかい", vi: "đắt" },
-            { id: 546, lesson: 5, ja: "パソコンはたかかったです。", vi: "Máy vi tính đắt." },
-            { id: 547, lesson: 5, ja: "やすい", vi: "rẻ" },
-            { id: 548, lesson: 5, ja: "たのしい", vi: "vui" },
-            { id: 549, lesson: 5, ja: "むずかしい", vi: "khó" },
-            { id: 550, lesson: 5, ja: "かんたん(な)", vi: "đơn giản" },
-            { id: 551, lesson: 5, ja: "たいへん(な)", vi: "vất vả" },
-            { id: 552, lesson: 5, ja: "ひま(な)", vi: "nhàn rỗi" },
-            { id: 553, lesson: 5, ja: "どうして", vi: "tại sao" },
-            { id: 554, lesson: 5, ja: "こんど", vi: "lần tới" },
-            { id: 555, lesson: 5, ja: "こんばん", vi: "tối nay" },
-            { id: 556, lesson: 5, ja: "ことし", vi: "năm nay" },
-            { id: 557, lesson: 5, ja: "らいねん", vi: "sang năm" },
-            { id: 558, lesson: 5, ja: "アニメ", vi: "phim hoạt hình" },
-            { id: 559, lesson: 5, ja: "え", vi: "bức tranh" },
-            { id: 560, lesson: 5, ja: "けしき", vi: "phong cảnh" },
-            { id: 561, lesson: 5, ja: "じてんしゃ", vi: "xe đạp" },
-            { id: 562, lesson: 5, ja: "しゃしん", vi: "bức ảnh" },
-            { id: 563, lesson: 5, ja: "とります [とる]", vi: "chụp" },
-            { id: 564, lesson: 5, ja: "かります [かりる]", vi: "mượn" },
-            { id: 565, lesson: 5, ja: "ほしい", vi: "muốn" },
-            { id: 566, lesson: 5, ja: "すき(な)", vi: "thích" },
+<button class="toggle">🌙</button>
 
-            // BÀI 6
-            { id: 601, lesson: 6, ja: "ソース", vi: "nước sốt" },
-            { id: 602, lesson: 6, ja: "ピザ", vi: "bánh piza" },
-            { id: 603, lesson: 6, ja: "こんしゅう", vi: "tuần này" },
-            { id: 604, lesson: 6, ja: "らいしゅう", vi: "tuần sau" },
-            { id: 605, lesson: 6, ja: "こんげつ", vi: "tháng này" },
-            { id: 606, lesson: 6, ja: "らいげつ", vi: "tháng sau" },
-            { id: 607, lesson: 6, ja: "しあい", vi: "trận đấu" },
-            { id: 608, lesson: 6, ja: "ちず", vi: "bản đồ" },
-            { id: 609, lesson: 6, ja: "カラオケ", vi: "karaoke" },
-            { id: 610, lesson: 6, ja: "コンサート", vi: "buổi hòa nhạc" },
-            { id: 611, lesson: 6, ja: "セール", vi: "bán hạ giá" },
-            { id: 612, lesson: 6, ja: "チケット", vi: "vé" },
-            { id: 613, lesson: 6, ja: "ドライブ", vi: "lái ô-tô đi chơi" },
-            { id: 614, lesson: 6, ja: "みずぎ", vi: "quần áo tắm" },
-            { id: 615, lesson: 6, ja: "やきゅう", vi: "bóng chày" },
-            { id: 616, lesson: 6, ja: "やくそく", vi: "hẹn" },
-            { id: 617, lesson: 6, ja: "ようじ", vi: "công chuyện" },
-            { id: 618, lesson: 6, ja: "~まい", vi: "-cái" },
-            { id: 619, lesson: 6, ja: "あります [ある]", vi: "Có" },
-            { id: 620, lesson: 6, ja: "こんばん、ようじがあります。", vi: "Tối nay tôi có công chuyện." },
-            { id: 621, lesson: 6, ja: "よこはまでやきゅうのしあいがあります。", vi: "Ở Yokohama có trận đấu bóng chày." },
-            { id: 622, lesson: 6, ja: "チケットが2まいあります。", vi: "Có hai cái vé." },
-            { id: 623, lesson: 6, ja: "ざんねん(な)", vi: "tiếc" },
-            { id: 624, lesson: 6, ja: "いっしょに", vi: "cùng" },
-            { id: 625, lesson: 6, ja: "いいですね", vi: "thích nhỉ, được rồi" },
-            { id: 626, lesson: 6, ja: "A: いっしょにえいがをみにいきませんか。", vi: "A: Bạn có đi xem phim cùng tôi không?" },
-            { id: 627, lesson: 6, ja: "B: いいですね。いきましょう。", vi: "B: Được rồi. Chúng ta cùng đi." },
-            { id: 628, lesson: 6, ja: "ああ", vi: "Ôi" },
-            { id: 629, lesson: 6, ja: "ああ、にちようびはちょっと…。", vi: "Ôi, chủ nhật thì không được rồi..." },
-            { id: 630, lesson: 6, ja: "すみません", vi: "xin lỗi" },
-            { id: 631, lesson: 6, ja: "A: こんばんいっしょにごはんをたべませんか。", vi: "A: Tối nay bạn có ăn cơm cùng tôi không?" },
-            { id: 632, lesson: 6, ja: "すきやき", vi: "thịt bò hoặc đậu phụ... lẩu (nấu từ tương và đường để ăn)" },
-            { id: 633, lesson: 6, ja: "B: すみません。こんばんはちょっと…。", vi: "B: Xin lỗi. Tối nay thì không được rồi..." },
-            { id: 634, lesson: 6, ja: "またこんど", vi: "hẹn lần tới" },
-            { id: 635, lesson: 6, ja: "あそびます [あそぶ]", vi: "chơi" },
-            { id: 636, lesson: 6, ja: "ぜひ", vi: "nhất định" },
-            { id: 637, lesson: 6, ja: "まだ", vi: "chưa" },
-            { id: 638, lesson: 6, ja: "もう", vi: "rồi" },
-            { id: 639, lesson: 6, ja: "わあ", vi: "Ôi" },
-            { id: 640, lesson: 6, ja: "そうしましょう", vi: "chúng ta làm thế nhé" },
-            { id: 641, lesson: 6, ja: "たべもの", vi: "đồ ăn" },
-            { id: 642, lesson: 6, ja: "わかりました", vi: "hiểu rồi" },
-            { id: 643, lesson: 6, ja: "のみもの", vi: "đồ uống" },
-            { id: 644, lesson: 6, ja: "(お)みせ", vi: "cửa hàng" },
-            { id: 645, lesson: 6, ja: "やきにく", vi: "thịt nướng" },
-            { id: 646, lesson: 6, ja: "ラーメン", vi: "mì" },
-            { id: 647, lesson: 6, ja: "たのしみです", vi: "tôi mong đợi" },
-            { id: 648, lesson: 6, ja: "よかった", vi: "tốt" },
-            { id: 649, lesson: 6, ja: "たべほうだい", vi: "ăn thỏa thích" },
-            { id: 650, lesson: 6, ja: "コース", vi: "loạt/bộ món ăn" },
-            { id: 651, lesson: 6, ja: "いざかや", vi: "quán rượu" },
-            { id: 652, lesson: 6, ja: "えいがかん", vi: "rạp chiếu phim" },
-            { id: 653, lesson: 6, ja: "ちかてつ", vi: "tàu điện ngầm" },
-            { id: 654, lesson: 6, ja: "かしゅ", vi: "ca sĩ" },
-            { id: 655, lesson: 6, ja: "きせつ", vi: "mùa" },
-            { id: 656, lesson: 6, ja: "コメディー", vi: "diễn viên hài" },
-            { id: 657, lesson: 6, ja: "ジャズ", vi: "nhạc jazz" },
-            { id: 658, lesson: 6, ja: "ツアー", vi: "tua" },
-            { id: 659, lesson: 6, ja: "どちら", vi: "cái nào" },
-            { id: 660, lesson: 6, ja: "どちらも", vi: "cái nào cũng được" },
-            { id: 661, lesson: 6, ja: "ちかい", vi: "gần" },
-            { id: 662, lesson: 6, ja: "とおい", vi: "xa" },
-            { id: 663, lesson: 6, ja: "はやい", vi: "sớm" },
-            { id: 664, lesson: 6, ja: "ひろい", vi: "rộng" },
-            { id: 665, lesson: 6, ja: "いちばん", vi: "nhất, số một" },
-            { id: 666, lesson: 6, ja: "ぜんぶ", vi: "toàn bộ" },
-            { id: 667, lesson: 6, ja: "そうですねえ", vi: "à, vâng..." },
-            { id: 668, lesson: 6, ja: "おこのみやき", vi: "bánh xèo Nhật (hòa bột mì vào nước, cho nguyên liệu tùy chọn như thịt, rau vào rồi rán lên)" },
+<div class="container">
+<div class="title">
+<div class="jp">日本語への旅</div>
+<div class="vn">HÀNH TRÌNH CHINH PHỤC TIẾNG NHẬT</div>
+</div>
 
-            // BÀI 7
-            { id: 701, lesson: 7, ja: "アパート", vi: "nhà chung cư" },
-            { id: 702, lesson: 7, ja: "かいさつ", vi: "soát vé" },
-            { id: 703, lesson: 7, ja: "き", vi: "cây" },
-            { id: 704, lesson: 7, ja: "こうばん", vi: "đồn cảnh sát" },
-            { id: 705, lesson: 7, ja: "じどうはんばいき", vi: "máy bán tự động" },
-            { id: 706, lesson: 7, ja: "バスてい", vi: "điểm đỗ xe buýt" },
-            { id: 707, lesson: 7, ja: "ポスト", vi: "hòm thư bưu điện" },
-            { id: 708, lesson: 7, ja: "はな", vi: "hoa" },
-            { id: 709, lesson: 7, ja: "いぬ", vi: "chó" },
-            { id: 710, lesson: 7, ja: "あいだ", vi: "giữa" },
-            { id: 711, lesson: 7, ja: "うえ", vi: "trên" },
-            { id: 712, lesson: 7, ja: "した", vi: "dưới" },
-            { id: 713, lesson: 7, ja: "ちかく", vi: "gần" },
-            { id: 714, lesson: 7, ja: "となり", vi: "bên cạnh" },
-            { id: 715, lesson: 7, ja: "なか", vi: "trong" },
-            { id: 716, lesson: 7, ja: "まえ", vi: "trước" },
-            { id: 717, lesson: 7, ja: "そと", vi: "ngoài" },
-            { id: 718, lesson: 7, ja: "うしろ", vi: "sau" },
-            { id: 719, lesson: 7, ja: "よこ", vi: "cạnh" },
-            { id: 720, lesson: 7, ja: "むかえにいきます [むかえにいく]", vi: "đi đón" },
-            { id: 721, lesson: 7, ja: "います [いる]", vi: "có (người, động vật)" },
-            { id: 722, lesson: 7, ja: "わたしはほんやのなかにいます。", vi: "Tôi ở trong hiệu sách." },
-            { id: 723, lesson: 7, ja: "もしもし", vi: "alô" },
-            { id: 724, lesson: 7, ja: "いす", vi: "ghế" },
-            { id: 725, lesson: 7, ja: "テーブル", vi: "bàn" },
-            { id: 726, lesson: 7, ja: "でんしレンジ", vi: "lò vi sóng" },
-            { id: 727, lesson: 7, ja: "れいぞうこ", vi: "tủ lạnh" },
-            { id: 728, lesson: 7, ja: "さとう", vi: "đường" },
-            { id: 729, lesson: 7, ja: "しお", vi: "muối" },
-            { id: 730, lesson: 7, ja: "しょうゆ", vi: "tương" },
-            { id: 731, lesson: 7, ja: "コップ", vi: "CỐC" },
-            { id: 732, lesson: 7, ja: "(お)さら", vi: "đĩa" },
-            { id: 733, lesson: 7, ja: "スプーン", vi: "thìa" },
-            { id: 734, lesson: 7, ja: "ナイフ", vi: "dao" },
-            { id: 735, lesson: 7, ja: "フォーク", vi: "nĩa" },
-            { id: 736, lesson: 7, ja: "はし", vi: "đũa" },
-            { id: 737, lesson: 7, ja: "かんじ", vi: "chữ Hán" },
-            { id: 738, lesson: 7, ja: "どれ", vi: "cái nào" },
-            { id: 739, lesson: 7, ja: "どの", vi: "nào" },
-            { id: 740, lesson: 7, ja: "あらいます [あらう]", vi: "rửa" },
-            { id: 741, lesson: 7, ja: "おきます [おく]", vi: "để" },
-            { id: 742, lesson: 7, ja: "かきます [かく]", vi: "viết" },
-            { id: 743, lesson: 7, ja: "かします [かす]", vi: "cho mượn" },
-            { id: 744, lesson: 7, ja: "ききます [きく]", vi: "hỏi, nghe" },
-            { id: 745, lesson: 7, ja: "パクさんにでんわばんごうをききます。", vi: "Tôi hỏi số điện thoại của anh Pak." },
-            { id: 746, lesson: 7, ja: "きります [きる]", vi: "cắt" },
-            { id: 747, lesson: 7, ja: "つかいます [つかう]", vi: "dùng" },
-            { id: 748, lesson: 7, ja: "てつだいます [てつだう]", vi: "giúp" },
-            { id: 749, lesson: 7, ja: "とります [とる]", vi: "lấy" },
-            { id: 750, lesson: 7, ja: "もっていきます [もっていく]", vi: "mang đi" },
-            { id: 751, lesson: 7, ja: "わかります [わかる]", vi: "hiểu" },
-            { id: 752, lesson: 7, ja: "だします [だす]", vi: "lấy ra" },
-            { id: 753, lesson: 7, ja: "れいぞうこからジュースをだします。", vi: "Tôi lấy nước ngọt ra từ tủ lạnh." },
-            { id: 754, lesson: 7, ja: "いれます [いれる]", vi: "cho vào" },
-            { id: 755, lesson: 7, ja: "おしえます [おしえる]", vi: "dạy, chỉ" },
-            { id: 756, lesson: 7, ja: "たくさん", vi: "nhiều" },
-            { id: 757, lesson: 7, ja: "すみませんが", vi: "xin lỗi nhưng..." },
-            { id: 758, lesson: 7, ja: "ああ", vi: "a" },
-            { id: 759, lesson: 7, ja: "ああ、これですね", vi: "A, cái này có phải không." },
-            { id: 760, lesson: 7, ja: "いいですよ", vi: "được chứ" },
-            { id: 761, lesson: 7, ja: "うた", vi: "bài hát" },
-            { id: 762, lesson: 7, ja: "ギター", vi: "đàn ghita" },
-            { id: 763, lesson: 7, ja: "だいどころ", vi: "bếp" },
-            { id: 764, lesson: 7, ja: "たばこ", vi: "thuốc lá" },
-            { id: 765, lesson: 7, ja: "でんわ", vi: "điện thoại" },
-            { id: 766, lesson: 7, ja: "まど", vi: "cửa sổ" },
-            { id: 767, lesson: 7, ja: "うたいます [うたう]", vi: "hát" },
-            { id: 768, lesson: 7, ja: "すいます [すう]", vi: "hút" },
-            { id: 769, lesson: 7, ja: "はなします [はなす]", vi: "nói" },
-            { id: 770, lesson: 7, ja: "ひきます [ひく]", vi: "chơi (đàn)" },
-            { id: 771, lesson: 7, ja: "もちます [もつ]", vi: "cầm" },
-            { id: 772, lesson: 7, ja: "あけます [あける]", vi: "mở" },
-            { id: 773, lesson: 7, ja: "しめます [しめる]", vi: "đóng" },
-            { id: 774, lesson: 7, ja: "かけます [かける]", vi: "gọi (điện thoại)" },
-            { id: 775, lesson: 7, ja: "ともだちにでんわをかけます。", vi: "Tôi gọi điện thoại cho bạn." },
-            { id: 776, lesson: 7, ja: "もってきます [もってくる]", vi: "mang đến" },
-            { id: 777, lesson: 7, ja: "おねがいします", vi: "nhờ anh/chị" }
-        ];
+<div class="slogan">
+Khám phá ngôn ngữ • Chạm tới văn hóa • Mở rộng tương lai
+</div>
 
-        // Shuffle utility function
-        const shuffleArray = (array) => {
-            const newArr = [...array];
-            for (let i = newArr.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
-            }
-            return newArr;
-        };
+<div class="cards">
+<a href="./tuvung/index.html" class="card">
+<div class="icon">📚</div>
+<h2>TỪ VỰNG</h2>
+<p>Flashcard • Kanji • Từ mới</p>
+</a>
 
-        // --- HỆ THỐNG PHÁT ÂM (Web Speech API) ---
-        let speechVoices = [];
-        // Lấy danh sách giọng đọc có sẵn của trình duyệt
-        if (window.speechSynthesis) {
-            window.speechSynthesis.onvoiceschanged = () => {
-                speechVoices = window.speechSynthesis.getVoices();
-            };
-        }
+<a href="./ontap45/index.html" class="card">
+<div class="icon">📝</div>
+<h2>ÔN TẬP 4 & 5</h2>
+<p>Luyện tập và kiểm tra</p>
+</a>
 
-        const playAudio = (text, lang) => {
-            if (!window.speechSynthesis) {
-                console.warn("Trình duyệt không hỗ trợ phát âm.");
-                return;
-            }
+<a href="./ontap67/index.html" class="card">
+<div class="icon">📝</div>
+<h2>ÔN TẬP 6 & 7</h2>
+<p>Củng cố kiến thức nâng cao</p>
+</a>
+</div>
+</div>
 
-            window.speechSynthesis.cancel(); // Dừng các âm thanh đang phát trước đó
+<script>
+window.addEventListener("load",()=>{
+setTimeout(()=>document.getElementById("loader").style.display="none",3000);
+});
 
-            // Xử lý làm sạch text tiếng Nhật trước khi đọc
-            let cleanText = text;
-            if (lang === 'ja') {
-                cleanText = cleanText.replace(/\(~が\)/g, ''); // Bỏ (~が)
-                cleanText = cleanText.replace(/~/g, ''); // Bỏ dấu ~
-                cleanText = cleanText.replace(/\((.*?)\)/g, '$1'); // (お)しろ -> おしろ
-                cleanText = cleanText.replace(/\[.*?\]/g, ''); // あります [ある] -> あります
-                cleanText = cleanText.replace(/A:/g, ''); // Xóa chữ A: trong hội thoại
-                cleanText = cleanText.replace(/B:/g, ''); // Xóa chữ B: trong hội thoại
-                cleanText = cleanText.trim();
-            }
+const canvas=document.getElementById("space"),ctx=canvas.getContext("2d");
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
+resize();addEventListener("resize",resize);
+let stars=[...Array(250)].map(()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*2+0.2,v:Math.random()*0.4+0.1}));
+(function anim(){
+ctx.fillStyle="#050816";ctx.fillRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="white";
+stars.forEach(s=>{ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.28);ctx.fill();s.y+=s.v;if(s.y>canvas.height)s.y=0;});
+requestAnimationFrame(anim);
+})();
 
-            const utterance = new SpeechSynthesisUtterance(cleanText);
-            utterance.lang = lang === 'ja' ? 'ja-JP' : 'vi-VN';
-            utterance.rate = 0.85; // Giảm tốc độ đọc một chút
-            utterance.pitch = 1.0;
+for(let i=0;i<40;i++){
+let p=document.createElement("div");
+p.className="sakura";p.innerHTML="🌸";
+p.style.left=Math.random()*100+"vw";
+p.style.animationDuration=(8+Math.random()*8)+"s";
+p.style.animationDelay=Math.random()*5+"s";
+document.body.appendChild(p);
+}
 
-            if (speechVoices.length === 0) speechVoices = window.speechSynthesis.getVoices();
-            
-            // Tìm giọng đọc tự nhiên
-            const targetLang = lang === 'ja' ? 'ja' : 'vi';
-            const availableVoices = speechVoices.filter(v => v.lang.includes(targetLang));
-            
-            if (availableVoices.length > 0) {
-                const premiumVoice = availableVoices.find(v => v.name.includes('Google') || v.name.includes('Premium') || v.name.includes('Natural'));
-                utterance.voice = premiumVoice || availableVoices[0];
-            }
+const cursor=document.querySelector(".cursor");
+document.addEventListener("mousemove",e=>{
+cursor.style.left=e.clientX+"px";
+cursor.style.top=e.clientY+"px";
+let t=document.createElement("div");
+t.className="trail";
+t.style.left=e.clientX+"px";
+t.style.top=e.clientY+"px";
+document.body.appendChild(t);
+setTimeout(()=>t.remove(),800);
+});
 
-            window.speechSynthesis.speak(utterance);
-        };
+document.querySelector(".toggle").onclick=()=>{
+document.body.classList.toggle("dark");
+};
 
-        // Component Icon Loa
-        const SpeakerIcon = ({ className }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" className={className || "w-5 h-5"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
-            </svg>
-        );
+const hoverAudio=new Audio("assets/hover.mp3");
+const clickAudio=new Audio("assets/click.mp3");
 
-        const App = () => {
-            const [activeTab, setActiveTab] = useState('list');
-            const [selectedLesson, setSelectedLesson] = useState('all');
-            const [languageMode, setLanguageMode] = useState('ja-vi');
-
-            // Lọc dữ liệu theo bài
-            const filteredData = useMemo(() => {
-                if (selectedLesson === 'all') return vocabularyData;
-                return vocabularyData.filter(word => word.lesson === parseInt(selectedLesson));
-            }, [selectedLesson]);
-
-            // Icons Navigation
-            const BookIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>;
-            const CardsIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M5 6h14"/><path d="M5 14h14"/></svg>;
-            const GamepadIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="6" x2="10" y1="12" y2="12"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="15" x2="15.01" y1="13" y2="13"/><line x1="18" x2="18.01" y1="11" y2="11"/><rect width="20" height="12" x="2" y="6" rx="2"/></svg>;
-
-            return (
-                <div className="max-w-4xl mx-auto p-4 md:p-6 lg:p-8">
-                    {/* Header */}
-                    <header className="text-center mb-8">
-                        <h1 className="text-3xl font-bold text-green-700 mb-2">Học Từ Vựng Sơ Cấp</h1>
-                        <p className="text-gray-500">Giáo trình: できる日本語 (Bài 4 - Bài 7)</p>
-                    </header>
-
-                    {/* Controls */}
-                    <div className="flex flex-col md:flex-row justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-6 gap-4">
-                        <div className="flex items-center gap-2">
-                            <label className="font-semibold text-gray-700">Chọn Bài:</label>
-                            <select 
-                                className="border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-                                value={selectedLesson}
-                                onChange={(e) => setSelectedLesson(e.target.value)}
-                            >
-                                <option value="all">Tất cả (Bài 4-7)</option>
-                                <option value="4">Bài 4</option>
-                                <option value="5">Bài 5</option>
-                                <option value="6">Bài 6</option>
-                                <option value="7">Bài 7</option>
-                            </select>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <label className="font-semibold text-gray-700">Chế độ:</label>
-                            <div className="flex bg-gray-100 rounded-lg p-1">
-                                <button 
-                                    className={`px-3 py-1 rounded-md text-sm transition-colors ${languageMode === 'ja-vi' ? 'bg-white shadow text-green-600 font-bold' : 'text-gray-500 hover:text-gray-700'}`}
-                                    onClick={() => setLanguageMode('ja-vi')}
-                                >
-                                    Nhật ➔ Việt
-                                </button>
-                                <button 
-                                    className={`px-3 py-1 rounded-md text-sm transition-colors ${languageMode === 'vi-ja' ? 'bg-white shadow text-green-600 font-bold' : 'text-gray-500 hover:text-gray-700'}`}
-                                    onClick={() => setLanguageMode('vi-ja')}
-                                >
-                                    Việt ➔ Nhật
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Navigation Tabs */}
-                    <div className="flex justify-center mb-8 border-b border-gray-200">
-                        <button 
-                            className={`flex items-center gap-2 px-6 py-3 font-medium transition-colors border-b-2 ${activeTab === 'list' ? 'border-green-600 text-green-600' : 'border-transparent text-gray-500 hover:text-green-500'}`}
-                            onClick={() => setActiveTab('list')}
-                        >
-                            <BookIcon /> Danh sách
-                        </button>
-                        <button 
-                            className={`flex items-center gap-2 px-6 py-3 font-medium transition-colors border-b-2 ${activeTab === 'flashcard' ? 'border-green-600 text-green-600' : 'border-transparent text-gray-500 hover:text-green-500'}`}
-                            onClick={() => setActiveTab('flashcard')}
-                        >
-                            <CardsIcon /> Flashcard
-                        </button>
-                        <button 
-                            className={`flex items-center gap-2 px-6 py-3 font-medium transition-colors border-b-2 ${activeTab === 'quiz' ? 'border-green-600 text-green-600' : 'border-transparent text-gray-500 hover:text-green-500'}`}
-                            onClick={() => setActiveTab('quiz')}
-                        >
-                            <GamepadIcon /> Trắc nghiệm
-                        </button>
-                    </div>
-
-                    {/* Main Content Area */}
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 min-h-[400px]">
-                        {activeTab === 'list' && <WordList data={filteredData} />}
-                        {activeTab === 'flashcard' && <Flashcards data={filteredData} mode={languageMode} />}
-                        {activeTab === 'quiz' && <Quiz data={filteredData} mode={languageMode} lesson={selectedLesson} />}
-                    </div>
-                </div>
-            );
-        };
-
-        const WordList = ({ data }) => {
-            return (
-                <div>
-                    <h2 className="text-xl font-bold mb-4 text-gray-800 border-l-4 border-green-500 pl-3">Tổng hợp từ vựng ({data.length} từ)</h2>
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-left border-collapse">
-                            <thead>
-                                <tr className="bg-green-50 text-green-800">
-                                    <th className="py-3 px-4 border-b font-semibold w-24">Bài</th>
-                                    <th className="py-3 px-4 border-b font-semibold text-lg">Tiếng Nhật</th>
-                                    <th className="py-3 px-4 border-b font-semibold">Tiếng Việt</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {data.map((word) => (
-                                    <tr key={word.id} className="hover:bg-gray-50 border-b border-gray-100 transition-colors">
-                                        <td className="py-3 px-4 text-gray-500">Bài {word.lesson}</td>
-                                        <td className="py-3 px-4">
-                                            <div className="flex items-center gap-3">
-                                                <button onClick={() => playAudio(word.ja, 'ja')} className="shrink-0 p-2 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100 hover:scale-105 transition shadow-sm" title="Nghe tiếng Nhật">
-                                                    <SpeakerIcon className="w-4 h-4" />
-                                                </button>
-                                                <span className="text-lg md:text-xl text-blue-800 font-medium">{word.ja}</span>
-                                            </div>
-                                        </td>
-                                        <td className="py-3 px-4">
-                                            <div className="flex items-center gap-3">
-                                                <button onClick={() => playAudio(word.vi, 'vi')} className="shrink-0 p-1.5 bg-gray-100 text-gray-500 rounded-full hover:bg-gray-200 transition shadow-sm" title="Nghe tiếng Việt">
-                                                    <SpeakerIcon className="w-3.5 h-3.5" />
-                                                </button>
-                                                <span className="text-gray-700">{word.vi}</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            );
-        };
-
-        const Flashcards = ({ data, mode }) => {
-            const [currentIndex, setCurrentIndex] = useState(0);
-            const [isFlipped, setIsFlipped] = useState(false);
-            const [cards, setCards] = useState(data);
-
-            useEffect(() => {
-                setCards(data);
-                setCurrentIndex(0);
-                setIsFlipped(false);
-            }, [data]);
-
-            const handleNext = () => {
-                setIsFlipped(false);
-                setTimeout(() => {
-                    setCurrentIndex((prev) => (prev + 1) % cards.length);
-                }, 150);
-            };
-
-            const handlePrev = () => {
-                setIsFlipped(false);
-                setTimeout(() => {
-                    setCurrentIndex((prev) => (prev - 1 + cards.length) % cards.length);
-                }, 150);
-            };
-
-            const handleShuffle = () => {
-                setIsFlipped(false);
-                setTimeout(() => {
-                    setCards(shuffleArray(cards));
-                    setCurrentIndex(0);
-                }, 150);
-            };
-
-            if (cards.length === 0) return <div className="text-center p-8 text-gray-500">Không có dữ liệu</div>;
-
-            const currentCard = cards[currentIndex];
-            const frontText = mode === 'ja-vi' ? currentCard.ja : currentCard.vi;
-            const backText = mode === 'ja-vi' ? currentCard.vi : currentCard.ja;
-            
-            // Hàm điều chỉnh size chữ cho vừa khung hình
-            const getFontSizeClass = (text, isJa) => {
-                if (text.length > 50) return isJa ? 'text-lg text-blue-800 font-bold px-4' : 'text-base text-gray-800 font-medium px-4';
-                if (text.length > 25) return isJa ? 'text-xl md:text-2xl text-blue-800 font-bold px-4' : 'text-lg md:text-xl text-gray-800 font-medium px-4';
-                return isJa ? 'text-3xl md:text-4xl text-blue-800 font-bold px-4' : 'text-2xl md:text-3xl text-gray-800 font-medium px-4';
-            };
-
-            const frontClass = getFontSizeClass(frontText, mode === 'ja-vi');
-            const backClass = getFontSizeClass(backText, mode === 'vi-ja');
-
-            return (
-                <div className="flex flex-col items-center justify-center py-6">
-                    <div className="mb-4 text-sm font-semibold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                        {currentIndex + 1} / {cards.length} | Bài {currentCard.lesson}
-                    </div>
-
-                    {/* Card Container */}
-                    <div 
-                        className="perspective-1000 w-full max-w-md h-64 md:h-72 cursor-pointer"
-                        onClick={() => setIsFlipped(!isFlipped)}
-                    >
-                        <div className={`relative w-full h-full rounded-2xl shadow-lg transform-style-3d flip-card-inner border-2 border-green-100 ${isFlipped ? 'rotate-y-180' : ''}`}>
-                            
-                            {/* Front */}
-                            <div className="absolute w-full h-full backface-hidden bg-white rounded-2xl flex items-center justify-center text-center overflow-y-auto custom-scrollbar">
-                                <button 
-                                    onClick={(e) => { e.stopPropagation(); playAudio(frontText, mode === 'ja-vi' ? 'ja' : 'vi'); }}
-                                    className="absolute top-4 right-4 p-2.5 text-blue-600 bg-blue-50 hover:bg-blue-100 hover:scale-105 rounded-full shadow-sm transition"
-                                    title="Nghe phát âm"
-                                >
-                                    <SpeakerIcon className="w-5 h-5"/>
-                                </button>
-                                <span className={frontClass}>{frontText}</span>
-                                <span className="absolute bottom-4 text-xs text-gray-400 font-light flex items-center gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 0 1 9-9"/></svg>
-                                    Chạm để lật
-                                </span>
-                            </div>
-
-                            {/* Back */}
-                            <div className="absolute w-full h-full backface-hidden bg-pattern rounded-2xl flex flex-col items-center justify-center text-center rotate-y-180 border-2 border-green-200 overflow-y-auto custom-scrollbar">
-                                <button 
-                                    onClick={(e) => { e.stopPropagation(); playAudio(backText, mode === 'ja-vi' ? 'vi' : 'ja'); }}
-                                    className="absolute top-4 right-4 p-2.5 text-green-600 bg-white hover:bg-green-50 hover:scale-105 rounded-full shadow-sm transition border border-green-100"
-                                    title="Nghe phát âm"
-                                >
-                                    <SpeakerIcon className="w-5 h-5"/>
-                                </button>
-                                <span className={backClass}>{backText}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Controls */}
-                    <div className="flex items-center gap-6 mt-10">
-                        <button onClick={handlePrev} className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 transition shadow-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-                        </button>
-                        <button onClick={handleShuffle} className="px-6 py-2.5 rounded-full bg-green-100 text-green-700 font-semibold hover:bg-green-200 transition shadow flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.7-1.1 2-1.7 3.3-1.7H2"/><path d="m18 2 4 4-4 4"/><path d="M2 6h1.9c1.5 0 2.8.8 3.6 2.1l2 3.1"/><path d="m22 16-4 4 4 4"/><path d="M13.8 16.3c-.8 1.1-2.1 1.7-3.4 1.7H2"/></svg>
-                            Trộn thẻ
-                        </button>
-                        <button onClick={handleNext} className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 transition shadow-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                        </button>
-                    </div>
-                </div>
-            );
-        };
-
-        const Quiz = ({ data, mode, lesson }) => {
-            const [questions, setQuestions] = useState([]);
-            const [currentQIndex, setCurrentQIndex] = useState(0);
-            const [score, setScore] = useState(0);
-            const [selectedAnswer, setSelectedAnswer] = useState(null);
-            const [isFinished, setIsFinished] = useState(false);
-
-            useEffect(() => {
-                generateQuiz(data);
-            }, [data, mode]);
-
-            const generateQuiz = (vocabData) => {
-                if (vocabData.length < 4) return;
-                
-                let pool = shuffleArray(vocabData);
-                let quizLength = Math.min(pool.length, 20); // Tối đa 20 câu 1 lượt
-                let generatedQuestions = [];
-
-                for (let i = 0; i < quizLength; i++) {
-                    const correctWord = pool[i];
-                    let wrongOptions = vocabularyData.filter(w => w.id !== correctWord.id);
-                    wrongOptions = shuffleArray(wrongOptions).slice(0, 3);
-                    
-                    let optionsData = [correctWord, ...wrongOptions];
-                    optionsData = shuffleArray(optionsData);
-
-                    generatedQuestions.push({
-                        correct: correctWord,
-                        options: optionsData,
-                        questionText: mode === 'ja-vi' ? correctWord.ja : correctWord.vi,
-                        correctOptionText: mode === 'ja-vi' ? correctWord.vi : correctWord.ja
-                    });
-                }
-                
-                setQuestions(generatedQuestions);
-                setCurrentQIndex(0);
-                setScore(0);
-                setSelectedAnswer(null);
-                setIsFinished(false);
-            };
-
-            const handleAnswer = (option) => {
-                if (selectedAnswer !== null) return;
-                
-                const currentQ = questions[currentQIndex];
-                const selectedText = mode === 'ja-vi' ? option.vi : option.ja;
-                const isCorrect = selectedText === currentQ.correctOptionText;
-                
-                setSelectedAnswer({ text: selectedText, isCorrect });
-
-                if (isCorrect) setScore(score + 1);
-
-                setTimeout(() => {
-                    if (currentQIndex + 1 < questions.length) {
-                        setCurrentQIndex(currentQIndex + 1);
-                        setSelectedAnswer(null);
-                    } else {
-                        setIsFinished(true);
-                    }
-                }, 1200);
-            };
-
-            if (data.length < 4) {
-                return (
-                    <div className="text-center p-10 text-orange-600 bg-orange-50 rounded-xl border border-orange-200">
-                        Bài học này không đủ từ vựng (cần ít nhất 4 từ) để tạo bộ câu hỏi trắc nghiệm.
-                    </div>
-                );
-            }
-
-            if (isFinished) {
-                const percentage = Math.round((score / questions.length) * 100);
-                let message = "";
-                if (percentage >= 80) message = "Tuyệt vời! Bạn ghi nhớ rất tốt!";
-                else if (percentage >= 50) message = "Khá lắm, hãy cố gắng ôn tập thêm chút nữa nhé!";
-                else message = "Bạn cần ôn tập nhiều hơn ở bài này nha.";
-
-                return (
-                    <div className="text-center py-10 flex flex-col items-center">
-                        <div className="w-32 h-32 bg-green-100 rounded-full flex items-center justify-center mb-6 shadow-inner border-4 border-white">
-                            <span className="text-4xl font-bold text-green-600">{score}/{questions.length}</span>
-                        </div>
-                        <h2 className="text-2xl font-bold text-gray-800 mb-2">Hoàn thành bài kiểm tra!</h2>
-                        <p className="text-gray-600 mb-8 font-medium">{message}</p>
-                        <button 
-                            onClick={() => generateQuiz(data)}
-                            className="px-8 py-3 bg-green-600 text-white rounded-full font-bold shadow hover:bg-green-700 hover:-translate-y-1 transition transform"
-                        >
-                            Làm lại bài
-                        </button>
-                    </div>
-                );
-            }
-
-            if (questions.length === 0) return null;
-
-            const currentQ = questions[currentQIndex];
-
-            return (
-                <div className="max-w-3xl mx-auto py-4">
-                    {/* Progress */}
-                    <div className="mb-6 flex items-center justify-between">
-                        <span className="text-sm font-bold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">Câu {currentQIndex + 1} / {questions.length}</span>
-                        <span className="text-sm font-bold text-green-600 bg-green-50 px-3 py-1 rounded-full border border-green-100">Điểm: {score}</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2.5 mb-8 overflow-hidden">
-                        <div className="bg-green-500 h-2.5 rounded-full transition-all duration-500 ease-out" style={{ width: `${((currentQIndex + 1) / questions.length) * 100}%` }}></div>
-                    </div>
-
-                    {/* Question Card */}
-                    <div className="text-center mb-10 relative">
-                        <h3 className="text-xs text-gray-400 mb-3 uppercase tracking-widest font-bold">Câu hỏi</h3>
-                        <div className="py-10 px-6 bg-blue-50/50 rounded-2xl border border-blue-100 shadow-sm flex flex-col items-center justify-center gap-6 relative">
-                            
-                            <button 
-                                onClick={() => playAudio(currentQ.questionText, mode === 'ja-vi' ? 'ja' : 'vi')}
-                                className="absolute top-4 right-4 p-3 text-blue-600 bg-white hover:bg-blue-100 hover:scale-110 rounded-full shadow transition"
-                                title="Nghe câu hỏi"
-                            >
-                                <SpeakerIcon className="w-6 h-6"/>
-                            </button>
-
-                            <div className={`text-2xl md:text-4xl font-bold ${mode === 'ja-vi' ? 'text-blue-900' : 'text-gray-800'} leading-tight px-4`}>
-                                {currentQ.questionText}
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Options Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {currentQ.options.map((opt, idx) => {
-                            const optionText = mode === 'ja-vi' ? opt.vi : opt.ja;
-                            let buttonClass = "p-5 text-lg font-medium border-2 rounded-xl transition-all duration-200 text-center flex items-center justify-center min-h-[90px] shadow-sm ";
-                            
-                            if (selectedAnswer === null) {
-                                buttonClass += "border-gray-200 bg-white hover:border-green-400 hover:bg-green-50 hover:-translate-y-1 hover:shadow text-gray-700 cursor-pointer";
-                            } else {
-                                if (optionText === currentQ.correctOptionText) {
-                                    buttonClass += "border-green-500 bg-green-100 text-green-900 scale-[1.02] shadow-md z-10"; // Đúng
-                                } else if (selectedAnswer.text === optionText && !selectedAnswer.isCorrect) {
-                                    buttonClass += "border-red-400 bg-red-50 text-red-800"; // Sai
-                                } else {
-                                    buttonClass += "border-gray-200 bg-gray-50 text-gray-400 opacity-60"; // Mờ đi
-                                }
-                            }
-
-                            return (
-                                <button 
-                                    key={idx}
-                                    disabled={selectedAnswer !== null}
-                                    onClick={() => handleAnswer(opt)}
-                                    className={buttonClass}
-                                >
-                                    {optionText}
-                                </button>
-                            );
-                        })}
-                    </div>
-                </div>
-            );
-        };
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
+document.querySelectorAll(".card").forEach(c=>{
+c.addEventListener("mouseenter",()=>{try{hoverAudio.currentTime=0;hoverAudio.play()}catch(e){}});
+c.addEventListener("click",()=>{try{clickAudio.currentTime=0;clickAudio.play()}catch(e){}});
+});
+</script>
 </body>
 </html>
