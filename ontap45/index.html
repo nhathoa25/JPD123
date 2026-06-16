@@ -3,98 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luyện Tập Kanji & Ngữ Pháp Bài 4 & 5</title>
+    <title>Luyện Tập Tiếng Nhật</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
         body {
             font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #fce4ec 0%, #eef2ff 50%, #e0f7fa 100%);
+            background: linear-gradient(135deg, #fde4f2 0%, #eef2ff 50%, #e0f2fe 100%);
             min-height: 100vh;
             color: #1e293b;
             overflow-x: hidden;
-            background-attachment: fixed;
         }
-        
         .glass-panel {
             background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15), inset 0 0 0 1px rgba(255,255,255,0.5);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
         }
 
+        /* --- ANIMATIONS & HOVER EFFECTS --- */
         .hover-lift {
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
         }
         .hover-lift:hover:not(:disabled) {
-            transform: translateY(-6px) scale(1.01);
-            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.25);
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 15px 30px -10px rgba(99, 102, 241, 0.3);
         }
         .btn-press {
-            transition: transform 0.1s ease, filter 0.1s ease;
+            transition: transform 0.1s ease;
         }
         .btn-press:active:not(:disabled) {
-            transform: scale(0.95);
-            filter: brightness(0.9);
+            transform: scale(0.96);
         }
         .floating-icon {
-            animation: float 4s ease-in-out infinite;
+            animation: float 3.5s ease-in-out infinite;
         }
         @keyframes float {
             0% { transform: translateY(0px) rotate(3deg); }
-            50% { transform: translateY(-15px) rotate(-3deg); }
+            50% { transform: translateY(-12px) rotate(-3deg); }
             100% { transform: translateY(0px) rotate(3deg); }
         }
         .animate-fade-in-up {
             animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .animate-pulse-glow {
-            animation: pulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            animation: pulseGlow 2s infinite;
         }
         @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.5); }
-            50% { box-shadow: 0 0 0 12px rgba(99, 102, 241, 0); }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
         }
 
+        /* --- OPTION STATES --- */
         .option-btn {
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s ease;
         }
         .option-correct {
             border-color: #10b981 !important;
             background-color: #ecfdf5 !important;
-            color: #065f46 !important;
+            color: #065f46;
             transform: scale(1.02);
-            box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.25);
+            box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.2);
         }
         .option-wrong {
             border-color: #ef4444 !important;
             background-color: #fef2f2 !important;
-            color: #991b1b !important;
-            animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-        }
-        @keyframes shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
+            color: #991b1b;
         }
         .option-disabled {
-            opacity: 0.5;
-            filter: grayscale(0.8);
+            opacity: 0.6;
+            filter: grayscale(0.5);
             cursor: not-allowed;
-            transform: scale(0.98);
         }
 
+        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 20px; border: 2px solid transparent; background-clip: content-box; }
-        ::-webkit-scrollbar-thumb:hover { background-color: #94a3b8; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.02); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         
         input[type="number"]::-webkit-inner-spin-button, 
         input[type="number"]::-webkit-outer-spin-button { 
@@ -102,24 +93,20 @@
         }
     </style>
 </head>
-<body class="p-4 md:p-6 lg:p-8 flex items-center justify-center">
+<body class="p-4 md:p-8 flex items-center justify-center">
 
-    <div id="app" class="w-full max-w-5xl glass-panel rounded-[2rem] overflow-hidden relative shadow-2xl">
-        <!-- SPA Render Target -->
+    <div id="app" class="w-full max-w-4xl glass-panel rounded-3xl overflow-hidden relative min-h-[600px] flex flex-col">
+        <!-- Rendered Content will go here -->
     </div>
 
 <script>
-// =========================================================================
-// 1. DỮ LIỆU ĐẦU VÀO KANJI & TỪ VỰNG (ĐÃ LÀM SẠCH KANJI LẠ)
-// =========================================================================
-
 const kanjiData = [
-    // Bài 4 (13 chữ)
-    { k: '東', h: 'ひがし', m: 'Phía đông' }, { k: '東京', h: 'とうきょう', m: 'Tokyo' }, { k: '名人', h: 'めいじん', m: 'Danh nhân' },
+    // Bài 4
+    { k: '東', h: 'ひがし', m: 'Phía đông' }, { k: '東京', h: 'とうきょう', m: 'Toukyou' }, { k: '名人', h: 'めいじん', m: 'Danh nhân' },
     { k: '名前', h: 'なまえ', m: 'Tên' }, { k: '前', h: 'まえ', m: 'Phía trước' }, { k: '前日', h: 'ぜんじつ', m: 'Ngày trước' },
     { k: '国', h: 'くに', m: 'Nước, quốc gia' }, { k: '国語', h: 'こくご', m: 'Quốc ngữ' }, { k: '男', h: 'おとこ', m: 'Đàn ông, nam' },
     { k: '女', h: 'おんな', m: 'Phụ nữ, nữ' }, { k: '男女', h: 'だんじょ', m: 'Nam nữ' }, { k: '区', h: 'く', m: 'Quận' }, { k: '市', h: 'し', m: 'Thành phố' },
-    // Bài 5 (31 chữ)
+    // Bài 5
     { k: '先生', h: 'せんせい', m: 'Giáo viên' }, { k: '先日', h: 'せんじつ', m: 'Ngày trước' }, { k: '先月', h: 'せんげつ', m: 'Tháng trước' },
     { k: '先週', h: 'せんしゅう', m: 'Tuần trước' }, { k: '週間', h: 'しゅうかん', m: '～tuần (số lượng)' }, { k: '毎日', h: 'まいにち', m: 'Mỗi ngày' },
     { k: '毎月', h: 'まいげつ', m: 'Mỗi tháng' }, { k: '毎週', h: 'まいしゅう', m: 'Mỗi tuần' }, { k: '毎年', h: 'まいとし', m: 'Mỗi năm' },
@@ -134,141 +121,112 @@ const kanjiData = [
 ];
 
 const vocabData = [
-    // Bổ sung rất nhiều từ vựng Bài 4 & 5 (Hoàn toàn bằng Hiragana/Katakana)
-    { h: 'きた', m: 'Phía bắc' }, { h: 'みなみ', m: 'Phía nam' }, { h: 'にし', m: 'Phía tây' },
-    { h: 'まんなか', m: 'Ở giữa' }, { h: 'くるま', m: 'Xe ô-tô' }, { h: 'しんかんせん', m: 'Tàu cao tốc' },
-    { h: 'でんしゃ', m: 'Tàu điện' }, { h: 'ひこうき', m: 'Máy bay' }, { h: 'ふね', m: 'Tàu thủy' },
-    { h: 'バス', m: 'Xe buýt' }, { h: 'タクシー', m: 'Xe taxi' }, { h: 'じてんしゃ', m: 'Xe đạp' },
-    { h: 'えき', m: 'Nhà ga' }, { h: 'まち', m: 'Thành phố, khu phố' }, { h: 'じかん', m: 'Tiếng (đồng hồ)' },
-    { h: 'ふん / ぷん', m: 'Phút' }, { h: 'おんせん', m: 'Suối nước nóng' }, { h: 'かわ', m: 'Sông' },
-    { h: 'やま', m: 'Núi' }, { h: 'きょうかい', m: 'Nhà thờ' }, { h: 'じんじゃ', m: 'Đền Thần đạo' },
-    { h: 'てら', m: 'Chùa' }, { h: 'がっこう', m: 'Trường học' }, { h: 'だいがく', m: 'Đại học' },
-    { h: 'びょういん', m: 'Bệnh viện' }, { h: 'ぎんこう', m: 'Ngân hàng' }, { h: 'ゆうびんきょく', m: 'Bưu điện' },
-    { h: 'としょかん', m: 'Thư viện' }, { h: 'スーパー', m: 'Siêu thị' }, { h: 'ホテル', m: 'Khách sạn' },
-    { h: 'レストラン', m: 'Nhà hàng' },
-    
-    // Tính từ
-    { h: 'あたらしい', m: 'Mới' }, { h: 'ふるい', m: 'Cũ' }, { h: 'おおい', m: 'Nhiều' },
-    { h: 'すくない', m: 'Ít' }, { h: 'おおきい', m: 'To, lớn' }, { h: 'ちいさい', m: 'Nhỏ, bé' },
-    { h: 'たかい', m: 'Cao, đắt' }, { h: 'ひくい', m: 'Thấp' }, { h: 'きれい', m: 'Đẹp, sạch' },
-    { h: 'しずか', m: 'Yên tĩnh' }, { h: 'にぎやか', m: 'Náo nhiệt' }, { h: 'ゆうめい', m: 'Nổi tiếng' },
-    { h: 'あめ', m: 'Mưa' }, { h: 'ゆき', m: 'Tuyết' }, { h: 'あたたかい', m: 'Ấm áp (thời tiết)' },
-    { h: 'すずしい', m: 'Mát mẻ' }, { h: 'あつい', m: 'Nóng (thời tiết)' }, { h: 'さむい', m: 'Lạnh (thời tiết)' },
-    { h: 'おいしい', m: 'Ngon' }, { h: 'あまい', m: 'Ngọt' }, { h: 'からい', m: 'Cay' },
-    { h: 'にがい', m: 'Đắng' }, { h: 'すっぱい', m: 'Chua' }, { h: 'とても', m: 'Rất' }, { h: 'あまり', m: 'Không... lắm' },
-    { h: 'いそがしい', m: 'Bận rộn' }, { h: 'おもしろい', m: 'Thú vị' }, { h: 'やすい', m: 'Rẻ' },
-    { h: 'たのしい', m: 'Vui vẻ' }, { h: 'むずかしい', m: 'Khó' }, { h: 'かんたん', m: 'Đơn giản' },
-    { h: 'ひま', m: 'Rảnh rỗi' }, { h: 'いい / よい', m: 'Tốt' }, { h: 'わるい', m: 'Xấu, tồi' },
-
-    // Bài 5 thời gian & người & động từ (không kanji)
-    { h: 'しゅうまつ', m: 'Cuối tuần' }, { h: 'きょう', m: 'Hôm nay' }, { h: 'あした', m: 'Ngày mai' },
-    { h: 'きのう', m: 'Hôm qua' }, { h: 'おととい', m: 'Hôm kia' }, { h: 'あさって', m: 'Ngày kia' },
-    { h: 'いえ', m: 'Nhà' }, { h: 'へや', m: 'Căn phòng' }, { h: 'デパート', m: 'Bách hóa' }, 
-    { h: 'びじゅつかん', m: 'Bảo tàng mỹ thuật' }, { h: 'かぞく', m: 'Gia đình' }, { h: 'ともだち', m: 'Bạn bè' }, 
-    { h: 'こいびと', m: 'Người yêu' }, { h: 'あいます', m: 'Gặp gỡ' }, { h: 'つくります', m: 'Làm, chế tạo' },
-    { h: 'せんたくします', m: 'Giặt giũ' }, { h: 'そうじします', m: 'Dọn dẹp vệ sinh' }, { h: 'きます', m: 'Đến' },
-    { h: 'かえります', m: 'Về' }, { h: 'べんきょうします', m: 'Học bài' }
+    // PURE KANA VOCAB (No extraneous Kanji)
+    // L4
+    { h: 'きた', m: 'Phía bắc' }, { h: 'みなみ', m: 'Phía nam' }, { h: 'にし', m: 'Phía tây' }, { h: 'まんなか', m: 'Ở giữa' },
+    { h: 'くるま', m: 'Xe ô-tô' }, { h: 'しんかんせん', m: 'Tàu cao tốc' }, { h: 'でんしゃ', m: 'Tàu điện' }, { h: 'ひこうき', m: 'Máy bay' },
+    { h: 'えき', m: 'Nhà ga' }, { h: 'まち', m: 'Thành phố, khu phố' }, { h: 'じかん', m: 'Tiếng (đồng hồ)' }, { h: 'ふん', m: 'Phút' },
+    { h: 'あるいて', m: 'Đi bộ' }, { h: 'ホテル', m: 'Khách sạn' }, { h: 'レストラン', m: 'Nhà hàng' }, { h: 'ゆうびんきょく', m: 'Bưu điện' },
+    { h: 'ぎんこう', m: 'Ngân hàng' }, { h: 'としょかん', m: 'Thư viện' }, { h: 'びょういん', m: 'Bệnh viện' }, { h: 'だいがく', m: 'Đại học' },
+    { h: 'おんせん', m: 'Suối nước nóng' }, { h: 'かわ', m: 'Sông' }, { h: 'やま', m: 'Núi' }, { h: 'うみ', m: 'Biển' },
+    { h: 'きょうかい', m: 'Nhà thờ' }, { h: 'じんじゃ', m: 'Đền Thần đạo' }, { h: 'てら', m: 'Chùa' }, { h: 'プール', m: 'Hồ bơi' },
+    { h: 'あたらしい', m: 'Mới' }, { h: 'ふるい', m: 'Cũ' }, { h: 'おおい', m: 'Nhiều' }, { h: 'すくない', m: 'Ít' },
+    { h: 'おおきい', m: 'To, lớn' }, { h: 'ちいさい', m: 'Nhỏ, bé' }, { h: 'たかい', m: 'Cao, đắt' }, { h: 'ひくい', m: 'Thấp' },
+    { h: 'きれい', m: 'Đẹp, sạch' }, { h: 'しずか', m: 'Yên tĩnh' }, { h: 'にぎやか', m: 'Náo nhiệt' }, { h: 'ゆうめい', m: 'Nổi tiếng' },
+    { h: 'いい', m: 'Tốt' }, { h: 'わるい', m: 'Xấu' }, { h: 'とおい', m: 'Xa' }, { h: 'ちかい', m: 'Gần' },
+    { h: 'むずかしい', m: 'Khó' }, { h: 'やさしい', m: 'Dễ, hiền lành' }, { h: 'はやい', m: 'Nhanh, sớm' }, { h: 'おそい', m: 'Chậm, muộn' },
+    { h: 'あめ', m: 'Mưa' }, { h: 'ゆき', m: 'Tuyết' }, { h: 'あたたかい', m: 'Ấm áp' }, { h: 'すずしい', m: 'Mát mẻ' },
+    { h: 'あつい', m: 'Nóng' }, { h: 'さむい', m: 'Lạnh' }, { h: 'おいしい', m: 'Ngon' }, { h: 'あまい', m: 'Ngọt' },
+    { h: 'からい', m: 'Cay' }, { h: 'にがい', m: 'Đắng' }, { h: 'すっぱい', m: 'Chua' },
+    { h: 'とても', m: 'Rất' }, { h: 'すこし', m: 'Một chút, ít' }, { h: 'あまり', m: 'Không... lắm' }, { h: 'ぜんぜん', m: 'Hoàn toàn không...' },
+    { h: 'いつも', m: 'Luôn luôn' }, { h: 'たいてい', m: 'Thường, thông thường' }, { h: 'よく', m: 'Thường xuyên' }, { h: 'ときどき', m: 'Thỉnh thoảng' },
+    // L5
+    { h: 'しゅうまつ', m: 'Cuối tuần' }, { h: 'きょう', m: 'Hôm nay' }, { h: 'あした', m: 'Ngày mai' }, { h: 'きのう', m: 'Hôm qua' },
+    { h: 'あさって', m: 'Ngày kia' }, { h: 'おととい', m: 'Hôm kia' }, { h: 'こんしゅう', m: 'Tuần này' }, { h: 'らいしゅう', m: 'Tuần sau' },
+    { h: 'こんげつ', m: 'Tháng này' }, { h: 'らいげつ', m: 'Tháng sau' }, { h: 'ことし', m: 'Năm nay' }, { h: 'らいねん', m: 'Năm sau' },
+    { h: 'いえ', m: 'Nhà' }, { h: 'へや', m: 'Căn phòng' }, { h: 'デパート', m: 'Bách hóa' }, { h: 'スーパー', m: 'Siêu thị' },
+    { h: 'びじゅつかん', m: 'Bảo tàng mỹ thuật' }, { h: 'かぞく', m: 'Gia đình' }, { h: 'ともだち', m: 'Bạn bè' }, { h: 'こいびと', m: 'Người yêu' },
+    { h: 'おまつり', m: 'Lễ hội' }, { h: 'コンサート', m: 'Buổi hòa nhạc' }, { h: 'えいが', m: 'Phim ảnh' },
+    { h: 'あいます', m: 'Gặp gỡ' }, { h: 'つくります', m: 'Làm, chế tạo' }, { h: 'せんたくします', m: 'Giặt giũ' }, { h: 'そうじします', m: 'Dọn dẹp vệ sinh' },
+    { h: 'おきます', m: 'Thức dậy' }, { h: 'ねます', m: 'Ngủ' }, { h: 'はたらきます', m: 'Làm việc' }, { h: 'べんきょうします', m: 'Học tập' },
+    { h: 'パン', m: 'Bánh mì' }, { h: 'たまご', m: 'Trứng' }, { h: 'にく', m: 'Thịt' }, { h: 'さかな', m: 'Cá' },
+    { h: 'やさい', m: 'Rau' }, { h: 'くだもの', m: 'Trái cây' }, { h: 'みず', m: 'Nước' }, { h: 'おちゃ', m: 'Trà (Nhật)' },
+    { h: 'こうちゃ', m: 'Trà đen' }, { h: 'ぎゅうにゅう', m: 'Sữa bò' }, { h: 'ジュース', m: 'Nước ép' }, { h: 'ビール', m: 'Bia' },
+    { h: 'まいあさ', m: 'Mỗi sáng' }, { h: 'まいばん', m: 'Mỗi tối' }, { h: 'ごはん', m: 'Cơm, bữa ăn' }, { h: 'あさごはん', m: 'Bữa sáng' },
+    { h: 'ひるごはん', m: 'Bữa trưa' }, { h: 'ばんごはん', m: 'Bữa tối' }, { h: 'のみます', m: 'Uống' }, { h: 'たべます', m: 'Ăn' },
+    { h: 'みます', m: 'Xem, nhìn' }, { h: 'ききます', m: 'Nghe, hỏi' }, { h: 'よみます', m: 'Đọc' }, { h: 'かきます', m: 'Viết, vẽ' },
+    { h: 'かいます', m: 'Mua' }, { h: 'とります', m: 'Chụp (ảnh), lấy' }, { h: 'しゃしん', m: 'Bức ảnh' }, { h: 'てがみ', m: 'Bức thư' }
 ];
 
-const grammarData = [
-    // --- BÀI 4: VỊ TRÍ, ĐỊA ĐIỂM ---
-    { q: "_____ は どこ ですか。", opts: ["Danh từ", "Nơi chốn に", "Nơi chốn で", "Nơi chốn へ"], ans: "Danh từ", exp: "Hỏi vị trí 'A ở đâu?'. Cấu trúc: A は どこ ですか。" },
-    { q: "とうきょう は どこ _____。", opts: ["ですか", "ますか", "ありますか", "いますか"], ans: "ですか", exp: "Hỏi địa điểm dùng mẫu câu: N は どこ ですか (N ở đâu?)." },
-    { q: "FPTだいがく _____ どこですか。", opts: ["は", "が", "に", "を"], ans: "は", exp: "Trợ từ chỉ chủ đề của câu hỏi vị trí luôn là は." },
-    { q: "えき は どこですか。 ー びじゅつかん の _____ です。", opts: ["となり", "に", "あります", "から"], ans: "となり", exp: "Chỉ vị trí tương đối: N1 の (vị trí - ví dụ: となり - bên cạnh) です." },
-    { q: "つくえ の うえ _____ ほん が あります。", opts: ["に", "で", "は", "を"], ans: "に", exp: "Vị trí tồn tại của vật: Vị trí + に + Danh từ + が + あります." },
-    { q: "ホテル は どこに ありますか。ー ゆうびんきょく _____ ぎんこうの あいだです。", opts: ["と", "に", "で", "を"], ans: "と", exp: "Cấu trúc A và B: A と B の あいだ (Ở giữa A và B)." },
-    { q: "レストランの _____ に くるま が あります。", opts: ["まえ", "に", "へ", "は"], ans: "まえ", exp: "Danh từ chỉ phương hướng/vị trí đi sau 'の'. (Ví dụ: まえ - phía trước)." },
-    { q: "あそこに スーパー _____ あります。", opts: ["が", "を", "に", "は"], ans: "が", exp: "Đi với あります (Có) luôn dùng trợ từ が." },
+const explicitGrammarData = [
+    // --- VỊ TRÍ, TỒN TẠI ---
+    { q: "_____ は どこ ですか。", opts: ["Danh từ nơi chốn", "Nơi chốn に", "Nơi chốn で", "Nơi chốn へ"], ans: "Danh từ nơi chốn", exp: "Cấu trúc hỏi vị trí 'A ở đâu?': [Danh từ] は どこ ですか。 (Tuyệt đối không dùng trợ từ に/で/へ đi kèm chủ ngữ). Nghĩa: [Nơi chốn] ở đâu?" },
+    { q: "えき は どこですか。 ー びじゅつかん の _____ です。", opts: ["となり", "に", "あります", "から"], ans: "となり", exp: "Chỉ vị trí tương đối: N1 の [vị trí] です. Ví dụ: となり (bên cạnh). Nghĩa: Nhà ga ở đâu? - Ở bên cạnh bảo tàng." },
+    { q: "ホテル は どこに ありますか。ー ゆうびんきょく _____ ぎんこうの あいだです。", opts: ["と", "に", "で", "を"], ans: "と", exp: "Cấu trúc 'Ở giữa A và B': A と B の あいだ. Nghĩa: Khách sạn ở đâu? - Ở giữa bưu điện VÀ ngân hàng." },
+    { q: "つくえ の うえ _____ ほん が あります。", opts: ["に", "で", "を", "へ"], ans: "に", exp: "Chỉ nơi tồn tại của sự vật vô tri/cây cối dùng trợ từ に: Địa điểm に + Sự vật が あります. Nghĩa: Ở trên bàn có quyển sách." },
+    { q: "あそこに せんせい _____ います。", opts: ["が", "を", "に", "は"], ans: "が", exp: "Trợ từ đi với động từ tồn tại (います/あります) để nhấn mạnh sự vật là が. Nghĩa: Ở đằng kia có giáo viên." },
+    { q: "へや の なか に なに _____ ありますか。", opts: ["が", "を", "は", "か"], ans: "が", exp: "Hỏi 'Có CÁI GÌ' dùng từ để hỏi: なに + が + ありますか. Nghĩa: Bên trong căn phòng có cái gì vậy?" },
+    { q: "としょかん は どこですか。 ー あそこ _____。", opts: ["です", "あります", "います", "にです"], ans: "です", exp: "Cách trả lời ngắn gọn vị trí: [Nơi chốn] です. Nghĩa: Thư viện ở đâu? - Ở đằng kia." },
     
-    // --- BÀI 4: THỜI GIAN, KHOẢNG CÁCH ---
-    { q: "とうきょう _____ Ayuttaya _____ バス _____ 1じかんはんくらいです。", opts: ["から / まで / で", "に / から / で", "まで / から / に", "から / まで / に"], ans: "から / まで / で", exp: "Khoảng thời gian: Từ A (から) đến B (まで) bằng phương tiện C (で) mất khoảng..." },
-    { q: "えきまで あるいて 10ぷん _____。", opts: ["くらいです", "ごろです", "までです", "からです"], ans: "くらいです", exp: "Hỏi/nói về khoảng thời gian, khoảng cách: dùng くらい (khoảng/chừng). Không đi với trợ từ に." },
-    { q: "うちから がっこうまで バス _____ 20ぷんくらいです。", opts: ["で", "に", "を", "へ"], ans: "で", exp: "Trợ từ で dùng để chỉ phương tiện di chuyển (bằng xe buýt)." },
-    { q: "うちから がっこうまで _____ 20ぷんくらいです。", opts: ["あるいて", "あるくで", "あるきますで", "あるいてで"], ans: "あるいて", exp: "Đi bộ là あるいて. Lưu ý: Đi bộ KHÔNG CÓ trợ từ で." },
-    { q: "Hanoiから Danangまで どのくらい _____。", opts: ["ですか", "ありますか", "かかりますか", "かかります"], ans: "ですか", exp: "Hỏi tốn bao nhiêu thời gian đi lại thường dùng どのくらいですか." }, 
-    { q: "うち _____ えき まで タクシー で 行きます。", opts: ["から", "に", "を", "へ"], ans: "から", exp: "Điểm xuất phát: N (địa điểm) + から (Từ...)." },
-    { q: "あした、とうきょう _____ きます。", opts: ["へ", "で", "を", "が"], ans: "へ", exp: "Động từ di chuyển (いきます, きます, かえります) đi với trợ từ へ (hoặc に) chỉ phương hướng." },
-
-    // --- BÀI 4: TÍNH TỪ HIỆN TẠI ---
-    { q: "FPTは _____。 (Phủ định của おおきい - To lớn)", opts: ["おおきくないです", "おおきいじゃないです", "おおきいでした", "おおきくなかったです"], ans: "おおきくないです", exp: "Tính từ đuôi い: Khẳng định (おおきいです) -> Phủ định: Bỏ 'い' thêm 'くないです'." },
-    { q: "この まちは _____。 (Phủ định của しずか - Yên tĩnh)", opts: ["しずかじゃないです", "しずかなくないです", "しずかでした", "しずかくないです"], ans: "しずかじゃないです", exp: "Tính từ đuôi な: Khẳng định (しずかです) -> Phủ định: Bỏ 'な' thêm 'じゃないです'." },
-    { q: "Hanoiは 8がつ、 _____ あついです。 (Rất nóng)", opts: ["とても", "あまり", "すこし", "ぜんぜん"], ans: "とても", exp: "とても (rất) đi với câu khẳng định. あまり (không lắm) đi với câu phủ định." },
-    { q: "Hanoiは 9がつ、 _____ あつくないです。 (Không nóng lắm)", opts: ["あまり", "とても", "すこし", "よく"], ans: "あまり", exp: "あまり + Tính từ phủ định (くないです / じゃないです) mang nghĩa 'Không ... lắm'." },
-    { q: "FPTだいがく は _____ だいがくですか。 ー おおきい だいがくです。", opts: ["どんな", "どこ", "どう", "なに"], ans: "どんな", exp: "Hỏi tính chất của danh từ: どんな + N + ですか (N là loại... như thế nào?)." },
-    { q: "Hanoi は _____ ですか。 ー にぎやかです。", opts: ["どう", "どんな", "なに", "どこ"], ans: "どう", exp: "Hỏi cảm nghĩ/tính chất đứng một mình: どう ですか (Như thế nào?)." },
-    { q: "きょうの てんきは いいですか。－いいえ、_____。", opts: ["よくないです", "いくないです", "いいじゃないです", "よくなかったです"], ans: "よくないです", exp: "Phủ định của tính từ đặc biệt いい (tốt) là よくないです." },
-    { q: "にほんの せいかつは _____。 (Phủ định của らく - Nhàn rỗi)", opts: ["らくじゃないです", "らくくないです", "らくじゃなかったです", "らくです"], ans: "らくじゃないです", exp: "らく là tính từ đuôi na -> phủ định là らくじゃないです." },
-    { q: "さくらは _____ はな です。", opts: ["きれいな", "きれいの", "きれい", "きれいい"], ans: "きれいな", exp: "Tính từ đuôi な bổ nghĩa cho danh từ: Thêm 'な' + Danh từ (きれいな はな)." },
-    { q: "ふじさんは _____ やま です。", opts: ["たかい", "たかいな", "たかの", "たか"], ans: "たかい", exp: "Tính từ đuôi い bổ nghĩa cho danh từ: Giữ nguyên 'い' + Danh từ (たかい やま)." },
-
-    // --- BÀI 4: SỰ TỒN TẠI ---
-    { q: "Sapa に やま _____ あります。", opts: ["が", "を", "に", "は"], ans: "が", exp: "Chỉ sự tồn tại (đồ vật/cây cối/vô tri giác): Nơi chốn に + Vật が + あります." },
-    { q: "あそこに せんせい _____ います。", opts: ["が", "を", "に", "は"], ans: "が", exp: "Chỉ sự tồn tại (người/động vật sống): Nơi chốn に + Người/Vật sống が + います." },
-    { q: "へや の なか に なに _____ ありますか。", opts: ["が", "を", "は", "か"], ans: "が", exp: "Hỏi có CÁI GÌ dùng từ để hỏi なに + が + ありますか." },
-    { q: "あそこに だれ _____ いますか。", opts: ["が", "を", "は", "か"], ans: "が", exp: "Hỏi có AI dùng từ để hỏi だれ + が + いますか." },
-    { q: "いぬ は どこに _____。", opts: ["いますか", "ありますか", "ですか", "しますか"], ans: "いますか", exp: "Hỏi vị trí của động vật (có sinh mạng) dùng いますか." },
-    { q: "きょうかい は どこに _____。", opts: ["ありますか", "いますか", "ですか", "しますか"], ans: "ありますか", exp: "Hỏi vị trí của đồ vật/địa điểm (không có sinh mạng) dùng ありますか." },
-
-    // --- BÀI 4: TỪ NỐI ---
-    { q: "Hanoi は おおきくないですが、いいまち _____。", opts: ["です", "あります", "います", "だ"], ans: "です", exp: "Nối 2 vế câu tương phản với 'が': S1 です が、S2 です (Tuy S1 nhưng S2)." },
-    { q: "にほんごは むずかしいです。_____、おもしろいです。", opts: ["ですが", "そして", "それから", "から"], ans: "ですが", exp: "Dùng 'ですが' (nhưng) để nối 2 mệnh đề có ý nghĩa tương phản (Khó >< Thú vị)." },
-    { q: "この へやは ひろいです。_____、きれいです。", opts: ["そして", "ですが", "それから", "から"], ans: "そして", exp: "Dùng 'そして' (và) để nối 2 mệnh đề có ý nghĩa tương đồng (Cùng khen: rộng VÀ đẹp)." },
-    { q: "この パソコン は たかいです _____、いいです。", opts: ["が", "そして", "から", "で"], ans: "が", exp: "Nối liền 2 vế trong 1 câu thể hiện sự đối lập: ~です が (Đắt NHƯNG tốt)." },
-
-    // --- BÀI 5: ĐỘNG TỪ QUÁ KHỨ ---
-    { q: "きのう、なにか _____。 － いいえ、なにも たべませんでした。", opts: ["たべましたか", "たべますか", "たべませんでしたか", "たべたくないですか"], ans: "たべましたか", exp: "Hỏi quá khứ 'Hôm qua ĐÃ làm gì chưa?' dùng V-ましたか." },
-    { q: "にちようび、どこかへ 行きましたか。ー いいえ、どこ_____ いきませんでした。", opts: ["へも", "に", "を", "が"], ans: "へも", exp: "Phủ định hoàn toàn: どこへも + Động từ phủ định (Không đi đâu cả). Cũng có thể dùng どこも." },
-    { q: "あさごはん は なに _____ たべませんでした。", opts: ["も", "を", "は", "が"], ans: "も", exp: "Phủ định hoàn toàn với ĐỒ VẬT: なにも + V-phủ định (Không ăn GÌ CẢ)." },
-    { q: "きのう は だれ _____ あいませんでした。", opts: ["にも", "も", "は", "と"], ans: "にも", exp: "Phủ định hoàn toàn với NGƯỜI (gặp gỡ): だれにも + あいませんでした (Không gặp BẤT CỨ AI)." },
-    { q: "きのう、デパート で かいもの _____。", opts: ["しました", "します", "しません", "したいです"], ans: "しました", exp: "Trạng từ chỉ quá khứ (きのう - hôm qua) đi với động từ chia ở quá khứ (しました)." },
-
-    // --- BÀI 5: TRỢ TỪ HÀNH ĐỘNG ---
-    { q: "こいびと _____ えいがを 見ます。", opts: ["と", "に", "で", "を"], ans: "と", exp: "Thực hiện hành động CÙNG VỚI AI đó: Người + と + V." },
-    { q: "わたし は _____ えいが を 見ます。", opts: ["ひとりで", "ひとりと", "ひとりに", "ひとりでと"], ans: "ひとりで", exp: "Đặc biệt: Làm gì đó MỘT MÌNH dùng ひとりで (Không có trợ từ と)." },
-    { q: "まいあさ、うち _____ ごはん を たべます。", opts: ["で", "に", "へ", "を"], ans: "で", exp: "Địa điểm xảy ra HÀNH ĐỘNG (Ăn ở nhà) dùng trợ từ で. (Phân biệt với に của あります/います)." },
-    { q: "えき で ともだち _____ あいます。", opts: ["に", "を", "で", "へ"], ans: "に", exp: "Gặp gỡ AI ĐÓ dùng trợ từ に (Động từ あいます)." },
+    // --- KHOẢNG CÁCH, THỜI GIAN, DI CHUYỂN ---
+    { q: "とうきょう _____ おおさか _____ バス _____ 3じかんくらいです。", opts: ["から / まで / で", "に / から / で", "まで / から / に", "から / まで / に"], ans: "から / まで / で", exp: "Cấu trúc: Từ A (から) đến B (まで) bằng phương tiện C (で). Nghĩa: Từ Tokyo đến Osaka bằng xe buýt mất khoảng 3 tiếng." },
+    { q: "えきまで あるいて 10ぷん _____。", opts: ["くらいです", "ごろです", "までです", "からです"], ans: "くらいです", exp: "Khi nói về khoảng thời gian/khoảng cách mất bao lâu, dùng くらい (khoảng/chừng). Nghĩa: Đi bộ đến nhà ga mất khoảng 10 phút." },
+    { q: "うちから がっこうまで バス _____ 20ぷんくらいです。", opts: ["で", "に", "を", "へ"], ans: "で", exp: "Trợ từ で dùng chỉ phương tiện di chuyển. Nghĩa: Từ nhà đến trường bằng xe buýt mất khoảng 20 phút." },
+    { q: "うちから がっこうまで _____ 20ぷんくらいです。", opts: ["あるいて", "あるくで", "あるきますで", "あるいてで"], ans: "あるいて", exp: "Đi bộ là あるいて. (Đặc biệt lưu ý: Không dùng trợ từ で). Nghĩa: Từ nhà đến trường đi bộ mất khoảng 20 phút." },
+    { q: "ベトナムから にほんまで どのくらい _____。", opts: ["かかりますか", "ありますか", "ですか", "かかります"], ans: "かかりますか", exp: "Hỏi tốn bao nhiêu thời gian: どのくらい かかりますか. Nghĩa: Từ Việt Nam đến Nhật Bản mất khoảng bao lâu?" }, 
     
-    // --- BÀI 5: TỪ NỐI THỨ TỰ ---
-    { q: "せんたくしました。_____、そうじしました。", opts: ["それから", "そして", "ですが", "から"], ans: "それから", exp: "Nối 2 hành động theo trình tự thời gian: V1 ました。それから(Sau đó)、V2 ました." },
-    { q: "あさごはん を たべます。_____ がっこう へ 行きます。", opts: ["それから", "そして", "が", "から"], ans: "それから", exp: "Mô tả chuỗi hành động: Ăn sáng xong, SAU ĐÓ (それから) đi học." },
+    // --- PHÓ TỪ & TỪ NỐI ---
+    { q: "ハノイは 8がつ、 _____ あついです。 (Rất nóng)", opts: ["とても", "あまり", "すこし", "ぜんぜん"], ans: "とても", exp: "とても (rất) luôn đi với câu khẳng định. あまり (không lắm) đi với câu phủ định. Nghĩa: Hà Nội tháng 8 rất nóng." },
+    { q: "ハノイは 9がつ、 _____ あつくないです。 (Không nóng lắm)", opts: ["あまり", "とても", "すこし", "よく"], ans: "あまり", exp: "あまり + Tính từ phủ định (くないです / じゃありません) mang nghĩa 'Không ... lắm'. Nghĩa: Hà Nội tháng 9 không nóng lắm." },
+    { q: "ハノイ は おおきくないですが、いいまち _____。", opts: ["です", "あります", "います", "だ"], ans: "です", exp: "Nối 2 vế câu tương phản với 'が': S1 です が、S2 です. Nghĩa: Hà Nội tuy không lớn NHƯNG là một thành phố tốt." },
+    { q: "にほんごは むずかしいです。_____、おもしろいです。", opts: ["ですが", "そして", "それから", "から"], ans: "ですが", exp: "Dùng 'ですが' (nhưng) ở đầu câu để nối ý tương phản (Khó >< Thú vị). Nghĩa: Tiếng Nhật khó. Nhưng mà thú vị." },
+    { q: "この へやは ひろいです。_____、きれいです。", opts: ["そして", "ですが", "それから", "から"], ans: "そして", exp: "Dùng 'そして' (và) nối 2 mệnh đề ý nghĩa tương đồng (rộng VÀ đẹp). Nghĩa: Căn phòng này rộng. Và còn đẹp nữa." },
+    { q: "せんたくしました。_____、そうじしました。", opts: ["それから", "そして", "ですが", "から"], ans: "それから", exp: "Nối trình tự thời gian: V1 ました。それから(Sau đó)、V2 ました. Nghĩa: Tôi đã giặt giũ. SAU ĐÓ tôi đã dọn dẹp." },
+    
+    // --- ĐỘNG TỪ, TRỢ TỪ (を、に、で、と、へ) ---
+    { q: "きのう、なにか _____。 － いいえ、なにも たべませんでした。", opts: ["たべましたか", "たべますか", "たべませんでしたか", "たべたくないですか"], ans: "たべましたか", exp: "Hỏi quá khứ 'Đã làm gì chưa?' dùng V-ましたか. Nghĩa: Hôm qua bạn đã ăn gì chưa? - Chưa, tôi không ăn gì cả." },
+    { q: "にちようび、どこかへ 行きましたか。ー いいえ、どこ_____ いきませんでした。", opts: ["へも", "に", "を", "が"], ans: "へも", exp: "Phủ định hoàn toàn nơi chốn: どこへも / どこも + Động từ phủ định. Nghĩa: Chủ nhật có đi đâu không? - Không đi đâu cả." },
+    { q: "あさごはん は なに _____ たべませんでした。", opts: ["も", "を", "は", "が"], ans: "も", exp: "Phủ định hoàn toàn ĐỒ VẬT: なにも + V-phủ định. Nghĩa: Bữa sáng tôi đã KHÔNG ĂN GÌ CẢ." },
+    { q: "きのう は だれ _____ あいませんでした。", opts: ["にも", "も", "は", "と"], ans: "にも", exp: "Phủ định hoàn toàn với NGƯỜI (gặp gỡ): だれにも + あいませんでした. Nghĩa: Hôm qua tôi KHÔNG GẶP BẤT CỨ AI." },
+    { q: "こいびと _____ えいがを 見ます。", opts: ["と", "に", "で", "を"], ans: "と", exp: "Thực hiện hành động CÙNG AI: Người + と + V. Nghĩa: Tôi xem phim cùng người yêu." },
+    { q: "わたし は _____ えいが を 見ます。", opts: ["ひとりで", "ひとりと", "ひとりに", "ひとりでと"], ans: "ひとりで", exp: "Làm gì đó MỘT MÌNH dùng ひとりで (tuyệt đối không có trợ từ と). Nghĩa: Tôi xem phim một mình." },
+    { q: "まいあさ、うち _____ ごはん を たべます。", opts: ["で", "に", "へ", "を"], ans: "で", exp: "Địa điểm xảy ra HÀNH ĐỘNG dùng trợ từ で. Nghĩa: Mỗi sáng tôi ăn cơm ở nhà." },
+    { q: "えき で ともだち _____ あいます。", opts: ["に", "を", "で", "へ"], ans: "に", exp: "Gặp gỡ AI ĐÓ dùng trợ từ に (N に あいます). Nghĩa: Tôi gặp bạn ở nhà ga." },
+    
+    // --- LÝ DO (から) ---
+    { q: "_____ ケーキ を たべませんか。 － あまい ですから。", opts: ["どうして", "なに", "どこ", "いつ"], ans: "どうして", exp: "Hỏi lý do dùng 'どうして' (Tại sao). Trả lời kết thúc bằng 'から' (Vì). Nghĩa: Tại sao bạn không ăn bánh? - Vì nó ngọt." },
+    { q: "どうして ほん を よみませんか。 － つまらない _____。", opts: ["ですから", "です", "から", "ので"], ans: "ですから", exp: "Trả lời どうして kết thúc bằng ～から. Đứng sau tính từ đuôi い thêm ですから. Nghĩa: Vì nó nhàm chán." },
+    
+    // --- MONG MUỐN (たい、ほしい) ---
+    { q: "わたしは あたらしい くるま _____ ほしいです。", opts: ["が", "を", "は", "に"], ans: "が", exp: "Mong muốn sở hữu đồ vật: Danh từ + が + ほしいです (Không dùng を). Nghĩa: Tôi muốn có ô tô mới." },
+    { q: "わたしは にほんご _____ べんきょうしたいです。", opts: ["が", "を", "に", "へ"], ans: "が", exp: "Muốn LÀM gì (V-たいです): Trợ từ 'を' có thể được thay bằng 'が'. Nghĩa: Tôi muốn học tiếng Nhật." }, 
+    { q: "のど が かわきました から、なにか _____。", opts: ["のみたいです", "のみます", "のんで", "のみません"], ans: "のみたいです", exp: "'Khát nước nên MUỐN uống'. Động từ V-ます bỏ 'ます' thêm 'たいです'. Nghĩa: Khát nước quá, muốn uống chút gì đó." },
+    { q: "つかれました から、なにも _____。", opts: ["したくないです", "しません", "したいです", "しました"], ans: "したくないです", exp: " なにも + V-たくないです (Không muốn làm gì cả). Nghĩa: Vì mệt nên tôi KHÔNG MUỐN LÀM GÌ CẢ." },
+    
+    // --- MỤC ĐÍCH DI CHUYỂN (に 行きます) ---
+    { q: "わたしは デパートへ くつを _____ に 行きます。", opts: ["かい", "かう", "かって", "かいます"], ans: "かい", exp: "Mục đích di chuyển: Nơi chốn へ V(bỏ ます) に 行きます. かいます -> かい. Nghĩa: Tôi đi bách hóa để mua giày." },
+    { q: "スーパーへ _____ に 行きます。", opts: ["かいもの", "かいものし", "かいものして", "かいものします"], ans: "かいもの", exp: "Với Danh Động Từ (買い物します): N(Danh từ) + に 行きます. Nghĩa: Tôi đi siêu thị để mua sắm." },
+    { q: "どこ へ あそび _____ 行きますか。", opts: ["に", "で", "を", "へ"], ans: "に", exp: "Đi ĐỂ chơi (あそびます -> あそび に). Trợ từ に chỉ mục đích. Nghĩa: Bạn đi đâu để chơi vậy?" },
 
-    // --- BÀI 5: TÍNH TỪ / DANH TỪ QUÁ KHỨ ---
-    { q: "たのしい (Quá khứ khẳng định)", opts: ["たのしかったです", "たのしいでした", "たのしくなかったです", "たのしでした"], ans: "たのしかったです", exp: "Tính từ đuôi い ở quá khứ: Bỏ 'い' thêm 'かったです'." },
-    { q: "にぎやか (Quá khứ phủ định)", opts: ["にぎやかじゃなかったです", "にぎやかじゃありません", "にぎやかでした", "にぎやかかったです"], ans: "にぎやかじゃなかったです", exp: "Tính từ đuôi な ở quá khứ phủ định: Bỏ 'な' thêm じゃなかったです." },
-    { q: "きのうの テストは _____。 (Quá khứ phủ định của むずかしい - Khó)", opts: ["むずかしくなかったです", "むずかしいじゃなかったです", "むずかしくないでした", "むずかしかかったです"], ans: "むずかしくなかったです", exp: "Tính từ đuôi い ở quá khứ phủ định: Bỏ 'い' thêm 'くなかったです'." },
-    { q: "きのうは _____。 (Quá khứ khẳng định của あめ - Mưa)", opts: ["あめでした", "あめだ", "あめかったです", "あめじゃなかったです"], ans: "あめでした", exp: "Danh từ (như あめ, ゆき, ひま) trong quá khứ chia giống tính từ đuôi 'な': N + でした." },
-    { q: "きのうは _____。 (Quá khứ phủ định của ひま - Rảnh rỗi)", opts: ["ひまじゃなかったです", "ひまくなかったです", "ひまじゃありません", "ひまでした"], ans: "ひまじゃなかったです", exp: "Danh từ/Tính từ đuôi な quá khứ phủ định: ~じゃなかったです." },
-    { q: "きのうの てんき は _____。", opts: ["どうでしたか", "どうですか", "どうしましたか", "どんなでしたか"], ans: "どうでしたか", exp: "Hỏi 'Đã như thế nào?' trong quá khứ dùng: どうでしたか." },
-    { q: "せんしゅうの りょこう は _____。 (Quá khứ khẳng định của たのしい)", opts: ["たのしかったです", "たのしいでした", "たのしかったでした", "たのしくないでした"], ans: "たのしかったです", exp: "Tính từ đuôi い: Bỏ い + かったです." },
-    { q: "きのうの えいがは _____。(Quá khứ phủ định của よい/いい - Tốt)", opts: ["よくなかったです", "いくなかったです", "いいじゃなかったです", "よくないでした"], ans: "よくなかったです", exp: "Trường hợp đặc biệt いい (tốt), quá khứ phủ định là よくなかったです." },
-
-    // --- BÀI 5: LÝ DO ---
-    { q: "_____ ケーキ を たべませんか。 － あまい ですから。", opts: ["どうして", "なに", "どこ", "いつ"], ans: "どうして", exp: "Hỏi lý do dùng 'どうして' (Tại sao). Câu trả lời thường kết thúc bằng 'から' (Vì)." },
-    { q: "どうして ほん を よみませんか。 － つまらない _____。", opts: ["ですから", "です", "から", "ので"], ans: "ですから", exp: "Trả lời cho どうして luôn kết thúc bằng ～から (Nếu đứng sau tính từ/danh từ đuôi です thì là ですから)." },
-    { q: "きょうは いそがしい _____、あした 行きます。", opts: ["から", "ですが", "そして", "それから"], ans: "から", exp: "Dùng から ở giữa câu để nối mệnh đề chỉ nguyên nhân (Vì... nên...)." },
-
-    // --- BÀI 5: MONG MUỐN ---
-    { q: "わたしは あたらしい くるま _____ ほしいです。", opts: ["が", "を", "は", "に"], ans: "が", exp: "Thể hiện mong muốn sở hữu đồ vật: N + が + ほしいです. (KHÔNG DÙNG を)." },
-    { q: "わたしは にほんご _____ べんきょうしたいです。", opts: ["が", "を", "に", "へ"], ans: "が", exp: "Cấu trúc muốn LÀM gì (V-たいです): Trợ từ 'を' của V-ます có thể được thay thế bằng 'が'." }, 
-    { q: "のど が かわきました から、なにか _____。", opts: ["のみたいです", "のみます", "のんで", "のみません"], ans: "のみたいです", exp: "'Khát nước rồi, nên muốn uống cái gì đó'. Động từ V-ます bỏ 'ます' thêm 'たいです'." },
-    { q: "つかれました から、なにも _____。", opts: ["したくないです", "しません", "したいです", "しました"], ans: "したくないです", exp: "'Vì mệt nên KHÔNG MUỐN LÀM GÌ CẢ'. なにも + V-たくないです (Phủ định của V-たい)." },
-    { q: "あした、どこへ _____。", opts: ["行きたいですか", "行きますか", "行きたくないですか", "行きましたか"], ans: "行きたいですか", exp: "Hỏi 'Ngày mai muốn đi đâu?': どこへ V-たいですか." },
-
-    // --- BÀI 5: MỤC ĐÍCH DI CHUYỂN ---
-    { q: "わたしは デパートへ くつを _____ に 行きます。", opts: ["かい", "かう", "かって", "かいます"], ans: "かい", exp: "Mục đích của sự di chuyển: Nơi chốn へ V(bỏ ます) に 行きます/来ます/帰ります." },
-    { q: "スーパーへ _____ に 行きます。", opts: ["かいもの", "かいものし", "かいものして", "かいものします"], ans: "かいもの", exp: "Với Danh Động Từ (Ví dụ 買い物します), cấu trúc là: N(Danh từ) + に 行きます." },
-    { q: "としょかん へ ほん を _____ に 行きます。", opts: ["かり", "かりる", "かって", "かいます"], ans: "かり", exp: "Mượn sách (かりみます) -> Bỏ ます -> かり に 行きます (Đi để mượn sách)." },
-    { q: "どこ へ あそび _____ 行きますか。", opts: ["に", "で", "を", "へ"], ans: "に", exp: "Đi ĐỂ chơi (あそびます -> あそび に). Trợ từ に chỉ mục đích." },
-    { q: "にほん へ にほんご を _____ に 行きます。", opts: ["べんきょうし", "べんきょう", "べんきょうして", "べんきょうします"], ans: "べんきょうし", exp: "Danh động từ べんきょうします -> bỏ ます thành べんきょうし に行きます (Hoặc べんきょう に行きます)." }
+    // --- MỞ RỘNG TRỢ TỪ KHÁC ---
+    { q: "つくえ の うえ に ほん _____ ノート が あります。", opts: ["と", "に", "で", "を"], ans: "と", exp: "Nối 2 danh từ hoàn chỉnh dùng と (và). Nghĩa: Trên bàn có sách VÀ vở." },
+    { q: "きのう、デパート _____ かいものを しました。", opts: ["で", "に", "へ", "を"], ans: "で", exp: "Nơi diễn ra HÀNH ĐỘNG (mua sắm) dùng で. Nghĩa: Hôm qua tôi đã mua sắm Ở bách hóa." },
+    { q: "あした、とうきょう _____ いきます。", opts: ["へ", "で", "を", "が"], ans: "へ", exp: "Trợ từ chỉ hướng di chuyển đi kèm với 行きます/来ます/帰ります là へ. Nghĩa: Ngày mai tôi đi ĐẾN Tokyo." },
+    { q: "きのう、10じ _____ ねました。", opts: ["に", "で", "を", "へ"], ans: "に", exp: "Thời gian CỤ THỂ (có con số) dùng trợ từ に. Nghĩa: Hôm qua tôi đã ngủ LÚC 10 giờ." },
+    { q: "まいあさ、コーヒー _____ のみます。", opts: ["を", "に", "で", "が"], ans: "を", exp: "Trợ từ đi với tha động từ (uống CÁI GÌ) là を. Nghĩa: Mỗi sáng tôi uống cà phê." },
+    { q: "へや に だれ _____ いません。", opts: ["も", "に", "を", "が"], ans: "も", exp: "だれ + も + Phủ định. Nghĩa: Trong phòng KHÔNG CÓ AI CẢ." },
+    { q: "えいが を _____ に 行きます。", opts: ["み", "みる", "みて", "みます"], ans: "み", exp: "Mục đích di chuyển: Động từ bỏ 'ます' + に 行きます (みます -> み). Nghĩa: Tôi đi ĐỂ xem phim." },
+    { q: "うちから がっこう _____ 15ふんです。", opts: ["まで", "から", "で", "に"], ans: "まで", exp: "Đến đâu đó dùng まで. Nghĩa: Từ nhà ĐẾN trường mất 15 phút." }
 ];
 
+// Hai hàm tiện ích trộn mảng & lấy đáp án sai
 function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
+    let arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+        [arr[i], arr[j]] = [arr[j], arr[i]];
     }
-    return array;
+    return arr;
 }
 
 function getRandomWrongOptions(correctOption, dataArray, key, count = 3) {
@@ -287,120 +245,223 @@ function getRandomWrongOptions(correctOption, dataArray, key, count = 3) {
 function generateQuestionBank() {
     let generated = [];
     
-    // --- 1. KANJI (Giảm xuống đúng 4 biến thể) ---
+    // 1. KANJI (Đúng 4 biến thể / từ) -> 44 * 4 = 176 câu
     kanjiData.forEach(item => {
-        // Biến thể 1: Kanji -> Hiragana
         let hOpts = shuffleArray([item.h, ...getRandomWrongOptions(item.h, kanjiData, 'h', 3)]);
-        generated.push({ type: 'Kanji', q: `Chữ Hán <strong class="text-indigo-600 text-[120%]">'${item.k}'</strong> có phiên âm Hiragana là gì?`, opts: hOpts, ans: item.h, exp: `<strong>${item.k} (${item.h})</strong> nghĩa là: ${item.m}.`, tts: item.k});
+        generated.push({
+            type: 'kanji',
+            q: `Chữ Hán <strong class="text-indigo-600 text-[120%]">'${item.k}'</strong> có phiên âm Hiragana là gì?`,
+            opts: hOpts, ans: item.h, 
+            exp: `<strong>${item.k} (${item.h})</strong> nghĩa là: ${item.m}.`, tts: item.k
+        });
 
-        // Biến thể 2: Kanji -> Nghĩa
         let mOpts = shuffleArray([item.m, ...getRandomWrongOptions(item.m, kanjiData, 'm', 3)]);
-        generated.push({ type: 'Kanji', q: `Nghĩa của chữ Hán <strong class="text-indigo-600 text-[120%]">'${item.k}'</strong> là gì?`, opts: mOpts, ans: item.m, exp: `<strong>${item.k} (${item.h})</strong> nghĩa là: ${item.m}.`, tts: item.k});
+        generated.push({
+            type: 'kanji',
+            q: `Nghĩa của chữ Hán <strong class="text-indigo-600 text-[120%]">'${item.k}'</strong> là gì?`,
+            opts: mOpts, ans: item.m, 
+            exp: `<strong>${item.k} (${item.h})</strong> nghĩa là: ${item.m}.`, tts: item.k
+        });
 
-        // Biến thể 3: Nghĩa -> Kanji
-        let kOpts = shuffleArray([item.k, ...getRandomWrongOptions(item.k, kanjiData, 'k', 3)]);
-        generated.push({ type: 'Kanji', q: `Từ nào có nghĩa là <strong>'${item.m}'</strong>?`, opts: kOpts, ans: item.k, exp: `<strong>${item.m}</strong> viết Hán tự là: ${item.k} (${item.h}).`, tts: item.h});
+        let kOpts1 = shuffleArray([item.k, ...getRandomWrongOptions(item.k, kanjiData, 'k', 3)]);
+        generated.push({
+            type: 'kanji',
+            q: `Từ nào có nghĩa là <strong>'${item.m}'</strong>?`,
+            opts: kOpts1, ans: item.k, 
+            exp: `<strong>${item.m}</strong> trong tiếng Nhật là: ${item.k} (${item.h}).`, tts: ''
+        });
 
-        // Biến thể 4: Hiragana -> Kanji
         let kOpts2 = shuffleArray([item.k, ...getRandomWrongOptions(item.k, kanjiData, 'k', 3)]);
-        generated.push({ type: 'Kanji', q: `Từ có âm đọc <strong class="text-indigo-600 text-[120%]">'${item.h}'</strong> viết Kanji là gì?`, opts: kOpts2, ans: item.k, exp: `Chữ <strong>${item.k}</strong> đọc là ${item.h}.`, tts: item.h});
+        generated.push({
+            type: 'kanji',
+            q: `Từ <strong>'${item.h}'</strong> được viết bằng chữ Hán nào?`,
+            opts: kOpts2, ans: item.k, 
+            exp: `<strong>${item.h}</strong> viết chữ Hán là: ${item.k} (Nghĩa: ${item.m}).`, tts: item.h
+        });
     });
 
-    // --- 2. VOCAB (2 biến thể) ---
+    // 2. TỪ VỰNG KANA (2 biến thể / từ) -> ~112 * 2 = 224 câu
     vocabData.forEach(item => {
-        // Biến thể 1: Hiragana -> Nghĩa
         let mOpts = shuffleArray([item.m, ...getRandomWrongOptions(item.m, vocabData, 'm', 3)]);
-        generated.push({ type: 'Từ vựng', q: `Từ <strong class="text-pink-600 text-[120%]">'${item.h}'</strong> có nghĩa là gì?`, opts: mOpts, ans: item.m, exp: `<strong>${item.h}</strong> nghĩa là: ${item.m}.`, tts: item.h});
+        generated.push({
+            type: 'vocab',
+            q: `Từ <strong class="text-indigo-600 text-[120%]">'${item.h}'</strong> có nghĩa là gì?`,
+            opts: mOpts, ans: item.m, 
+            exp: `<strong>${item.h}</strong> nghĩa là: ${item.m}.`, tts: item.h
+        });
 
-        // Biến thể 2: Nghĩa -> Hiragana
         let hOpts = shuffleArray([item.h, ...getRandomWrongOptions(item.h, vocabData, 'h', 3)]);
-        generated.push({ type: 'Từ vựng', q: `Từ nào sau đây có nghĩa là <strong>'${item.m}'</strong>?`, opts: hOpts, ans: item.h, exp: `<strong>${item.m}</strong> tiếng Nhật là: ${item.h}.`, tts: ''});
+        generated.push({
+            type: 'vocab',
+            q: `Từ nào sau đây có nghĩa là <strong>'${item.m}'</strong>?`,
+            opts: hOpts, ans: item.h, 
+            exp: `<strong>${item.m}</strong> dịch sang tiếng Nhật là: ${item.h}.`, tts: ''
+        });
     });
 
-    // --- 3. GRAMMAR ---
-    grammarData.forEach(item => {
-        generated.push({ type: 'Ngữ pháp', q: item.q, opts: shuffleArray(item.opts), ans: item.ans, exp: item.exp, tts: '' });
+    // 3. NGỮ PHÁP BIÊN SOẠN (Explicit) -> 35 câu
+    explicitGrammarData.forEach(item => {
+        generated.push({
+            type: 'grammar',
+            q: item.q, opts: item.opts, ans: item.ans, exp: item.exp, tts: ''
+        });
+    });
+
+    // 4. TỰ ĐỘNG SINH NGỮ PHÁP (Tính từ chuẩn hóa Khẳng định/Phủ định/Quá khứ) -> 8 * 4 = 32 câu
+    const iAdjs = [
+        {w: 'おおきい', p: 'おおきくないです', qk: 'おおきかったです', qp: 'おおきくなかったです', m: 'To, lớn'},
+        {w: 'ちいさい', p: 'ちいさくないです', qk: 'ちいさかったです', qp: 'ちいさくなかったです', m: 'Nhỏ, bé'},
+        {w: 'たかい', p: 'たかくないです', qk: 'たかかったです', qp: 'たかくなかったです', m: 'Cao, đắt'},
+        {w: 'いい', p: 'よくないです', qk: 'よかったです', qp: 'よくなかったです', m: 'Tốt, hay'}
+    ];
+    
+    const naAdjs = [
+        {w: 'しずか', p: 'しずかじゃありません', qk: 'しずかでした', qp: 'しずかじゃありませんでした', m: 'Yên tĩnh'},
+        {w: 'にぎやか', p: 'にぎやかじゃありません', qk: 'にぎやかでした', qp: 'にぎやかじゃありませんでした', m: 'Náo nhiệt'},
+        {w: 'ゆうめい', p: 'ゆうめいじゃありません', qk: 'ゆうめいでした', qp: 'ゆうめいじゃありませんでした', m: 'Nổi tiếng'},
+        {w: 'かんたん', p: 'かんたんじゃありません', qk: 'かんたんでした', qp: 'かんたんじゃありませんでした', m: 'Đơn giản'}
+    ];
+    
+    naAdjs.forEach(adj => {
+        generated.push({
+            type: 'grammar',
+            q: `この まちは _____。 (Phủ định của ${adj.w} - ${adj.m})`,
+            opts: [adj.p, `${adj.w}なくないです`, `${adj.w}でした`, `${adj.w}じゃないです`],
+            ans: adj.p,
+            exp: `${adj.w} là tính từ đuôi な. Phủ định ở hiện tại là 'じゃありません'. Nghĩa: Khu phố này không ${adj.m.toLowerCase()}.`, tts: ''
+        });
+        generated.push({
+            type: 'grammar',
+            q: `きのうの パーティーは _____。 (Quá khứ khẳng định của ${adj.w} - ${adj.m})`,
+            opts: [adj.qk, `${adj.w}かったです`, `${adj.w}だ`, `${adj.w}じゃありません`],
+            ans: adj.qk,
+            exp: `${adj.w} là tính từ đuôi な. Quá khứ là 'でした'. Nghĩa: Bữa tiệc hôm qua đã ${adj.m.toLowerCase()}.`, tts: ''
+        });
+        generated.push({
+            type: 'grammar',
+            q: `きのうは _____。 (Quá khứ phủ định của ${adj.w} - ${adj.m})`,
+            opts: [adj.qp, `${adj.w}じゃないです`, `${adj.w}ませんでした`, `${adj.w}くなかったです`],
+            ans: adj.qp,
+            exp: `${adj.w} là tính từ đuôi な. Quá khứ phủ định CHỈ DÙNG cấu trúc chuẩn 'じゃありませんでした'. Nghĩa: Hôm qua đã không ${adj.m.toLowerCase()}.`, tts: ''
+        });
+    });
+
+    iAdjs.forEach(adj => {
+        generated.push({
+            type: 'grammar',
+            q: `あの くるまは _____。 (Phủ định của ${adj.w} - ${adj.m})`,
+            opts: [adj.p, `${adj.w}じゃないです`, `${adj.w}でした`, `${adj.w.slice(0, -1)}くありません`],
+            ans: adj.p,
+            exp: `${adj.w} là tính từ đuôi い. Phủ định dùng '${adj.p}' (TUYỆT ĐỐI không dùng くありません). Nghĩa: Ô tô kia không ${adj.m.toLowerCase()}.`, tts: ''
+        });
+        generated.push({
+            type: 'grammar',
+            q: `きのうの えいがは _____。 (Quá khứ khẳng định của ${adj.w} - ${adj.m})`,
+            opts: [adj.qk, `${adj.w}でした`, `${adj.w}だ`, `${adj.w}くなかったです`],
+            ans: adj.qk,
+            exp: `${adj.w} là tính từ đuôi い. Quá khứ là '${adj.qk}'. Nghĩa: Phim hôm qua đã ${adj.m.toLowerCase()}.`, tts: ''
+        });
+        generated.push({
+            type: 'grammar',
+            q: `きのうの テストは _____。 (Quá khứ phủ định của ${adj.w} - ${adj.m})`,
+            opts: [adj.qp, `${adj.w}じゃありませんでした`, `${adj.qp.replace('なかった', 'ないでした')}`, `${adj.w}かったです`],
+            ans: adj.qp,
+            exp: `${adj.w} là tính từ đuôi い. Quá khứ phủ định dùng '${adj.qp}'. Nghĩa: Bài kiểm tra hôm qua đã không ${adj.m.toLowerCase()}.`, tts: ''
+        });
     });
 
     return generated;
 }
 
-const allGeneratedQuestions = generateQuestionBank();
-
-// Tách pool để trộn Round-Robin
-const poolKanji = shuffleArray(allGeneratedQuestions.filter(q => q.type === 'Kanji'));
-const poolVocab = shuffleArray(allGeneratedQuestions.filter(q => q.type === 'Từ vựng'));
-const poolGrammar = shuffleArray(allGeneratedQuestions.filter(q => q.type === 'Ngữ pháp'));
-
-const totalBankSize = allGeneratedQuestions.length; // Sẽ ~500 câu
+// KHỞI TẠO NGÂN HÀNG CÂU HỎI (HƠN 460+ CÂU ĐA DẠNG)
+const questionBank = generateQuestionBank();
 
 let currentQuestions = [];
 let currentIndex = 0;
 let userAnswers = [];
 let stats = { correct: 0, incorrect: 0, skipped: 0 };
-let totalConfigured = 30; // Default 30 câu
+let totalConfigured = 30;
 
 const appDiv = document.getElementById('app');
 
+// Thuật toán Round-Robin: Trộn đều Ngữ pháp -> Kanji -> Từ vựng
+function getBalancedQuestions(total) {
+    let kBank = shuffleArray(questionBank.filter(q => q.type === 'kanji'));
+    let vBank = shuffleArray(questionBank.filter(q => q.type === 'vocab'));
+    let gBank = shuffleArray(questionBank.filter(q => q.type === 'grammar'));
+    
+    let result = [];
+    let i = 0;
+    while(result.length < total) {
+        if(gBank.length > i && result.length < total) result.push(gBank[i]);
+        if(kBank.length > i && result.length < total) result.push(kBank[i]);
+        if(vBank.length > i && result.length < total) result.push(vBank[i]);
+        i++;
+        if(i >= Math.max(kBank.length, vBank.length, gBank.length)) break;
+    }
+    return result;
+}
+
 const getHeaderHTML = () => `
-    <div class="px-6 md:px-10 pt-8 pb-5 border-b border-gray-100 bg-white/60">
-        <div class="flex items-center gap-3 mb-4">
-            <span class="bg-indigo-100 text-indigo-700 text-xs font-black px-4 py-1.5 rounded-full tracking-wider shadow-sm uppercase border border-indigo-200">Đại Học FPT</span>
-            <span class="bg-pink-100 text-pink-700 text-xs font-black px-4 py-1.5 rounded-full tracking-wider shadow-sm uppercase border border-pink-200">Light Galaxy Theme</span>
+    <div class="px-8 pt-8 pb-4 border-b border-gray-100 bg-white/50 flex-shrink-0">
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex gap-3">
+                <span class="bg-indigo-100 text-indigo-700 text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full tracking-wide shadow-sm">ĐẠI HỌC FPT</span>
+                <span class="bg-pink-100 text-pink-700 text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full tracking-wide shadow-sm">BÀI 4 & 5</span>
+            </div>
+            <button onclick="renderLibraryScreen()" class="bg-blue-50 hover:bg-blue-100 text-blue-600 text-sm font-bold px-4 py-1.5 rounded-full shadow-sm transition border border-blue-200 flex items-center gap-2">
+                <i class="fa-solid fa-layer-group"></i> Xem Thư Viện
+            </button>
         </div>
-        <h1 class="text-3xl md:text-4xl font-black text-gray-800 tracking-tight leading-tight">Luyện Tập N5 Bài 4 & 5</h1>
-        <p class="text-gray-500 mt-3 flex items-center gap-2 font-bold text-sm">
-            <i class="fa-solid fa-star text-yellow-400 text-lg"></i>
-            Trắc nghiệm đa chiều (Tổng kho: <span class="text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">${totalBankSize}</span> câu hỏi)
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-800 tracking-tight">Luyện Tập Tiếng Nhật Độc Quyền</h1>
+        <p class="text-gray-500 mt-2 flex items-center gap-2 font-medium text-sm sm:text-base">
+            <i class="fa-solid fa-star text-yellow-400"></i>
+            Kho dữ liệu khủng: ${questionBank.length} câu (Cân bằng Ngữ pháp, Kanji, Từ vựng)
         </p>
     </div>
 `;
 
+
+// --- SCREEN 1: BẮT ĐẦU ---
 function renderStartScreen() {
     appDiv.innerHTML = `
         ${getHeaderHTML()}
-        <div class="p-6 md:p-12 flex flex-col items-center justify-center text-center animate-fade-in-up">
-            <div class="w-24 h-24 bg-gradient-to-tr from-white to-pink-50 rounded-[2rem] shadow-lg border border-white flex items-center justify-center mb-8 floating-icon">
-                <i class="fa-solid fa-wand-magic-sparkles text-5xl text-orange-400 drop-shadow-md"></i>
+        <div class="p-8 md:p-12 flex flex-col items-center justify-center text-center animate-fade-in-up flex-1">
+            <div class="w-24 h-24 bg-gradient-to-tr from-orange-100 to-pink-100 rounded-3xl shadow-inner flex items-center justify-center mb-6 floating-icon">
+                <i class="fa-solid fa-sparkles text-4xl text-orange-400"></i>
             </div>
-            <h2 class="text-3xl font-black text-gray-800 mb-4 tracking-tight">Sẵn Sàng Chinh Phục Tiếng Nhật!</h2>
-            <p class="text-gray-500 max-w-xl mb-8 leading-relaxed font-medium">
-                Hệ thống <strong>trộn đề xoay vòng (Round-Robin)</strong> sẽ luôn đảm bảo phân bổ đều <span class="text-indigo-500 font-bold">Ngữ Pháp</span>, <span class="text-pink-500 font-bold">Kanji</span> và <span class="text-emerald-500 font-bold">Từ Vựng</span> trong đề thi của bạn. Đã loại bỏ hoàn toàn câu hỏi Nghe bắt buộc.
+            <h2 class="text-2xl font-bold text-gray-800 mb-3">Sẵn Sàng Chinh Phục Bài 4 & 5!</h2>
+            <p class="text-gray-500 max-w-lg mb-8 text-sm sm:text-base">
+                Thuật toán thông minh sẽ tự động trộn đều <strong>Ngữ pháp, Kanji và Từ vựng</strong>. Tuyệt đối không dùng cấu trúc lạ hay Kanji ngoài giáo trình.
             </p>
 
-            <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 w-full max-w-xl relative group hover-lift cursor-default transition-all duration-300">
-                <div class="flex justify-between items-center mb-6">
-                    <span class="font-extrabold text-gray-700 flex items-center gap-2 text-lg">
-                        <i class="fa-solid fa-layer-group text-indigo-500"></i> Số câu muốn làm:
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 w-full max-w-md relative group hover-lift cursor-default transition-all duration-300">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="font-bold text-gray-700 flex items-center gap-2 text-sm sm:text-base">
+                        <i class="fa-solid fa-crosshairs text-indigo-500"></i> Số câu hỏi muốn làm:
                     </span>
-                    <span class="bg-indigo-50 text-indigo-700 text-xs font-black px-3 py-1.5 rounded-lg border border-indigo-100">Kho: ${totalBankSize}</span>
                 </div>
                 
-                <div class="grid grid-cols-4 sm:grid-cols-5 gap-3 mb-6" id="numSelectGrid">
-                    <button class="py-3 rounded-2xl text-sm font-black border border-gray-200 text-gray-500 btn-press option-btn hover:border-indigo-300" data-val="15" onclick="selectNumQ(15)">15</button>
-                    <button class="py-3 rounded-2xl text-sm font-black border border-gray-200 text-gray-500 btn-press option-btn hover:border-indigo-300" data-val="30" onclick="selectNumQ(30)">30</button>
-                    <button class="py-3 rounded-2xl text-sm font-black border border-gray-200 text-gray-500 btn-press option-btn hover:border-indigo-300" data-val="60" onclick="selectNumQ(60)">60</button>
-                    <button class="py-3 rounded-2xl text-sm font-black border border-gray-200 text-gray-500 btn-press option-btn hover:border-indigo-300" data-val="120" onclick="selectNumQ(120)">120</button>
-                    <button class="py-3 rounded-2xl text-sm font-black border border-gray-200 text-gray-500 btn-press option-btn hover:border-indigo-300 col-span-4 sm:col-span-1" data-val="all" onclick="selectNumQ(${totalBankSize})">Tất cả</button>
+                <div class="grid grid-cols-5 gap-2 mb-4" id="numSelectGrid">
+                    <button class="py-2 rounded-xl text-xs sm:text-sm font-semibold border border-gray-200 hover:border-indigo-400 text-gray-600 btn-press option-btn hover:bg-indigo-50 hover:text-indigo-600" data-val="10" onclick="selectNumQ(10)">10</button>
+                    <button class="py-2 rounded-xl text-xs sm:text-sm font-semibold border border-gray-200 hover:border-indigo-400 text-gray-600 btn-press option-btn hover:bg-indigo-50 hover:text-indigo-600" data-val="30" onclick="selectNumQ(30)">30</button>
+                    <button class="py-2 rounded-xl text-xs sm:text-sm font-semibold border border-gray-200 hover:border-indigo-400 text-gray-600 btn-press option-btn hover:bg-indigo-50 hover:text-indigo-600" data-val="50" onclick="selectNumQ(50)">50</button>
+                    <button class="py-2 rounded-xl text-xs sm:text-sm font-semibold border border-gray-200 hover:border-indigo-400 text-gray-600 btn-press option-btn hover:bg-indigo-50 hover:text-indigo-600" data-val="100" onclick="selectNumQ(100)">100</button>
+                    <button class="py-2 rounded-xl text-xs sm:text-sm font-semibold border border-gray-200 hover:border-indigo-400 text-gray-600 btn-press option-btn hover:bg-indigo-50 hover:text-indigo-600" data-val="all" onclick="selectNumQ(${questionBank.length})">Tất cả</button>
                 </div>
 
-                <div class="flex items-center bg-gray-50/50 p-2.5 rounded-2xl border border-gray-200 focus-within:border-indigo-400 focus-within:ring-4 focus-within:ring-indigo-50 transition-all shadow-inner group-hover:bg-white">
-                    <i class="fa-regular fa-keyboard text-gray-400 ml-4 text-xl"></i>
-                    <input type="number" id="customNumInput" min="1" max="${totalBankSize}" value="${totalConfigured}" 
-                        class="bg-transparent border-none outline-none w-full text-indigo-900 font-black ml-4 text-xl"
+                <div class="flex items-center bg-gray-50 p-1.5 rounded-xl border border-gray-200 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-200 transition-all shadow-inner">
+                    <i class="fa-regular fa-keyboard text-gray-400 ml-3 text-lg"></i>
+                    <input type="number" id="customNumInput" min="1" max="${questionBank.length}" value="${totalConfigured}" 
+                        class="bg-transparent border-none outline-none w-full text-gray-700 font-bold ml-3 text-base"
                         oninput="handleCustomInput(this.value)">
-                    <span class="text-sm text-indigo-500 font-black bg-indigo-50 px-4 py-2 rounded-xl border border-indigo-100 shadow-sm mr-1">câu</span>
+                    <span class="text-sm text-indigo-500 font-bold bg-indigo-100/50 px-3 py-1.5 rounded-lg mr-1 shadow-sm border border-indigo-100">câu</span>
                 </div>
             </div>
 
-            <div class="flex flex-col sm:flex-row gap-4 mt-8 w-full max-w-xl">
-                <button onclick="renderQuestionBankScreen()" class="flex-1 bg-white border-2 border-gray-200 hover:border-gray-300 text-gray-700 font-black py-4 px-6 rounded-[1.5rem] shadow-sm transition-all btn-press flex justify-center items-center gap-3">
-                    <i class="fa-solid fa-book-open-reader text-indigo-500 text-xl"></i> Xem Thư Viện
-                </button>
-                <button onclick="startQuiz()" class="flex-1 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-black py-4 px-6 rounded-[1.5rem] shadow-[0_10px_20px_-5px_rgba(99,102,241,0.4)] hover:shadow-[0_15px_30px_-5px_rgba(99,102,241,0.6)] transition-all transform hover:-translate-y-1 btn-press flex justify-center items-center gap-3">
-                    Khởi hành ngay <i class="fa-solid fa-rocket text-xl"></i>
-                </button>
-            </div>
+            <button onclick="startQuiz()" class="mt-8 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold py-4 px-12 rounded-2xl hover:shadow-[0_15px_30px_-5px_rgba(99,102,241,0.4)] transition-all transform hover:-translate-y-1 w-full max-w-md text-lg btn-press flex items-center justify-center gap-2">
+                Khởi hành ngay <i class="fa-solid fa-rocket"></i>
+            </button>
         </div>
     `;
     updateNumButtons(totalConfigured);
@@ -415,7 +476,7 @@ window.selectNumQ = function(num) {
 window.handleCustomInput = function(val) {
     let num = parseInt(val);
     if (isNaN(num) || num < 1) num = 1;
-    if (num > totalBankSize) num = totalBankSize;
+    if (num > questionBank.length) num = questionBank.length;
     totalConfigured = num;
     updateNumButtons(num);
 }
@@ -424,10 +485,10 @@ function updateNumButtons(num) {
     const buttons = document.querySelectorAll('#numSelectGrid button');
     buttons.forEach(btn => {
         const btnVal = btn.getAttribute('data-val');
-        if(btnVal == num || (btnVal === 'all' && num === totalBankSize)) {
-            btn.className = "py-3 rounded-2xl text-sm font-black border-2 border-indigo-500 bg-indigo-50 text-indigo-700 btn-press option-btn transform scale-105 shadow-md";
+        if(btnVal == num || (btnVal === 'all' && num === questionBank.length)) {
+            btn.className = "py-2 rounded-xl text-xs sm:text-sm font-semibold border-2 border-indigo-500 bg-indigo-50 text-indigo-700 btn-press option-btn transform scale-105 shadow-sm";
         } else {
-            btn.className = "py-3 rounded-2xl text-sm font-black border border-gray-200 text-gray-500 btn-press option-btn hover:bg-gray-50 hover:border-gray-300";
+            btn.className = "py-2 rounded-xl text-xs sm:text-sm font-semibold border border-gray-200 hover:border-indigo-400 text-gray-600 btn-press option-btn hover:bg-indigo-50 hover:text-indigo-600";
         }
     });
 }
@@ -435,91 +496,17 @@ function updateNumButtons(num) {
 function startQuiz() {
     let num = parseInt(document.getElementById('customNumInput').value) || totalConfigured;
     if(num < 1) num = 10;
-    if(num > totalBankSize) num = totalBankSize;
+    if(num > questionBank.length) num = questionBank.length;
     totalConfigured = num;
 
-    // Lấy bản sao của các pool để trộn
-    let pG = [...poolGrammar];
-    let pK = [...poolKanji];
-    let pV = [...poolVocab];
-    
-    let selected = [];
-    let turn = 0; // 0: Grammar, 1: Kanji, 2: Vocab
-
-    // Thuật toán bốc xoay vòng cân bằng
-    while(selected.length < totalConfigured) {
-        if (pG.length === 0 && pK.length === 0 && pV.length === 0) break; // Hết kho
-
-        if (turn === 0) {
-            if (pG.length > 0) selected.push(pG.pop());
-            turn = 1;
-        } else if (turn === 1) {
-            if (pK.length > 0) selected.push(pK.pop());
-            turn = 2;
-        } else if (turn === 2) {
-            if (pV.length > 0) selected.push(pV.pop());
-            turn = 0;
-        }
-    }
-
-    currentQuestions = selected; // Không shuffle ở đây nữa để thấy rõ nhịp Grammar -> Kanji -> Vocab
+    currentQuestions = getBalancedQuestions(totalConfigured);
     currentIndex = 0;
     userAnswers = new Array(totalConfigured).fill(null);
     stats = { correct: 0, incorrect: 0, skipped: 0 };
     renderQuizScreen();
 }
 
-window.renderQuestionBankScreen = function() {
-    let listHTML = allGeneratedQuestions.map((q, idx) => {
-        let badgeColor = q.type === 'Ngữ pháp' ? 'bg-indigo-100 text-indigo-700 border-indigo-200' : 
-                         (q.type === 'Kanji' ? 'bg-pink-100 text-pink-700 border-pink-200' : 'bg-emerald-100 text-emerald-700 border-emerald-200');
-        
-        return `
-        <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-[0_4px_15px_rgba(0,0,0,0.02)] mb-4 hover:shadow-md transition-shadow">
-            <div class="flex items-center gap-3 mb-4">
-                <span class="bg-gray-800 text-white text-xs font-black px-3 py-1 rounded-full shadow-sm">Câu ${idx + 1}</span>
-                <span class="${badgeColor} text-[10px] font-black px-3 py-1 rounded-full border shadow-sm uppercase tracking-wider">${q.type}</span>
-            </div>
-            <h3 class="font-extrabold text-gray-800 text-lg mb-4 leading-relaxed">${q.q}</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
-                ${q.opts.map(opt => `
-                    <div class="p-3 rounded-xl text-sm border-2 font-bold ${opt === q.ans ? 'bg-emerald-50 border-emerald-300 text-emerald-700' : 'bg-gray-50 border-gray-100 text-gray-500'} flex justify-between items-center">
-                        ${opt}
-                        ${opt === q.ans ? '<i class="fa-solid fa-circle-check text-emerald-500 text-lg"></i>' : ''}
-                    </div>
-                `).join('')}
-            </div>
-            <div class="bg-indigo-50/70 p-4 rounded-xl border border-indigo-100 text-sm text-indigo-900 font-bold">
-                <i class="fa-solid fa-lightbulb text-yellow-500 mr-2 text-lg"></i> ${q.exp}
-            </div>
-        </div>
-    `}).join('');
-
-    appDiv.innerHTML = `
-        ${getHeaderHTML()}
-        <div class="p-6 md:p-10 bg-white/40 animate-fade-in-up">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-                <div>
-                    <h2 class="text-2xl md:text-3xl font-black text-gray-800 flex items-center gap-3">
-                        <span class="w-12 h-12 rounded-[1rem] bg-gradient-to-tr from-indigo-100 to-white shadow-sm border border-white text-indigo-500 flex items-center justify-center">
-                            <i class="fa-solid fa-database text-xl"></i>
-                        </span>
-                        Thư Viện Câu Hỏi
-                    </h2>
-                    <p class="text-gray-500 mt-2 font-bold text-sm">Danh sách toàn bộ ${totalBankSize} câu hỏi được sinh tự động.</p>
-                </div>
-                <button onclick="renderStartScreen()" class="bg-white border-2 border-gray-200 text-gray-700 hover:bg-gray-50 font-black py-3 px-8 rounded-2xl shadow-sm transition-all btn-press hover-lift flex items-center gap-3">
-                    <i class="fa-solid fa-arrow-left"></i> Trở về
-                </button>
-            </div>
-            
-            <div class="max-h-[60vh] overflow-y-auto pr-3 scroll-smooth">
-                ${listHTML}
-            </div>
-        </div>
-    `;
-}
-
+// --- SCREEN 2: LÀM BÀI ---
 function renderQuizScreen() {
     const q = currentQuestions[currentIndex];
     const isAnswered = userAnswers[currentIndex] !== null;
@@ -527,19 +514,20 @@ function renderQuizScreen() {
     
     let answeredCount = stats.correct + stats.incorrect;
     let winRate = answeredCount > 0 ? Math.round((stats.correct / answeredCount) * 100) : 0;
+
     const alphabet = ['A', 'B', 'C', 'D'];
 
     let optionsHTML = q.opts.map((opt, idx) => {
         let btnClass = "bg-white border-2 border-gray-100 text-gray-700 hover-lift hover:border-indigo-300";
-        let iconHtml = `<span class="w-8 h-8 rounded-xl bg-gray-100 flex items-center justify-center text-sm font-black text-gray-400 group-hover:bg-indigo-100 group-hover:text-indigo-600 transition-colors">${alphabet[idx]}</span>`;
+        let iconHtml = `<span class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-sm font-bold text-gray-500 group-hover:bg-indigo-100 group-hover:text-indigo-600 transition-colors">${alphabet[idx]}</span>`;
         
         if (isAnswered) {
             if (opt === q.ans) {
                 btnClass = "option-correct font-extrabold";
-                iconHtml = `<span class="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center text-sm font-black text-emerald-600 shadow-inner"><i class="fa-solid fa-check"></i></span>`;
+                iconHtml = `<span class="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center text-sm font-bold text-emerald-600 shadow-inner"><i class="fa-solid fa-check"></i></span>`;
             } else if (idx === selectedIdx && opt !== q.ans) {
                 btnClass = "option-wrong";
-                iconHtml = `<span class="w-8 h-8 rounded-xl bg-red-100 flex items-center justify-center text-sm font-black text-red-600 shadow-inner"><i class="fa-solid fa-xmark"></i></span>`;
+                iconHtml = `<span class="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center text-sm font-bold text-red-600 shadow-inner"><i class="fa-solid fa-xmark"></i></span>`;
             } else {
                 btnClass = "bg-gray-50 border-2 border-gray-100 text-gray-400 option-disabled";
             }
@@ -547,8 +535,8 @@ function renderQuizScreen() {
 
         return `
             <button ${isAnswered ? 'disabled' : `onclick="selectAnswer(${idx})"`} 
-                class="option-btn btn-press w-full flex items-center justify-between p-4 md:p-5 rounded-2xl font-bold text-left text-lg ${btnClass} group">
-                <span class="mr-4 ml-2 leading-relaxed">${opt}</span>
+                class="option-btn btn-press w-full flex items-center justify-between p-4 md:p-5 rounded-2xl font-bold text-left text-base sm:text-lg ${btnClass} group">
+                <span class="mr-4 ml-2">${opt}</span>
                 ${iconHtml}
             </button>
         `;
@@ -561,91 +549,82 @@ function renderQuizScreen() {
         let statusText = userAnswers[currentIndex].isCorrect ? 'Chính xác!' : (userAnswers[currentIndex].selectedIdx === -1 ? 'Đã bỏ qua' : 'Sai rồi!');
 
         explanationHTML = `
-            <div class="mt-6 p-6 rounded-[1.5rem] bg-indigo-50/90 border border-indigo-100 animate-fade-in-up shadow-sm">
-                <h4 class="font-black ${statusColor} flex items-center gap-2 mb-3 text-lg">
+            <div class="mt-6 p-5 rounded-2xl bg-indigo-50/90 border border-indigo-100 animate-fade-in-up shadow-sm">
+                <h4 class="font-bold ${statusColor} flex items-center gap-2 mb-2 text-lg">
                     <i class="fa-solid ${statusIcon}"></i> ${statusText}
                 </h4>
-                <p class="text-indigo-900 leading-relaxed font-bold">
+                <p class="text-indigo-900 leading-relaxed font-medium">
                     ${q.exp}
                 </p>
             </div>
         `;
     }
 
-    // Đổi màu Label theo Dạng câu hỏi
-    let catColor = q.type === 'Ngữ pháp' ? 'text-indigo-500' : (q.type === 'Kanji' ? 'text-pink-500' : 'text-emerald-500');
-
     appDiv.innerHTML = `
         ${getHeaderHTML()}
         
-        <div class="px-6 md:px-10 py-8 bg-white/30 animate-fade-in-up">
-            <!-- Header Stats -->
+        <div class="px-8 py-6 bg-white/30 animate-fade-in-up flex-1 flex flex-col">
             <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
                 <div class="flex items-center gap-3">
-                    <span class="bg-white px-5 py-2.5 rounded-xl font-black text-indigo-700 shadow-sm border border-gray-100 text-sm">
+                    <span class="bg-white px-3 sm:px-4 py-2 rounded-xl font-extrabold text-indigo-700 shadow-sm border border-gray-100 text-xs sm:text-sm">
                         CÂU ${currentIndex + 1}/${totalConfigured}
                     </span>
-                    <span class="bg-white px-5 py-2.5 rounded-xl font-black text-gray-600 shadow-sm border border-gray-100 text-sm flex items-center gap-4">
-                        <span class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></div> ${stats.correct}</span>
-                        <span class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-red-400 shadow-[0_0_8px_rgba(248,113,113,0.8)]"></div> ${stats.incorrect}</span>
+                    <span class="bg-white px-3 sm:px-4 py-2 rounded-xl font-bold text-gray-600 shadow-sm border border-gray-100 text-xs sm:text-sm flex items-center gap-3">
+                        <span class="flex items-center gap-1"><div class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></div> ${stats.correct}</span>
+                        <span class="flex items-center gap-1"><div class="w-2.5 h-2.5 rounded-full bg-red-400 shadow-[0_0_8px_rgba(248,113,113,0.8)]"></div> ${stats.incorrect}</span>
                     </span>
                 </div>
                 
-                <div class="flex items-center gap-3">
-                    <span class="bg-indigo-50 px-5 py-2.5 rounded-xl font-black text-indigo-700 border border-indigo-100 text-sm shadow-sm">
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <span class="bg-indigo-50 px-3 sm:px-4 py-2 rounded-xl font-bold text-indigo-700 border border-indigo-100 text-xs sm:text-sm shadow-sm hidden sm:inline-block">
                         Tỉ lệ: ${winRate}%
                     </span>
-                    <button onclick="endQuiz()" class="bg-white px-5 py-2.5 rounded-xl font-black text-gray-500 shadow-sm border border-gray-100 hover:bg-red-50 hover:text-red-500 hover:border-red-200 text-sm flex items-center gap-2 transition-all btn-press">
-                        <i class="fa-solid fa-power-off"></i> Dừng lại
+                    <button onclick="endQuiz()" class="bg-white px-3 sm:px-4 py-2 rounded-xl font-bold text-gray-600 shadow-sm border border-gray-100 hover:bg-red-50 hover:text-red-500 hover:border-red-200 text-xs sm:text-sm flex items-center gap-2 transition-all btn-press">
+                        <i class="fa-solid fa-power-off"></i> <span class="hidden sm:inline">Kết thúc</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Progress Bar -->
-            <div class="w-full bg-gray-200/80 rounded-full h-2 mb-8 overflow-hidden shadow-inner">
-                <div class="bg-gradient-to-r from-indigo-400 to-pink-500 h-2 rounded-full transition-all duration-500 ease-out relative" style="width: ${((currentIndex) / totalConfigured) * 100}%">
+            <div class="w-full bg-gray-200 rounded-full h-2 mb-8 overflow-hidden shadow-inner flex-shrink-0">
+                <div class="bg-gradient-to-r from-indigo-400 to-purple-500 h-2 rounded-full transition-all duration-500 ease-out relative" style="width: ${((currentIndex) / totalConfigured) * 100}%">
                     <div class="absolute inset-0 bg-white/30 w-full animate-pulse"></div>
                 </div>
             </div>
 
-            <!-- Question Card -->
-            <div class="text-center mb-8 relative">
-                <span class="text-[11px] font-black ${catColor} tracking-widest uppercase mb-4 block flex justify-center items-center gap-2">
-                    <i class="fa-solid fa-hashtag text-gray-300"></i> Dạng: ${q.type}
-                </span>
+            <div class="text-center mb-8 relative flex-shrink-0">
+                <span class="text-[10px] sm:text-xs font-bold text-indigo-400 tracking-widest uppercase mb-4 block">NỘI DUNG CÂU HỎI (${q.type === 'grammar' ? 'NGỮ PHÁP' : (q.type === 'kanji' ? 'KANJI' : 'TỪ VỰNG')})</span>
                 
-                <div class="bg-white p-8 md:p-14 rounded-[2rem] shadow-lg border border-gray-50 relative min-h-[180px] flex items-center justify-center transform transition-transform hover:scale-[1.01] duration-300">
-                    <h2 class="text-2xl md:text-3xl font-black text-gray-800 leading-relaxed">
+                <div class="bg-white p-8 md:p-12 rounded-3xl shadow-lg border border-gray-50 relative min-h-[140px] flex items-center justify-center transform transition-transform hover:scale-[1.01] duration-300">
+                    <h2 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-800 leading-relaxed pr-10">
                         ${q.q}
                     </h2>
                     ${q.tts ? `
-                    <button onclick="playTTS('${q.tts}')" class="absolute right-6 md:right-10 top-1/2 -translate-y-1/2 w-14 h-14 bg-indigo-50 rounded-[1rem] flex items-center justify-center text-indigo-500 hover:bg-indigo-500 hover:text-white transition-all transform hover:scale-110 active:scale-95 shadow-sm hover:shadow-[0_10px_20px_-10px_rgba(99,102,241,0.5)]">
-                        <i class="fa-solid fa-volume-high text-2xl"></i>
+                    <button onclick="playTTS('${q.tts}')" title="Nghe phát âm" class="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-indigo-50 rounded-full flex items-center justify-center text-indigo-500 hover:bg-indigo-500 hover:text-white transition-all transform hover:scale-110 active:scale-95 shadow-sm hover:shadow-indigo-300">
+                        <i class="fa-solid fa-volume-high text-lg sm:text-xl"></i>
                     </button>
                     ` : ''}
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-shrink-0">
                 ${optionsHTML}
             </div>
 
             ${explanationHTML}
 
-            <!-- Bottom Nav -->
-            <div class="mt-10 flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-4">
-                <button onclick="prevQuestion()" class="w-full sm:w-auto flex items-center justify-center gap-3 font-black px-8 py-4 rounded-2xl transition-all btn-press ${currentIndex === 0 ? 'text-gray-300 cursor-not-allowed bg-transparent' : 'text-gray-500 hover:bg-white hover:shadow-sm hover:text-indigo-600 border border-transparent hover:border-gray-200'}" ${currentIndex === 0 ? 'disabled' : ''}>
-                    <i class="fa-solid fa-arrow-left"></i> Câu trước
+            <div class="mt-auto pt-8 flex items-center justify-between">
+                <button onclick="prevQuestion()" class="flex items-center gap-2 font-bold px-4 sm:px-6 py-3 rounded-xl transition-all btn-press text-sm sm:text-base ${currentIndex === 0 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-500 hover:bg-white hover:shadow-sm hover:text-indigo-600'}" ${currentIndex === 0 ? 'disabled' : ''}>
+                    <i class="fa-solid fa-arrow-left"></i> <span class="hidden sm:inline">Câu trước</span>
                 </button>
                 
-                <div class="flex items-center gap-3 w-full sm:w-auto">
+                <div class="flex items-center gap-2 sm:gap-3">
                     ${!isAnswered ? `
-                        <button onclick="skipQuestion()" class="flex-1 sm:flex-none font-black px-10 py-4 rounded-2xl text-yellow-600 border-2 border-yellow-200 hover:bg-yellow-50 transition-all btn-press hover-lift flex items-center justify-center gap-2">
+                        <button onclick="skipQuestion()" class="font-bold px-5 sm:px-8 py-3 rounded-xl text-yellow-600 border-2 border-yellow-200 hover:bg-yellow-50 transition-all btn-press hover-lift flex items-center gap-2 text-sm sm:text-base">
                             Bỏ qua <i class="fa-solid fa-forward-step"></i>
                         </button>
                     ` : ''}
                     
-                    <button onclick="nextQuestion()" class="flex-1 sm:flex-none btn-press hover-lift ${isAnswered ? 'bg-indigo-600 hover:bg-indigo-700 shadow-[0_8px_25px_-6px_rgba(79,70,229,0.7)] animate-pulse-glow' : 'bg-gray-200 text-gray-400 cursor-not-allowed'} text-white font-black px-10 py-4 rounded-2xl transition-all flex items-center justify-center gap-3" ${!isAnswered ? 'disabled' : ''}>
+                    <button onclick="nextQuestion()" class="btn-press hover-lift ${isAnswered ? 'bg-indigo-600 hover:bg-indigo-700 shadow-[0_8px_20px_-6px_rgba(79,70,229,0.6)] animate-pulse-glow' : 'bg-gray-200 text-gray-400 cursor-not-allowed'} text-white font-bold px-5 sm:px-8 py-3 rounded-xl transition-all flex items-center gap-2 text-sm sm:text-base" ${!isAnswered ? 'disabled' : ''}>
                         ${currentIndex === totalConfigured - 1 ? 'Hoàn thành' : 'Kế tiếp'} <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
@@ -656,7 +635,6 @@ function renderQuizScreen() {
 
 window.selectAnswer = function(idx) {
     if (userAnswers[currentIndex] !== null) return; 
-
     const q = currentQuestions[currentIndex];
     const isCorrect = q.opts[idx] === q.ans;
     
@@ -691,15 +669,17 @@ window.prevQuestion = function() {
 
 window.playTTS = function(text) {
     if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel(); 
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'ja-JP'; 
         utterance.rate = 0.85; 
         window.speechSynthesis.speak(utterance);
     } else {
-        console.warn("Trình duyệt không hỗ trợ phát âm (Web Speech API).");
+        console.log("Trình duyệt không hỗ trợ Text-to-Speech");
     }
 }
 
+// --- SCREEN 3: KẾT QUẢ ---
 window.endQuiz = function() {
     let c = 0, ic = 0, sk = 0;
     userAnswers.forEach(ans => {
@@ -714,7 +694,7 @@ window.endQuiz = function() {
 
     let accuracy = (c + ic) > 0 ? Math.round((c / (c + ic)) * 100) : 0;
     let title = accuracy >= 80 ? "Hoàn Thành Tuyệt Vời!" : (accuracy >= 50 ? "Hoàn Thành Khá Tốt!" : "Hoàn Thành Tuyệt Vời!");
-    let sub = accuracy >= 80 ? "Kiến thức của bạn rất vững. Hãy tiếp tục duy trì nhé!" : "Cần luyện tập thêm! Hãy chú ý đọc kỹ giải thích bên dưới nhé.";
+    let sub = accuracy >= 80 ? "Kiến thức của bạn rất vững. Hãy tiếp tục duy trì nhé!" : "Cần luyện tập thêm! Hãy làm lại nhiều lần để quen mặt chữ và ngữ pháp nhé.";
     
     let reviewHTML = currentQuestions.map((q, idx) => {
         let ansData = userAnswers[idx];
@@ -726,16 +706,16 @@ window.endQuiz = function() {
         else { statusText = 'SAI'; statusColor = 'bg-red-100 text-red-700 border-red-200'; }
 
         return `
-            <div class="bg-white rounded-2xl p-6 border border-gray-100 mb-5 text-left shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex gap-4 mb-4 items-start">
-                    <span class="${statusColor} border text-[10px] font-black px-2 py-1.5 rounded-lg mt-1 whitespace-nowrap shadow-sm tracking-wider">${statusText}</span>
-                    <h3 class="font-black text-gray-800 text-lg leading-relaxed">${q.q}</h3>
+            <div class="bg-white rounded-xl p-5 border border-gray-100 mb-4 text-left shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex gap-3 mb-3 items-start">
+                    <span class="${statusColor} border text-[10px] font-extrabold px-2 py-1 rounded mt-1 whitespace-nowrap">${statusText}</span>
+                    <h3 class="font-bold text-gray-800 text-base sm:text-lg">${q.q}</h3>
                 </div>
-                <div class="pl-16">
-                    <p class="text-sm text-gray-500 mb-1 font-bold">Bạn chọn: <strong>${ansData.selectedIdx !== -1 ? q.opts[ansData.selectedIdx] : 'Không chọn'}</strong></p>
-                    ${!ansData.isCorrect ? `<p class="text-sm text-emerald-600 mb-3 font-bold">Đáp án đúng: <strong class="bg-emerald-50 px-2 py-1 rounded-lg border border-emerald-100 shadow-sm">${q.ans}</strong></p>` : ''}
-                    <div class="text-sm bg-indigo-50/70 p-5 rounded-xl border border-indigo-100 text-indigo-900 font-bold mt-2">
-                        <i class="fa-solid fa-lightbulb text-yellow-500 mr-2 text-lg"></i> ${q.exp}
+                <div class="pl-12 sm:pl-14">
+                    <p class="text-xs sm:text-sm text-gray-500 mb-1">Đáp án của bạn: <strong>${ansData.selectedIdx !== -1 ? q.opts[ansData.selectedIdx] : 'Không chọn'}</strong></p>
+                    ${!ansData.isCorrect ? `<p class="text-xs sm:text-sm text-emerald-600 mb-3">Đáp án đúng: <strong class="bg-emerald-50 px-2 py-0.5 rounded">${q.ans}</strong></p>` : ''}
+                    <div class="text-xs sm:text-sm bg-indigo-50/50 p-3 sm:p-4 rounded-xl border border-indigo-100 text-indigo-900 font-medium">
+                        <i class="fa-solid fa-lightbulb text-yellow-500 mr-2 text-base sm:text-lg"></i> ${q.exp}
                     </div>
                 </div>
             </div>
@@ -744,48 +724,48 @@ window.endQuiz = function() {
 
     appDiv.innerHTML = `
         ${getHeaderHTML()}
-        <div class="p-8 md:p-14 text-center bg-white/50 animate-fade-in-up">
-            <div class="text-7xl mb-8 floating-icon drop-shadow-md text-indigo-400">
-                <i class="fa-solid fa-graduation-cap"></i>
+        <div class="p-8 md:p-12 text-center bg-white/40 animate-fade-in-up flex-1">
+            <div class="text-7xl mb-6 floating-icon drop-shadow-md text-blue-400">
+                <i class="fa-solid fa-book-open"></i>
             </div>
-            <h2 class="text-4xl font-black text-gray-800 mb-3 tracking-tight">${title}</h2>
-            <p class="text-pink-500 font-black mb-12 text-lg">${sub}</p>
+            <h2 class="text-3xl font-extrabold text-gray-800 mb-2">${title}</h2>
+            <p class="text-pink-500 font-bold mb-10 text-sm sm:text-lg">${sub}</p>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-                <div class="bg-white border border-indigo-100 rounded-[2rem] p-8 shadow-[0_10px_25px_-6px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-transform">
-                    <div class="text-5xl font-black text-indigo-600 mb-3">${accuracy}<span class="text-2xl text-indigo-400">%</span></div>
-                    <div class="text-[11px] font-black text-indigo-400 uppercase tracking-widest">ĐỘ CHÍNH XÁC</div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+                <div class="bg-white border border-indigo-100 rounded-2xl p-4 sm:p-6 shadow-[0_8px_20px_-6px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-transform">
+                    <div class="text-3xl sm:text-4xl font-black text-indigo-600 mb-2">${accuracy}<span class="text-xl sm:text-2xl text-indigo-400">%</span></div>
+                    <div class="text-[9px] sm:text-[10px] font-bold text-indigo-400 uppercase tracking-widest">ĐỘ CHÍNH XÁC</div>
                 </div>
-                <div class="bg-emerald-50 border border-emerald-100 rounded-[2rem] p-8 shadow-[0_10px_25px_-6px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-transform">
-                    <div class="text-5xl font-black text-emerald-500 mb-3">${c}</div>
-                    <div class="text-[11px] font-black text-emerald-400 uppercase tracking-widest">SỐ CÂU ĐÚNG</div>
+                <div class="bg-emerald-50 border border-emerald-100 rounded-2xl p-4 sm:p-6 shadow-[0_8px_20px_-6px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-transform">
+                    <div class="text-3xl sm:text-4xl font-black text-emerald-500 mb-2">${c}</div>
+                    <div class="text-[9px] sm:text-[10px] font-bold text-emerald-400 uppercase tracking-widest">SỐ CÂU ĐÚNG</div>
                 </div>
-                <div class="bg-red-50 border border-red-100 rounded-[2rem] p-8 shadow-[0_10px_25px_-6px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-transform">
-                    <div class="text-5xl font-black text-red-500 mb-3">${ic}</div>
-                    <div class="text-[11px] font-black text-red-400 uppercase tracking-widest">SỐ CÂU SAI</div>
+                <div class="bg-red-50 border border-red-100 rounded-2xl p-4 sm:p-6 shadow-[0_8px_20px_-6px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-transform">
+                    <div class="text-3xl sm:text-4xl font-black text-red-500 mb-2">${ic}</div>
+                    <div class="text-[9px] sm:text-[10px] font-bold text-red-400 uppercase tracking-widest">SỐ CÂU SAI</div>
                 </div>
-                <div class="bg-yellow-50 border border-yellow-100 rounded-[2rem] p-8 shadow-[0_10px_25px_-6px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-transform">
-                    <div class="text-5xl font-black text-yellow-600 mb-3">${sk}</div>
-                    <div class="text-[11px] font-black text-yellow-500 uppercase tracking-widest">BỎ QUA</div>
+                <div class="bg-yellow-50 border border-yellow-100 rounded-2xl p-4 sm:p-6 shadow-[0_8px_20px_-6px_rgba(0,0,0,0.05)] hover:-translate-y-1 transition-transform">
+                    <div class="text-3xl sm:text-4xl font-black text-yellow-600 mb-2">${sk}</div>
+                    <div class="text-[9px] sm:text-[10px] font-bold text-yellow-500 uppercase tracking-widest">BỎ QUA</div>
                 </div>
             </div>
 
-            <div class="flex flex-col sm:flex-row justify-center gap-5 mb-12">
-                <button onclick="renderStartScreen()" class="w-full sm:w-64 bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-black py-4 px-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 btn-press flex justify-center items-center gap-3">
-                    <i class="fa-solid fa-rotate-right text-xl"></i> Thử sức lại
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-10">
+                <button onclick="renderStartScreen()" class="w-full sm:w-48 bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 btn-press">
+                    <i class="fa-solid fa-rotate-right mr-2"></i> Thử sức lại
                 </button>
-                <button onclick="renderStartScreen()" class="w-full sm:w-64 bg-white border-2 border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 font-black py-4 px-8 rounded-2xl shadow-sm transition-all btn-press hover-lift flex justify-center items-center gap-3">
-                    <i class="fa-solid fa-house text-xl"></i> Trang chủ
+                <button onclick="renderStartScreen()" class="w-full sm:w-48 bg-white border-2 border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 font-bold py-4 px-6 rounded-2xl shadow-sm transition-all btn-press hover-lift">
+                    <i class="fa-solid fa-house mr-2"></i> Trang chủ
                 </button>
             </div>
 
             ${c + ic + sk > 0 ? `
-            <div class="mt-14 border-t-2 border-gray-100 pt-12">
-                <h3 class="text-2xl font-black text-gray-800 mb-8 flex items-center justify-center gap-4">
-                    <span class="w-12 h-12 rounded-[1rem] bg-indigo-100 text-indigo-500 flex items-center justify-center shadow-inner"><i class="fa-solid fa-list-check text-xl"></i></span>
+            <div class="mt-12 border-t border-gray-200 pt-10">
+                <h3 class="text-lg sm:text-xl font-extrabold text-gray-800 mb-6 flex items-center justify-center gap-3">
+                    <span class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-500 flex items-center justify-center"><i class="fa-solid fa-list-check"></i></span>
                     Xem lại chi tiết đáp án
                 </h3>
-                <div class="max-h-[600px] overflow-y-auto pr-4 scroll-smooth">
+                <div class="max-h-[500px] overflow-y-auto pr-3 scroll-smooth text-left">
                     ${reviewHTML}
                 </div>
             </div>
@@ -794,7 +774,49 @@ window.endQuiz = function() {
     `;
 }
 
-// Bắt đầu ứng dụng
+// --- SCREEN 4: THƯ VIỆN TOÀN BỘ CÂU HỎI ---
+window.renderLibraryScreen = function() {
+    let allHTML = questionBank.map((q, idx) => {
+        let typeLabel = q.type === 'grammar' ? '<span class="bg-purple-100 text-purple-700 px-2 py-0.5 rounded text-[10px] font-bold">NGỮ PHÁP</span>' : 
+                        (q.type === 'kanji' ? '<span class="bg-pink-100 text-pink-700 px-2 py-0.5 rounded text-[10px] font-bold">KANJI</span>' : 
+                        '<span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-[10px] font-bold">TỪ VỰNG</span>');
+        
+        return `
+            <div class="bg-white rounded-xl p-5 border border-gray-100 mb-4 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex gap-3 mb-2 items-start">
+                    <span class="bg-gray-100 text-gray-600 font-bold px-2 py-1 rounded mt-1 text-xs whitespace-nowrap">#${idx + 1}</span>
+                    <div class="flex-1">
+                        ${typeLabel}
+                        <h3 class="font-bold text-gray-800 text-base sm:text-lg mt-1">${q.q}</h3>
+                    </div>
+                </div>
+                <div class="pl-12 sm:pl-14">
+                    <p class="text-xs sm:text-sm text-emerald-600 mb-3">Đáp án chuẩn: <strong class="bg-emerald-50 px-2 py-0.5 rounded">${q.ans}</strong></p>
+                    <div class="text-xs sm:text-sm bg-indigo-50/50 p-3 sm:p-4 rounded-xl border border-indigo-100 text-indigo-900 font-medium">
+                        <i class="fa-solid fa-book text-indigo-500 mr-2"></i> ${q.exp}
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    appDiv.innerHTML = `
+        <div class="px-8 pt-8 pb-4 border-b border-gray-100 bg-white/80 sticky top-0 z-10 flex items-center justify-between">
+            <div>
+                <h1 class="text-2xl font-extrabold text-gray-800">Thư Viện Ngân Hàng Đề</h1>
+                <p class="text-gray-500 text-sm font-medium mt-1">Tổng cộng: ${questionBank.length} câu hỏi độc quyền</p>
+            </div>
+            <button onclick="renderStartScreen()" class="bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 font-bold px-4 py-2 rounded-xl shadow-sm transition flex items-center gap-2">
+                <i class="fa-solid fa-xmark"></i> Đóng
+            </button>
+        </div>
+        <div class="p-4 sm:p-8 flex-1 overflow-y-auto bg-gray-50/50">
+            ${allHTML}
+        </div>
+    `;
+}
+
+// KHỞI ĐỘNG ỨNG DỤNG
 renderStartScreen();
 </script>
 </body>
