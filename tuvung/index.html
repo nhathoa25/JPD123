@@ -9,8 +9,8 @@
     <!-- React & ReactDOM -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-    <!-- Babel -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Babel (Phiên bản ổn định 7.23.10) -->
+    <script src="https://unpkg.com/@babel/standalone@7.23.10/babel.min.js"></script>
 
     <style>
         /* Custom Styles for Flashcard Flip */
@@ -37,11 +37,12 @@
     <div id="root"></div>
 
     <script type="text/babel">
+        /* @jsx React.createElement */
         const { useState, useEffect, useMemo } = React;
 
-        // Dữ liệu từ vựng trích xuất từ PDF (Đầy đủ cụm từ, câu ví dụ)
+        /* Dữ liệu từ vựng trích xuất từ PDF (Đầy đủ cụm từ, câu ví dụ) */
         const vocabularyData = [
-            // BÀI 4
+            /* BÀI 4 */
             { id: 401, lesson: 4, ja: "チョコレート", vi: "sô-cô-la" },
             { id: 402, lesson: 4, ja: "びじゅつかん", vi: "bảo tàng mỹ thuật" },
             { id: 403, lesson: 4, ja: "みなさん", vi: "các bạn, quý vị" },
@@ -120,7 +121,7 @@
             { id: 476, lesson: 4, ja: "そうですね", vi: "vâng, đúng thế" },
             { id: 477, lesson: 4, ja: "たくさん", vi: "nhiều" },
 
-            // BÀI 5
+            /* BÀI 5 */
             { id: 501, lesson: 5, ja: "ちかく", vi: "gần" },
             { id: 502, lesson: 5, ja: "いちにち", vi: "một ngày" },
             { id: 503, lesson: 5, ja: "また", vi: "lại" },
@@ -161,7 +162,7 @@
             { id: 538, lesson: 5, ja: "ふく", vi: "quần áo" },
             { id: 539, lesson: 5, ja: "のぼります [のぼる]", vi: "leo" },
             { id: 540, lesson: 5, ja: "はいります [はいる]", vi: "vào" },
-            { id: 541, lesson: 5, ja: "おんせいにはいります。", vi: "vào (tắm) suối nước nóng" },
+            { id: 541, lesson: 5, ja: "おんせんにいります。", vi: "vào (tắm) suối nước nóng" },
             { id: 542, lesson: 5, ja: "いそがしい", vi: "bận" },
             { id: 543, lesson: 5, ja: "おもしろい", vi: "thú vị" },
             { id: 544, lesson: 5, ja: "きもちがいい", vi: "dễ chịu" },
@@ -188,7 +189,7 @@
             { id: 565, lesson: 5, ja: "ほしい", vi: "muốn" },
             { id: 566, lesson: 5, ja: "すき(な)", vi: "thích" },
 
-            // BÀI 6
+            /* BÀI 6 */
             { id: 601, lesson: 6, ja: "ソース", vi: "nước sốt" },
             { id: 602, lesson: 6, ja: "ピザ", vi: "bánh piza" },
             { id: 603, lesson: 6, ja: "こんしゅう", vi: "tuần này" },
@@ -256,9 +257,9 @@
             { id: 665, lesson: 6, ja: "いちばん", vi: "nhất, số một" },
             { id: 666, lesson: 6, ja: "ぜんぶ", vi: "toàn bộ" },
             { id: 667, lesson: 6, ja: "そうですねえ", vi: "à, vâng..." },
-            { id: 668, lesson: 6, ja: "おこのみやき", vi: "bánh xèo Nhật (hòa bột mì vào nước, cho nguyên liệu tùy chọn như thịt, rau vào rồi rán lên)" },
+            { id: 668, lesson: 6, ja: "おこのみやき", vi: "bánh xèo Nhật" },
 
-            // BÀI 7
+            /* BÀI 7 */
             { id: 701, lesson: 7, ja: "アパート", vi: "nhà chung cư" },
             { id: 702, lesson: 7, ja: "かいさつ", vi: "soát vé" },
             { id: 703, lesson: 7, ja: "き", vi: "cây" },
@@ -338,7 +339,6 @@
             { id: 777, lesson: 7, ja: "おねがいします", vi: "nhờ anh/chị" }
         ];
 
-        // Shuffle utility function
         const shuffleArray = (array) => {
             const newArr = [...array];
             for (let i = newArr.length - 1; i > 0; i--) {
@@ -348,9 +348,7 @@
             return newArr;
         };
 
-        // --- HỆ THỐNG PHÁT ÂM (Web Speech API) ---
         let speechVoices = [];
-        // Lấy danh sách giọng đọc có sẵn của trình duyệt
         if (window.speechSynthesis) {
             window.speechSynthesis.onvoiceschanged = () => {
                 speechVoices = window.speechSynthesis.getVoices();
@@ -363,28 +361,26 @@
                 return;
             }
 
-            window.speechSynthesis.cancel(); // Dừng các âm thanh đang phát trước đó
+            window.speechSynthesis.cancel();
 
-            // Xử lý làm sạch text tiếng Nhật trước khi đọc
             let cleanText = text;
             if (lang === 'ja') {
-                cleanText = cleanText.replace(/\(~が\)/g, ''); // Bỏ (~が)
-                cleanText = cleanText.replace(/~/g, ''); // Bỏ dấu ~
-                cleanText = cleanText.replace(/\((.*?)\)/g, '$1'); // (お)しろ -> おしろ
-                cleanText = cleanText.replace(/\[.*?\]/g, ''); // あります [ある] -> あります
-                cleanText = cleanText.replace(/A:/g, ''); // Xóa chữ A: trong hội thoại
-                cleanText = cleanText.replace(/B:/g, ''); // Xóa chữ B: trong hội thoại
+                cleanText = cleanText.replace(/\(~が\)/g, ''); 
+                cleanText = cleanText.replace(/~/g, ''); 
+                cleanText = cleanText.replace(/\((.*?)\)/g, '$1'); 
+                cleanText = cleanText.replace(/\[.*?\]/g, ''); 
+                cleanText = cleanText.replace(/A:/g, ''); 
+                cleanText = cleanText.replace(/B:/g, ''); 
                 cleanText = cleanText.trim();
             }
 
             const utterance = new SpeechSynthesisUtterance(cleanText);
             utterance.lang = lang === 'ja' ? 'ja-JP' : 'vi-VN';
-            utterance.rate = 0.85; // Giảm tốc độ đọc một chút
+            utterance.rate = 0.85; 
             utterance.pitch = 1.0;
 
             if (speechVoices.length === 0) speechVoices = window.speechSynthesis.getVoices();
             
-            // Tìm giọng đọc tự nhiên
             const targetLang = lang === 'ja' ? 'ja' : 'vi';
             const availableVoices = speechVoices.filter(v => v.lang.includes(targetLang));
             
@@ -396,7 +392,6 @@
             window.speechSynthesis.speak(utterance);
         };
 
-        // Component Icon Loa
         const SpeakerIcon = ({ className }) => (
             <svg xmlns="http://www.w3.org/2000/svg" className={className || "w-5 h-5"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
@@ -405,31 +400,27 @@
             </svg>
         );
 
+        const BookIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>;
+        const CardsIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M5 6h14"/><path d="M5 14h14"/></svg>;
+        const GamepadIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="6" x2="10" y1="12" y2="12"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="15" x2="15.01" y1="13" y2="13"/><line x1="18" x2="18.01" y1="11" y2="11"/><rect width="20" height="12" x="2" y="6" rx="2"/></svg>;
+
         const App = () => {
             const [activeTab, setActiveTab] = useState('list');
             const [selectedLesson, setSelectedLesson] = useState('all');
             const [languageMode, setLanguageMode] = useState('ja-vi');
 
-            // Lọc dữ liệu theo bài
             const filteredData = useMemo(() => {
                 if (selectedLesson === 'all') return vocabularyData;
                 return vocabularyData.filter(word => word.lesson === parseInt(selectedLesson));
             }, [selectedLesson]);
 
-            // Icons Navigation
-            const BookIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>;
-            const CardsIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M5 6h14"/><path d="M5 14h14"/></svg>;
-            const GamepadIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="6" x2="10" y1="12" y2="12"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="15" x2="15.01" y1="13" y2="13"/><line x1="18" x2="18.01" y1="11" y2="11"/><rect width="20" height="12" x="2" y="6" rx="2"/></svg>;
-
             return (
                 <div className="max-w-4xl mx-auto p-4 md:p-6 lg:p-8">
-                    {/* Header */}
                     <header className="text-center mb-8">
                         <h1 className="text-3xl font-bold text-green-700 mb-2">Học Từ Vựng Sơ Cấp</h1>
                         <p className="text-gray-500">Giáo trình: できる日本語 (Bài 4 - Bài 7)</p>
                     </header>
 
-                    {/* Controls */}
                     <div className="flex flex-col md:flex-row justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-6 gap-4">
                         <div className="flex items-center gap-2">
                             <label className="font-semibold text-gray-700">Chọn Bài:</label>
@@ -464,7 +455,6 @@
                         </div>
                     </div>
 
-                    {/* Navigation Tabs */}
                     <div className="flex justify-center mb-8 border-b border-gray-200">
                         <button 
                             className={`flex items-center gap-2 px-6 py-3 font-medium transition-colors border-b-2 ${activeTab === 'list' ? 'border-green-600 text-green-600' : 'border-transparent text-gray-500 hover:text-green-500'}`}
@@ -486,7 +476,6 @@
                         </button>
                     </div>
 
-                    {/* Main Content Area */}
                     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 min-h-[400px]">
                         {activeTab === 'list' && <WordList data={filteredData} />}
                         {activeTab === 'flashcard' && <Flashcards data={filteredData} mode={languageMode} />}
@@ -577,7 +566,6 @@
             const frontText = mode === 'ja-vi' ? currentCard.ja : currentCard.vi;
             const backText = mode === 'ja-vi' ? currentCard.vi : currentCard.ja;
             
-            // Hàm điều chỉnh size chữ cho vừa khung hình
             const getFontSizeClass = (text, isJa) => {
                 if (text.length > 50) return isJa ? 'text-lg text-blue-800 font-bold px-4' : 'text-base text-gray-800 font-medium px-4';
                 if (text.length > 25) return isJa ? 'text-xl md:text-2xl text-blue-800 font-bold px-4' : 'text-lg md:text-xl text-gray-800 font-medium px-4';
@@ -593,14 +581,12 @@
                         {currentIndex + 1} / {cards.length} | Bài {currentCard.lesson}
                     </div>
 
-                    {/* Card Container */}
                     <div 
                         className="perspective-1000 w-full max-w-md h-64 md:h-72 cursor-pointer"
                         onClick={() => setIsFlipped(!isFlipped)}
                     >
                         <div className={`relative w-full h-full rounded-2xl shadow-lg transform-style-3d flip-card-inner border-2 border-green-100 ${isFlipped ? 'rotate-y-180' : ''}`}>
                             
-                            {/* Front */}
                             <div className="absolute w-full h-full backface-hidden bg-white rounded-2xl flex items-center justify-center text-center overflow-y-auto custom-scrollbar">
                                 <button 
                                     onClick={(e) => { e.stopPropagation(); playAudio(frontText, mode === 'ja-vi' ? 'ja' : 'vi'); }}
@@ -616,7 +602,6 @@
                                 </span>
                             </div>
 
-                            {/* Back */}
                             <div className="absolute w-full h-full backface-hidden bg-pattern rounded-2xl flex flex-col items-center justify-center text-center rotate-y-180 border-2 border-green-200 overflow-y-auto custom-scrollbar">
                                 <button 
                                     onClick={(e) => { e.stopPropagation(); playAudio(backText, mode === 'ja-vi' ? 'vi' : 'ja'); }}
@@ -630,7 +615,6 @@
                         </div>
                     </div>
 
-                    {/* Controls */}
                     <div className="flex items-center gap-6 mt-10">
                         <button onClick={handlePrev} className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 transition shadow-sm">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
@@ -662,7 +646,7 @@
                 if (vocabData.length < 4) return;
                 
                 let pool = shuffleArray(vocabData);
-                let quizLength = Math.min(pool.length, 20); // Tối đa 20 câu 1 lượt
+                let quizLength = Math.min(pool.length, 20);
                 let generatedQuestions = [];
 
                 for (let i = 0; i < quizLength; i++) {
@@ -747,7 +731,6 @@
 
             return (
                 <div className="max-w-3xl mx-auto py-4">
-                    {/* Progress */}
                     <div className="mb-6 flex items-center justify-between">
                         <span className="text-sm font-bold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">Câu {currentQIndex + 1} / {questions.length}</span>
                         <span className="text-sm font-bold text-green-600 bg-green-50 px-3 py-1 rounded-full border border-green-100">Điểm: {score}</span>
@@ -756,7 +739,6 @@
                         <div className="bg-green-500 h-2.5 rounded-full transition-all duration-500 ease-out" style={{ width: `${((currentQIndex + 1) / questions.length) * 100}%` }}></div>
                     </div>
 
-                    {/* Question Card */}
                     <div className="text-center mb-10 relative">
                         <h3 className="text-xs text-gray-400 mb-3 uppercase tracking-widest font-bold">Câu hỏi</h3>
                         <div className="py-10 px-6 bg-blue-50/50 rounded-2xl border border-blue-100 shadow-sm flex flex-col items-center justify-center gap-6 relative">
@@ -775,7 +757,6 @@
                         </div>
                     </div>
 
-                    {/* Options Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {currentQ.options.map((opt, idx) => {
                             const optionText = mode === 'ja-vi' ? opt.vi : opt.ja;
@@ -785,11 +766,11 @@
                                 buttonClass += "border-gray-200 bg-white hover:border-green-400 hover:bg-green-50 hover:-translate-y-1 hover:shadow text-gray-700 cursor-pointer";
                             } else {
                                 if (optionText === currentQ.correctOptionText) {
-                                    buttonClass += "border-green-500 bg-green-100 text-green-900 scale-[1.02] shadow-md z-10"; // Đúng
+                                    buttonClass += "border-green-500 bg-green-100 text-green-900 scale-[1.02] shadow-md z-10";
                                 } else if (selectedAnswer.text === optionText && !selectedAnswer.isCorrect) {
-                                    buttonClass += "border-red-400 bg-red-50 text-red-800"; // Sai
+                                    buttonClass += "border-red-400 bg-red-50 text-red-800";
                                 } else {
-                                    buttonClass += "border-gray-200 bg-gray-50 text-gray-400 opacity-60"; // Mờ đi
+                                    buttonClass += "border-gray-200 bg-gray-50 text-gray-400 opacity-60";
                                 }
                             }
 
