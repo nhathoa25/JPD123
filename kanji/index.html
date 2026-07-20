@@ -1,0 +1,560 @@
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { Play, RotateCcw, ChevronRight, ChevronLeft, Check, X, List, BookOpen, GraduationCap, Volume2, ArrowRightLeft } from 'lucide-react';
+
+const KANJI_DATA = {
+  "Bài 4": [
+    { kana: "ひがし", kanji: "東", meaning: "Phía đông", romaji: "higashi" },
+    { kana: "とうきょう", kanji: "東京", meaning: "Toukyou", romaji: "toukyou" },
+    { kana: "めいじん", kanji: "名人", meaning: "Danh nhân", romaji: "meijin" },
+    { kana: "なまえ", kanji: "名前", meaning: "Tên", romaji: "namae" },
+    { kana: "まえ", kanji: "前", meaning: "Phía trước", romaji: "mae" },
+    { kana: "ぜんじつ", kanji: "前日", meaning: "Ngày trước", romaji: "zenjitsu" },
+    { kana: "くに", kanji: "国", meaning: "Nước, quốc gia", romaji: "kuni" },
+    { kana: "こくご", kanji: "国語", meaning: "Quốc ngữ", romaji: "kokugo" },
+    { kana: "おとこ", kanji: "男", meaning: "Đàn ông, nam", romaji: "otoko" },
+    { kana: "おんな", kanji: "女", meaning: "Phụ nữ, nữ", romaji: "onna" },
+    { kana: "だんじょ", kanji: "男女", meaning: "Nam nữ", romaji: "danjo" },
+    { kana: "く", kanji: "区", meaning: "Quận", romaji: "ku" },
+    { kana: "し", kanji: "市", meaning: "Thành phố", romaji: "shi" }
+  ],
+  "Bài 5": [
+    { kana: "せんせい", kanji: "先生", meaning: "Giáo viên", romaji: "sensei" },
+    { kana: "せんじつ", kanji: "先日", meaning: "Ngày trước", romaji: "senjitsu" },
+    { kana: "せんげつ", kanji: "先月", meaning: "Tháng trước", romaji: "sengetsu" },
+    { kana: "せんしゅう", kanji: "先週", meaning: "Tuần trước", romaji: "senshuu" },
+    { kana: "しゅうかん", kanji: "週間", meaning: "～tuần (số lượng)", romaji: "shuukan" },
+    { kana: "まいにち", kanji: "毎日", meaning: "Mỗi ngày", romaji: "mainichi" },
+    { kana: "まいげつ", kanji: "毎月", meaning: "Mỗi tháng", romaji: "maigetsu" },
+    { kana: "まいしゅう", kanji: "毎週", meaning: "Mỗi tuần", romaji: "maishuu" },
+    { kana: "まいとし", kanji: "毎年", meaning: "Mỗi năm", romaji: "maitoshi" },
+    { kana: "ごぜん", kanji: "午前", meaning: "Buổi sáng, AM", romaji: "gozen" },
+    { kana: "ごご", kanji: "午後", meaning: "Buổi chiều, PM", romaji: "gogo" },
+    { kana: "うしろ", kanji: "後ろ", meaning: "Phía sau", romaji: "ushiro" },
+    { kana: "あと", kanji: "後", meaning: "sau", romaji: "ato" },
+    { kana: "みます", kanji: "見ます", meaning: "xem", romaji: "mimasu" },
+    { kana: "けんがく", kanji: "見学", meaning: "Kiến tập", romaji: "kengaku" },
+    { kana: "たべます", kanji: "食べます", meaning: "Ăn (v)", romaji: "tabemasu" },
+    { kana: "のみます", kanji: "飲みます", meaning: "Uống (v)", romaji: "nomimasu" },
+    { kana: "いんしょく", kanji: "飲食", meaning: "Ẩm thực", romaji: "inshoku" },
+    { kana: "かいます", kanji: "買います", meaning: "Mua (v)", romaji: "kaimasu" },
+    { kana: "かいものします", kanji: "買い物します", meaning: "Shoping (v)", romaji: "kaimonoshimasu" },
+    { kana: "たべもの", kanji: "食べ物", meaning: "Đồ ăn", romaji: "tabemono" },
+    { kana: "しょくじ", kanji: "食事", meaning: "Dùng bữa", romaji: "shokuji" },
+    { kana: "のみもの", kanji: "飲み物", meaning: "Đồ uống", romaji: "nomimono" },
+    { kana: "じんぶつ", kanji: "人物", meaning: "Nhân vật", romaji: "jinbutsu" },
+    { kana: "けんぶつ", kanji: "見物", meaning: "Ngắm cảnh", romaji: "kenbutsu" },
+    { kana: "ものがたり", kanji: "物語", meaning: "Truyện ngụ ngôn", romaji: "monogatari" },
+    { kana: "いきます", kanji: "行きます", meaning: "Đi", romaji: "ikimasu" },
+    { kana: "ぎょう", kanji: "行", meaning: "Dòng/hàng", romaji: "gyou" },
+    { kana: "やすみのひ", kanji: "休みの日", meaning: "Ngày nghỉ", romaji: "yasuminohi" },
+    { kana: "きゅうじつ", kanji: "休日", meaning: "Ngày nghỉ", romaji: "kyuujitsu" },
+    { kana: "やすみます", kanji: "休みます", meaning: "Nghỉ (giải lao) (v)", romaji: "yasumimasu" }
+  ],
+  "Bài 6": [
+    { kana: "きょう", kanji: "今日", meaning: "Hôm nay", romaji: "kyou" },
+    { kana: "ことし", kanji: "今年", meaning: "Năm nay", romaji: "kotoshi" },
+    { kana: "こんげつ", kanji: "今月", meaning: "Tháng này", romaji: "kongetsu" },
+    { kana: "こんしゅう", kanji: "今週", meaning: "Tuần này", romaji: "konshuu" },
+    { kana: "いま", kanji: "今", meaning: "Bây giờ", romaji: "ima" },
+    { kana: "らいしゅう", kanji: "来週", meaning: "Tuần tới", romaji: "raishuu" },
+    { kana: "らいげつ", kanji: "来月", meaning: "Tháng tới", romaji: "raigetsu" },
+    { kana: "らいねん", kanji: "来年", meaning: "Năm tới", romaji: "rainen" },
+    { kana: "らいにち", kanji: "来日", meaning: "Đến Nhật Bản", romaji: "rainichi" },
+    { kana: "きます", kanji: "来ます", meaning: "Đến", romaji: "kimasu" },
+    { kana: "かえります", kanji: "帰ります", meaning: "Về", romaji: "kaerimasu" },
+    { kana: "きこく", kanji: "帰国", meaning: "Về nước", romaji: "kikoku" },
+    { kana: "かいけん", kanji: "会見", meaning: "Hội họp", romaji: "kaiken" },
+    { kana: "こっかい", kanji: "国会", meaning: "Quốc hội", romaji: "kokkai" },
+    { kana: "あいます", kanji: "会います", meaning: "Gặp", romaji: "aimasu" },
+    { kana: "かいしゃ", kanji: "会社", meaning: "Công ty", romaji: "kaisha" },
+    { kana: "しゃかい", kanji: "社会", meaning: "Xã hội", romaji: "shakai" },
+    { kana: "しんぶん", kanji: "新聞", meaning: "Báo", romaji: "shinbun" },
+    { kana: "ききます", kanji: "聞きます", meaning: "Nghe (を), hỏi (に)", romaji: "kikimasu" },
+    { kana: "よみもの", kanji: "読物", meaning: "Sách, tạp chí…", romaji: "yomimono" },
+    { kana: "どくしょ", kanji: "読書", meaning: "Đọc sách", romaji: "dokusho" },
+    { kana: "よみます", kanji: "読みます", meaning: "Đọc", romaji: "yomimasu" },
+    { kana: "かきます", kanji: "書きます", meaning: "Viết", romaji: "kakimasu" },
+    { kana: "かきもの", kanji: "書き物", meaning: "Việc viết chữ / văn bản", romaji: "kakimono" },
+    { kana: "はなし", kanji: "話", meaning: "Câu chuyện", romaji: "hanashi" },
+    { kana: "かいわ", kanji: "会話", meaning: "Hội thoại", romaji: "kaiwa" },
+    { kana: "はなします", kanji: "話します", meaning: "Nói (speak)", romaji: "hanashimasu" }
+  ],
+  "Bài 7": [
+    { kana: "おてら", kanji: "お寺", meaning: "Chùa", romaji: "otera" },
+    { kana: "げんご", kanji: "言語", meaning: "Ngôn ngữ", romaji: "gengo" },
+    { kana: "いいます", kanji: "言います", meaning: "Nói", romaji: "iimasu" },
+    { kana: "かい", kanji: "貝", meaning: "Sò, ốc", romaji: "kai" },
+    { kana: "すいでん", kanji: "水田", meaning: "Ruộng lúa nước", romaji: "suiden" },
+    { kana: "たなかさん", kanji: "田中さん", meaning: "Anh Tanaka", romaji: "tanakasan" },
+    { kana: "すいりょく", kanji: "水力", meaning: "Thủy lực", romaji: "suiryoku" },
+    { kana: "かりょく", kanji: "火力", meaning: "Hỏa lực", romaji: "karyoku" },
+    { kana: "ちから", kanji: "力", meaning: "Sức lực", romaji: "chikara" },
+    { kana: "だいがくのもん", kanji: "大学の門", meaning: "Cổng trường đại học", romaji: "daigakunomon" },
+    { kana: "にく", kanji: "肉", meaning: "Thịt", romaji: "niku" },
+    { kana: "りょうきん", kanji: "料金", meaning: "Tiền phí", romaji: "ryoukin" },
+    { kana: "りょうり", kanji: "料理", meaning: "Món ăn", romaji: "ryouri" },
+    { kana: "やさい", kanji: "野菜", meaning: "Rau", romaji: "yasai" },
+    { kana: "の", kanji: "野", meaning: "Cánh đồng", romaji: "no" },
+    { kana: "なかば", kanji: "半ば", meaning: "Giữa", romaji: "nakaba" },
+    { kana: "はんとし", kanji: "半年", meaning: "Nửa năm", romaji: "hantoshi" },
+    { kana: "はんつき", kanji: "半月", meaning: "Nửa tháng", romaji: "hantsuki" },
+    { kana: "はんにち", kanji: "半日", meaning: "Nửa ngày", romaji: "hannichi" },
+    { kana: "はんぶん", kanji: "半分", meaning: "Một nửa", romaji: "hanbun" },
+    { kana: "しちじはん", kanji: "七時半", meaning: "7h30", romaji: "shichijihan" },
+    { kana: "おおきい", kanji: "大きい", meaning: "To, lớn", romaji: "ookii" },
+    { kana: "だいがくせい", kanji: "大学生", meaning: "Sinh viên đại học", romaji: "daigakusei" },
+    { kana: "おとな", kanji: "大人", meaning: "Người lớn", romaji: "otona" },
+    { kana: "たいかい", kanji: "大会", meaning: "Đại hội", romaji: "taikai" },
+    { kana: "たいはん", kanji: "大半", meaning: "Phần lớn", romaji: "taihan" },
+    { kana: "ちいさい", kanji: "小さい", meaning: "Bé, nhỏ", romaji: "chiisai" },
+    { kana: "こびと", kanji: "小人", meaning: "Người nhỏ con, lùn", romaji: "kobito" },
+    { kana: "しょうがっこう", kanji: "小学校", meaning: "Trường tiểu học", romaji: "shougakkou" },
+    { kana: "しょうがくせい", kanji: "小学生", meaning: "Học sinh tiểu học", romaji: "shougakusei" }
+  ]
+};
+
+const speak = (text) => {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel(); // Dừng âm thanh cũ nếu đang phát
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'ja-JP';
+    utterance.rate = 0.9; // Tốc độ vừa phải
+    window.speechSynthesis.speak(utterance);
+  }
+};
+
+const shuffleArray = (array) => {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+};
+
+const Flashcard = ({ word, languageDirection }) => {
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  // Reset flip state khi đổi từ mới
+  useEffect(() => {
+    setIsFlipped(false);
+  }, [word]);
+
+  const handleFlip = () => {
+    const nextFlippedState = !isFlipped;
+    setIsFlipped(nextFlippedState);
+    
+    // Nếu mặt sau hiện ra và chứa tiếng Nhật, hoặc mặt trước là tiếng Nhật, tự động đọc
+    if (languageDirection === 'vi-to-ja' && nextFlippedState) {
+        speak(word.kana);
+    } else if (languageDirection === 'ja-to-vi' && !nextFlippedState) {
+        speak(word.kana);
+    }
+  };
+
+  const playAudio = (e) => {
+    e.stopPropagation();
+    speak(word.kana);
+  };
+
+  const isJaToVi = languageDirection === 'ja-to-vi';
+  
+  const FrontContent = () => (
+    <div className="flex flex-col items-center justify-center h-full w-full">
+      {isJaToVi ? (
+        <>
+          <span className="text-6xl font-bold text-gray-800 mb-2">{word.kanji}</span>
+          <span className="text-2xl text-gray-500">{word.kana}</span>
+        </>
+      ) : (
+        <span className="text-3xl font-bold text-blue-700 text-center px-4">{word.meaning}</span>
+      )}
+    </div>
+  );
+
+  const BackContent = () => (
+    <div className="flex flex-col items-center justify-center h-full w-full">
+      {!isJaToVi ? (
+        <>
+          <span className="text-6xl font-bold text-gray-800 mb-2">{word.kanji}</span>
+          <span className="text-2xl text-gray-600 mb-1">{word.kana}</span>
+          <span className="text-lg text-blue-500 italic">[{word.romaji}]</span>
+        </>
+      ) : (
+        <>
+           <span className="text-3xl font-bold text-blue-700 mb-2 text-center px-4">{word.meaning}</span>
+           <span className="text-lg text-gray-500 italic">[{word.romaji}]</span>
+        </>
+      )}
+    </div>
+  );
+
+  return (
+    <div className="w-full max-w-2xl h-80 perspective-1000 mx-auto cursor-pointer" onClick={handleFlip}>
+      <div className={`relative w-full h-full transition-transform duration-500 transform-style-3d shadow-xl rounded-2xl bg-white ${isFlipped ? 'rotate-y-180' : ''}`}>
+        
+        {/* Nút phát âm (luôn ở góc phải) */}
+        <button 
+          onClick={playAudio}
+          className="absolute top-4 right-4 p-2 z-10 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-full transition-colors"
+          title="Phát âm tiếng Nhật"
+        >
+          <Volume2 size={24} />
+        </button>
+
+        {/* Mặt trước */}
+        <div className="absolute w-full h-full backface-hidden flex items-center justify-center p-6 border-2 border-transparent hover:border-blue-100 rounded-2xl">
+          <FrontContent />
+          <div className="absolute bottom-4 text-gray-300 text-sm">Nhấp để lật</div>
+        </div>
+
+        {/* Mặt sau */}
+        <div className="absolute w-full h-full backface-hidden rotate-y-180 flex items-center justify-center p-6 border-2 border-transparent hover:border-blue-100 rounded-2xl bg-blue-50">
+          <BackContent />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const QuizMode = ({ words, languageDirection }) => {
+  const [questions, setQuestions] = useState([]);
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const [score, setScore] = useState(0);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [isFinished, setIsFinished] = useState(false);
+
+  const isJaToVi = languageDirection === 'ja-to-vi';
+
+  const generateQuestions = useCallback(() => {
+    if (!words || words.length === 0) return;
+    
+    const shuffledWords = shuffleArray(words);
+    const newQuestions = shuffledWords.map(word => {
+      // Tạo 3 đáp án sai
+      const distractors = shuffleArray(words.filter(w => w.kanji !== word.kanji)).slice(0, 3);
+      const options = shuffleArray([word, ...distractors]);
+      return {
+        word: word,
+        options: options
+      };
+    });
+    
+    setQuestions(newQuestions);
+    setCurrentIdx(0);
+    setScore(0);
+    setIsFinished(false);
+    setSelectedOption(null);
+  }, [words]);
+
+  useEffect(() => {
+    generateQuestions();
+  }, [generateQuestions]);
+
+  const handleOptionSelect = (option) => {
+    if (selectedOption !== null) return; // Đã trả lời
+    setSelectedOption(option);
+    
+    const isCorrect = option.kanji === questions[currentIdx].word.kanji;
+    
+    if (isCorrect) {
+      setScore(prev => prev + 1);
+    }
+    
+    // Tự động đọc tiếng Nhật khi hiện kết quả (dù đúng hay sai, đọc từ đúng)
+    speak(questions[currentIdx].word.kana);
+
+    setTimeout(() => {
+      if (currentIdx < questions.length - 1) {
+        setCurrentIdx(prev => prev + 1);
+        setSelectedOption(null);
+      } else {
+        setIsFinished(true);
+      }
+    }, 2000); // Đợi 2s để xem kết quả
+  };
+
+  if (questions.length === 0) return <div>Đang tải...</div>;
+
+  if (isFinished) {
+    return (
+      <div className="flex flex-col items-center justify-center p-8 bg-white rounded-2xl shadow-lg max-w-lg mx-auto mt-10">
+        <GraduationCap size={64} className="text-blue-500 mb-4" />
+        <h2 className="text-3xl font-bold mb-2">Kết quả của bạn</h2>
+        <p className="text-2xl text-gray-700 mb-6">
+          <span className="font-bold text-blue-600">{score}</span> / {questions.length} đúng
+        </p>
+        <button 
+          onClick={generateQuestions}
+          className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+        >
+          <RotateCcw size={20} />
+          <span>Làm lại bài kiểm tra</span>
+        </button>
+      </div>
+    );
+  }
+
+  const currentQ = questions[currentIdx];
+  const questionText = isJaToVi 
+    ? <div className="text-center"><div className="text-4xl font-bold">{currentQ.word.kanji}</div><div className="text-xl text-gray-500 mt-2">{currentQ.word.kana}</div></div>
+    : <div className="text-center"><div className="text-2xl font-bold text-blue-700">{currentQ.word.meaning}</div></div>;
+
+  return (
+    <div className="max-w-3xl mx-auto">
+      <div className="flex justify-between items-center mb-6 text-sm text-gray-500 font-medium">
+        <span>Câu hỏi {currentIdx + 1} / {questions.length}</span>
+        <span>Điểm: {score}</span>
+      </div>
+
+      <div className="bg-white p-8 rounded-2xl shadow-md mb-8 flex items-center justify-center min-h-[160px]">
+        {questionText}
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {currentQ.options.map((opt, idx) => {
+          const isCorrectAnswer = opt.kanji === currentQ.word.kanji;
+          let btnClass = "p-4 border-2 rounded-xl text-lg font-medium transition-all duration-200 text-left flex justify-between items-center h-24 ";
+          
+          if (selectedOption === null) {
+            btnClass += "border-gray-200 hover:border-blue-500 hover:bg-blue-50 bg-white text-gray-700";
+          } else {
+            if (isCorrectAnswer) {
+              btnClass += "border-green-500 bg-green-50 text-green-700"; // Đáp án đúng
+            } else if (selectedOption.kanji === opt.kanji) {
+              btnClass += "border-red-500 bg-red-50 text-red-700"; // Chọn sai
+            } else {
+              btnClass += "border-gray-200 bg-gray-50 text-gray-400 opacity-50"; // Các nút khác
+            }
+          }
+
+          const optionText = isJaToVi ? opt.meaning : `${opt.kanji} (${opt.kana})`;
+
+          return (
+            <button 
+              key={idx}
+              onClick={() => handleOptionSelect(opt)}
+              disabled={selectedOption !== null}
+              className={btnClass}
+            >
+              <span className="flex-1 text-center">{optionText}</span>
+              
+              {/* Icon feedback */}
+              {selectedOption !== null && isCorrectAnswer && <Check className="text-green-500 flex-shrink-0 ml-2" />}
+              {selectedOption !== null && selectedOption.kanji === opt.kanji && !isCorrectAnswer && <X className="text-red-500 flex-shrink-0 ml-2" />}
+            </button>
+          );
+        })}
+      </div>
+      
+      {/* Hiển thị Romaji và Nghĩa/Kanji khi đã trả lời để học */}
+      {selectedOption !== null && (
+        <div className="mt-6 p-4 bg-blue-50 rounded-xl text-center animate-fade-in">
+           <p className="text-lg text-blue-800">
+             <strong>{currentQ.word.kanji}</strong> ({currentQ.word.kana}) - {currentQ.word.meaning}
+           </p>
+           <p className="text-sm text-gray-600 italic">[{currentQ.word.romaji}]</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+
+const App = () => {
+  const [currentLesson, setCurrentLesson] = useState("Bài 4");
+  const [mode, setMode] = useState("flashcard"); // 'flashcard', 'list', 'quiz'
+  const [languageDirection, setLanguageDirection] = useState("ja-to-vi"); // 'ja-to-vi' or 'vi-to-ja'
+  const [flashcardIdx, setFlashcardIdx] = useState(0);
+
+  const words = currentLesson === "Tất cả" 
+    ? Object.values(KANJI_DATA).flat() 
+    : KANJI_DATA[currentLesson];
+
+  const handleNextCard = () => {
+    setFlashcardIdx((prev) => (prev + 1) % words.length);
+  };
+
+  const handlePrevCard = () => {
+    setFlashcardIdx((prev) => (prev - 1 + words.length) % words.length);
+  };
+
+  const toggleLanguageDirection = () => {
+    setLanguageDirection(prev => prev === 'ja-to-vi' ? 'vi-to-ja' : 'ja-to-vi');
+  };
+
+  // CSS nội tuyến cho hiệu ứng lật 3D (tránh dùng class Tailwind nếu không đủ)
+  const styles = `
+    .perspective-1000 { perspective: 1000px; }
+    .transform-style-3d { transform-style: preserve-3d; }
+    .backface-hidden { backface-visibility: hidden; }
+    .rotate-y-180 { transform: rotateY(180deg); }
+    .animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+  `;
+
+  return (
+    <div className="min-h-screen bg-gray-50 text-gray-800 pb-20">
+      <style>{styles}</style>
+      
+      {/* Header */}
+      <header className="bg-white shadow-sm sticky top-0 z-50">
+        <div className="max-w-5xl mx-auto px-4 py-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            
+            {/* Logo & Tiêu đề */}
+            <div className="flex items-center space-x-2">
+              <div className="bg-blue-600 text-white p-2 rounded-lg">
+                <BookOpen size={24} />
+              </div>
+              <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Học Kanji</h1>
+            </div>
+
+            {}
+            {/* Điều hướng Bài học */}
+            <div className="flex space-x-2 overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
+              {[...Object.keys(KANJI_DATA), "Tất cả"].map(lesson => (
+                <button
+                  key={lesson}
+                  onClick={() => { setCurrentLesson(lesson); setFlashcardIdx(0); }}
+                  className={`px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-colors ${
+                    currentLesson === lesson 
+                    ? 'bg-blue-100 text-blue-700' 
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  {lesson}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Tabs Chế độ học */}
+        <div className="max-w-5xl mx-auto px-4 flex border-t">
+          {[
+            { id: 'flashcard', icon: <ArrowRightLeft size={18} />, label: 'Thẻ ghi nhớ' },
+            { id: 'quiz', icon: <GraduationCap size={18} />, label: 'Trắc nghiệm' },
+            { id: 'list', icon: <List size={18} />, label: 'Danh sách' }
+          ].map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setMode(tab.id)}
+              className={`flex items-center space-x-2 px-6 py-4 border-b-2 font-medium text-sm transition-colors ${
+                mode === tab.id 
+                ? 'border-blue-600 text-blue-600' 
+                : 'border-transparent text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              {tab.icon}
+              <span className="hidden sm:inline">{tab.label}</span>
+            </button>
+          ))}
+        </div>
+      </header>
+
+      {/* Main Content Area */}
+      <main className="max-w-5xl mx-auto px-4 py-8">
+        
+        {/* Thanh công cụ chung (Chuyển đổi ngôn ngữ) */}
+        {(mode === 'flashcard' || mode === 'quiz') && (
+          <div className="flex justify-end mb-6">
+            <button 
+              onClick={toggleLanguageDirection}
+              className="flex items-center space-x-2 bg-white border border-gray-300 shadow-sm px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors"
+            >
+              <ArrowRightLeft size={16} className="text-gray-500"/>
+              <span>
+                {languageDirection === 'ja-to-vi' ? 'Nhật → Việt' : 'Việt → Nhật'}
+              </span>
+            </button>
+          </div>
+        )}
+
+        {/* Render nội dung theo chế độ */}
+        
+        {/* 1. CHẾ ĐỘ THẺ GHI NHỚ */}
+        {mode === 'flashcard' && (
+          <div className="flex flex-col items-center animate-fade-in">
+            <Flashcard 
+              word={words[flashcardIdx]} 
+              languageDirection={languageDirection}
+            />
+            
+            {/* Controls lật thẻ */}
+            <div className="flex items-center justify-between w-full max-w-2xl mt-8">
+              <button 
+                onClick={handlePrevCard}
+                className="p-4 bg-white rounded-full shadow-md hover:bg-gray-50 text-blue-600 transition-transform active:scale-95"
+              >
+                <ChevronLeft size={28} />
+              </button>
+              
+              <div className="text-lg font-medium text-gray-500">
+                {flashcardIdx + 1} / {words.length}
+              </div>
+              
+              <button 
+                onClick={handleNextCard}
+                className="p-4 bg-white rounded-full shadow-md hover:bg-gray-50 text-blue-600 transition-transform active:scale-95"
+              >
+                <ChevronRight size={28} />
+              </button>
+            </div>
+            
+            <div className="mt-8 text-center text-sm text-gray-400">
+              <p>Mẹo: Bạn có thể click vào thẻ để xem đáp án.</p>
+            </div>
+          </div>
+        )}
+
+        {/* 2. CHẾ ĐỘ TRẮC NGHIỆM */}
+        {mode === 'quiz' && (
+          <div className="animate-fade-in">
+            <QuizMode words={words} languageDirection={languageDirection} />
+          </div>
+        )}
+
+        {/* 3. CHẾ ĐỘ DANH SÁCH */}
+        {mode === 'list' && (
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden animate-fade-in">
+            {}
+            <div className="px-6 py-4 border-b bg-gray-50">
+              <h2 className="text-lg font-bold text-gray-700">
+                {currentLesson === "Tất cả" ? "Toàn bộ từ vựng" : `Từ vựng ${currentLesson}`} ({words.length} từ)
+              </h2>
+            </div>
+            <div className="divide-y divide-gray-100">
+              {words.map((word, idx) => (
+                <div key={idx} className="p-4 sm:px-6 flex flex-col sm:flex-row sm:items-center hover:bg-blue-50/50 transition-colors">
+                  <div className="flex-1 flex items-center space-x-4">
+                    <button 
+                      onClick={() => speak(word.kana)}
+                      className="p-2 text-gray-400 hover:text-blue-500 bg-white shadow-sm border border-gray-100 rounded-full flex-shrink-0"
+                    >
+                      <Volume2 size={18} />
+                    </button>
+                    <div>
+                      <div className="flex items-baseline space-x-2">
+                        <span className="text-2xl font-bold text-gray-800">{word.kanji}</span>
+                        <span className="text-gray-500">{word.kana}</span>
+                      </div>
+                      <div className="text-sm text-gray-400 italic">[{word.romaji}]</div>
+                    </div>
+                  </div>
+                  <div className="mt-2 sm:mt-0 sm:w-1/2">
+                    <span className="text-lg text-blue-700 font-medium">{word.meaning}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+      </main>
+    </div>
+  );
+};
+
+export default App;
